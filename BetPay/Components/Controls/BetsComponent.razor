@@ -1,0 +1,41 @@
+﻿
+
+<center>
+    <h3>Bets</h3>
+    <br />
+
+    <ul>
+        @foreach (var bet in bets)
+        {
+            var color = bet.IsWinning switch
+            {
+                Enums.BetStatusEnum.Unfinished => "yellow",
+                Enums.BetStatusEnum.Won => "green",
+                Enums.BetStatusEnum.Lost => "red",
+                 _ => "black"
+            };
+
+            <li class="betlist-item" style="color:@(color)">Stake: @bet.Stake || Odds: @bet.TotalOdds || Date: @bet.BetDate.ToString("dd-MM-yyyy" ) || @bet.CalculatePotentialWin() zł
+                <span>
+                        
+                </span> 
+            </li>
+        }
+
+    </ul>
+   </center>
+
+
+@code {
+    private List<Bet> bets = BetRepository.GetBets();
+
+
+     private List<Category> Categories = new List<Category>
+    {
+        new Category { Id = Guid.NewGuid(), Name = "Footbal" },
+        new Category { Id = Guid.NewGuid(), Name = "Tenis" },
+        new Category { Id = Guid.NewGuid(), Name = "Soccer" }
+    };
+
+
+}
