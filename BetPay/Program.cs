@@ -1,9 +1,15 @@
+using Application;
 using BetPay.Components;
+using Infrastructure;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSyncfusionBlazor();
 builder.Services.AddRazorComponents();
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
 
 var app = builder.Build();
 
@@ -19,6 +25,8 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ0NzY1NEAzMjM2MmUzMDJlMzBBRGN6bnVwUXo1TGY4WjBVY21LSWV2MWlCTVFXS0lBRk9mY2trSEZlNGk4PQ== ");
 
 app.MapRazorComponents<App>();
 

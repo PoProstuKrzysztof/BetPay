@@ -1,7 +1,6 @@
 ﻿using BetPay.Enums;
-using System.ComponentModel.DataAnnotations;
 
-namespace BetPay.Models;
+namespace BetPay.Entities;
 
 public class Bet
 {
@@ -13,11 +12,9 @@ public class Bet
 
     public Guid Id { get; init; }
 
-    
-    public required decimal TotalOdds { get; set; }
+    public decimal TotalOdds { get; set; }
 
-    
-    public required decimal Stake { get; set; }
+    public decimal Stake { get; set; }
 
     public DateTime BetDate { get; set; }
     public BetStatusEnum IsWinning { get; set; } = BetStatusEnum.Unfinished;

@@ -1,4 +1,4 @@
-﻿namespace BetPay.Models;
+﻿namespace BetPay.Entities;
 
 public class Category
 {

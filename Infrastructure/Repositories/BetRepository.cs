@@ -1,4 +1,4 @@
-﻿using BetPay.Models;
+﻿using BetPay.Entities;
 
 namespace BetPay.Repositories;
 
