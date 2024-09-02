@@ -66,7 +66,7 @@ public static class BetRepository
 
     public static Bet GetBetByGuid(Guid guid)
     {
-        var bet = bets.FirstOrDefault(s => s.Id == guid);
+        var bet = bets.Find(s => s.BetId == guid);
         if (bet != null)
         {
             return new Bet
@@ -83,9 +83,9 @@ public static class BetRepository
 
     public static void UpdateBet(Guid id, Bet bet)
     {
-        if (id != bet.Id) return;
+        if (id != bet.BetId) return;
 
-        var betToUpdate = bets.FirstOrDefault(x => x.Id == id);
+        var betToUpdate = bets.Find(x => x.BetId == id);
 
         if (betToUpdate != null)
         {
@@ -97,7 +97,7 @@ public static class BetRepository
 
     public static void DeleteBet(Guid id)
     {
-        Bet? bet = bets.FirstOrDefault(x => x.Id == id);
+        Bet? bet = bets.Find(x => x.BetId == id);
 
         if (bet != null)
         {

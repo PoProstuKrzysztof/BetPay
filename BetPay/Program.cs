@@ -1,6 +1,8 @@
 using Application;
 using BetPay.Components;
 using Infrastructure;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,16 @@ builder.Services.AddSyncfusionBlazor();
 builder.Services.AddRazorComponents();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
+
+builder.Services.AddDbContextPool<RepositoryContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlServerOptionsAction: sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure();
+            sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+        });
+});
 
 var app = builder.Build();
 
@@ -30,4 +42,7 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ0NzY1NEAzMjM2
 
 app.MapRazorComponents<App>();
 
-app.Run();
+await app.RunAsync();
+
+public partial class Program
+{ }
