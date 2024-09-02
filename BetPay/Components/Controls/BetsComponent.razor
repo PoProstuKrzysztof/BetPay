@@ -10,13 +10,13 @@
         {
             var color = bet.IsWinning switch
             {
-                Enums.BetStatusEnum.Unfinished => "yellow",
+                Enums.BetStatusEnum.Unfinished => "blue",
                 Enums.BetStatusEnum.Won => "green",
                 Enums.BetStatusEnum.Lost => "red",
                  _ => "black"
             };
 
-            <li class="betlist-item" style="color:@(color)">Stake: @bet.Stake || Odds: @bet.TotalOdds || Date: @bet.BetDate.ToString("dd-MM-yyyy" ) || @bet.CalculatePotentialWin() zł
+            <li class="betlist-item" style="color:@(color)">Stake: @bet.Stake || Odds: @bet.TotalOdds || Date: @bet.BetDate.ToString("dd-MM-yyyy" ) || @bet.PotentialWin zł
                 <span>
                         
                 </span> 
@@ -33,9 +33,9 @@
 
      private List<Category> Categories = new List<Category>
     {
-        new Category { Id = Guid.NewGuid(), Name = "Footbal" },
-        new Category { Id = Guid.NewGuid(), Name = "Tenis" },
-        new Category { Id = Guid.NewGuid(), Name = "Soccer" }
+        new Category { CategoryId = 1, Name = "Footbal" },
+        new Category { CategoryId = 2, Name = "Tenis" },
+        new Category { CategoryId = 3, Name = "Soccer" }
     };
 
 

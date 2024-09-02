@@ -31,3 +31,6 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ0NzY1NEAzMjM2
 app.MapRazorComponents<App>();
 
 app.Run();
+
+public partial class Program
+{ }
