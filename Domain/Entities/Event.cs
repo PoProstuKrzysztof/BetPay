@@ -17,4 +17,6 @@ public class Event
     public double Odds { get; set; }
 
     public Category Category { get; set; }
+
+    public EventType EventType { get; set; }
 }

@@ -6,7 +6,7 @@ namespace Infrastructure.Data;
 
 public class RepositoryContext : DbContext
 {
-    public RepositoryContext(DbContextOptions options) : base(options)
+    public RepositoryContext(DbContextOptions<RepositoryContext> options) : base(options)
     {
     }
 
@@ -17,9 +17,4 @@ public class RepositoryContext : DbContext
     public virtual DbSet<Event> Events { get; set; }
 
     public virtual DbSet<EventType> EventTypes { get; set; }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-    }
 }
