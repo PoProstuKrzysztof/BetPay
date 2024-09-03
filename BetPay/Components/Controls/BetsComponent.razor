@@ -1,42 +1,30 @@
 ﻿@using BetPay.Entities
 
+@inject IRepositoryWrapper RepositoryWrapper
 
-<center>
-    <h3>Bets</h3>
-    <br />
-
-    <ul>
-        @foreach (var bet in bets)
-        {
-            var color = bet.IsWinning switch
-            {
-                Enums.BetStatusEnum.Unfinished => "blue",
-                Enums.BetStatusEnum.Won => "green",
-                Enums.BetStatusEnum.Lost => "red",
-                 _ => "black"
-            };
-
-            <li class="betlist-item" style="color:@(color)">Stake: @bet.Stake || Odds: @bet.TotalOdds || Date: @bet.BetDate.ToString("dd-MM-yyyy" ) || @bet.PotentialWin zł
-                <span>
-                        
-                </span> 
-            </li>
-        }
-
-    </ul>
-   </center>
+<SfGrid DataSource="Bets">
+    <GridPageSettings PageSize="7">
+        <GridColumns>
+            <GridColumn Field="@nameof(Bet.BetId)" HeaderText="ID"></GridColumn>
+            <GridColumn Field="@nameof(Bet.Stake)" HeaderText="Stake"></GridColumn>
+            <GridColumn Field="@nameof(Bet.TotalOdds)" HeaderText="Total Odds"></GridColumn>
+            <GridColumn Field="@nameof(Bet.BetDate)" HeaderText="Bet date"></GridColumn>
+            
+        </GridColumns>
+    </GridPageSettings>
+</SfGrid>
 
 
 @code {
-    private List<Bet> bets = BetRepository.GetBets();
+    public IEnumerable<Bet> Bets { get; set; }
 
 
-     private List<Category> Categories = new List<Category>
+    protected override async Task OnInitializedAsync()
     {
-        new Category { CategoryId = 1, Name = "Footbal" },
-        new Category { CategoryId = 2, Name = "Tenis" },
-        new Category { CategoryId = 3, Name = "Soccer" }
-    };
 
+        Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
+
+
+    }
 
 }

@@ -1,7 +1,9 @@
 using Application;
 using BetPay.Components;
+using Domain.Contracts;
 using Infrastructure;
 using Infrastructure.Data;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Blazor;
 
@@ -12,6 +14,7 @@ builder.Services.AddSyncfusionBlazor();
 builder.Services.AddRazorComponents();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
+builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
 builder.Services.AddDbContextPool<RepositoryContext>(options =>
 {
