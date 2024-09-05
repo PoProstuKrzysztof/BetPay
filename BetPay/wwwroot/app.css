@@ -1,5 +1,13 @@
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-size:16px;
+}
+
+.nav-link{
+    font-size:18px;
 }
 
 a, .btn-link {

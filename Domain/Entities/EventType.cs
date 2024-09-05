@@ -11,5 +11,5 @@ public class EventType
 
     //Relationships
 
-    public ICollection<Event> Events { get; set; }
+    public virtual ICollection<Event> Events { get; set; }
 }

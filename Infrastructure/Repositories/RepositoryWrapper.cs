@@ -5,7 +5,7 @@ namespace Infrastructure.Repositories;
 
 public class RepositoryWrapper : IRepositoryWrapper
 {
-    private RepositoryContext _context;
+    private readonly RepositoryContext _context;
     private IBetRepository _betRepository;
     private IEventRepository _eventRepository;
 
@@ -18,12 +18,7 @@ public class RepositoryWrapper : IRepositoryWrapper
     {
         get
         {
-            if (_eventRepository == null)
-            {
-                _eventRepository = new EventRepository(_context);
-            }
-
-            return _eventRepository;
+            return _eventRepository ??= new EventRepository(_context);
         }
     }
 
@@ -31,12 +26,7 @@ public class RepositoryWrapper : IRepositoryWrapper
     {
         get
         {
-            if (BetRepository == null)
-            {
-                _betRepository = new BetRepository(_context);
-            }
-
-            return _betRepository;
+            return _betRepository ??= new BetRepository(_context);
         }
     }
 

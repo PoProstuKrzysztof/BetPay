@@ -11,9 +11,12 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
     {
     }
 
-    public Task<IEnumerable<Event>> GetAllEventsAsync()
+    public async Task<IEnumerable<Event>> GetAllEventsAsync()
     {
-        throw new NotImplementedException();
+        return await FindAll()
+                .Result
+                .OrderByDescending(x => x.EventId)
+                .ToListAsync();
     }
 
     public async Task<Event> GetEventByGuidAsync(Guid id)

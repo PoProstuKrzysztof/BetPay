@@ -1,4 +1,4 @@
-﻿using BetPay.Entities;
+﻿using Domain.Entities;
 using Domain.Contracts;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +16,7 @@ namespace Infrastructure.Repositories
             return await FindAll()
                 .Result
                 .OrderByDescending(x => x.BetDate)
+                .Include(b => b.EventsList)
                 .ToListAsync();
         }
 

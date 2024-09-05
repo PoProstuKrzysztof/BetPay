@@ -1,4 +1,4 @@
-﻿using BetPay.Entities;
+﻿using Domain.Entities;
 
 namespace Domain.Contracts;
 

@@ -1,7 +1,6 @@
-﻿using Domain.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace BetPay.Entities;
+namespace Domain.Entities;
 
 public class Category
 {
@@ -12,5 +11,5 @@ public class Category
 
     // Relationships
 
-    public ICollection<Event> Events { get; set; }
+    public virtual ICollection<Event> Events { get; set; }
 }

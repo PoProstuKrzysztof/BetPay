@@ -1,9 +1,8 @@
 ﻿using BetPay.Enums;
-using Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BetPay.Entities;
+namespace Domain.Entities;
 
 public class Bet
 {
@@ -21,7 +20,7 @@ public class Bet
     public int Month { get; set; }
     public int DayOfWeek { get; set; }
     public string? Bookmaker { get; set; }
-    public BetStatusEnum IsWinning { get; set; } = BetStatusEnum.Unfinished;
+    public BetStatusEnum Status { get; set; } = BetStatusEnum.Unfinished;
 
     public bool IsTaxIncluded { get; set; } = true;
 
@@ -36,5 +35,5 @@ public class Bet
 
     // Relationships
 
-    public ICollection<Event> EventsList { get; set; }
+    public virtual ICollection<Event> EventsList { get; set; }
 }

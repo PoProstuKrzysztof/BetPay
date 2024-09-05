@@ -24,6 +24,7 @@ builder.Services.AddDbContextPool<RepositoryContext>(options =>
             sqlOptions.EnableRetryOnFailure();
             sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
         });
+    options.UseLazyLoadingProxies();
 });
 
 var app = builder.Build();
@@ -45,7 +46,7 @@ Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ0NzY1NEAzMjM2
 
 app.MapRazorComponents<App>();
 
-await app.RunAsync();
+ app.Run();
 
 public partial class Program
 { }
