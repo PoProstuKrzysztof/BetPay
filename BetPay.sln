@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetPay", "BetPay\BetPay.csproj", "{E7CA636F-3228-42B1-97A2-C1D520A392ED}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{ABDB143E-E0E7-4BE0-A7F7-6078D41C6C6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{D30E87C5-608C-4DE3-ACD9-744B1E14234F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{D30E87C5-608C-4DE3-ACD9-744B1E14234F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{0803A10B-9892-411D-88DE-221F016DFDFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{0803A10B-9892-411D-88DE-221F016DFDFF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D91569D8-61BB-4F65-AF31-3DDD444E2B94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{D91569D8-61BB-4F65-AF31-3DDD444E2B94}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetPay", "BetPay\BetPay\BetPay.csproj", "{B37E1F0B-F053-4A4C-800E-C66C923AF3AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BetPay.Client", "BetPay\BetPay.Client\BetPay.Client.csproj", "{83538323-4FCB-4E3B-9DB1-A72A091CBD65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E7CA636F-3228-42B1-97A2-C1D520A392ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7CA636F-3228-42B1-97A2-C1D520A392ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7CA636F-3228-42B1-97A2-C1D520A392ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7CA636F-3228-42B1-97A2-C1D520A392ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D30E87C5-608C-4DE3-ACD9-744B1E14234F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D30E87C5-608C-4DE3-ACD9-744B1E14234F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D30E87C5-608C-4DE3-ACD9-744B1E14234F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +33,14 @@ Global
 		{D91569D8-61BB-4F65-AF31-3DDD444E2B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D91569D8-61BB-4F65-AF31-3DDD444E2B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D91569D8-61BB-4F65-AF31-3DDD444E2B94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B37E1F0B-F053-4A4C-800E-C66C923AF3AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B37E1F0B-F053-4A4C-800E-C66C923AF3AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B37E1F0B-F053-4A4C-800E-C66C923AF3AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B37E1F0B-F053-4A4C-800E-C66C923AF3AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83538323-4FCB-4E3B-9DB1-A72A091CBD65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83538323-4FCB-4E3B-9DB1-A72A091CBD65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83538323-4FCB-4E3B-9DB1-A72A091CBD65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83538323-4FCB-4E3B-9DB1-A72A091CBD65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
