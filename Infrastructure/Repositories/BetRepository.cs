@@ -1,107 +1,44 @@
-﻿using BetPay.Entities;
+﻿using Domain.Entities;
+using Domain.Contracts;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace BetPay.Repositories;
-
-public static class BetRepository
+namespace Infrastructure.Repositories
 {
-    private static List<Bet> bets = new List<Bet>
-        {
-            new Bet
-            {
-                TotalOdds = 2.5m,
-                Stake = 100.00m,
-                BetDate = new DateTime(2024, 8, 15),
-                IsWinning = Enums.BetStatusEnum.Won
-            },
-            new Bet
-            {
-                TotalOdds = 1.8m,
-                Stake = 50.00m,
-                BetDate = new DateTime(2024, 8, 16),
-                IsWinning = Enums.BetStatusEnum.Lost
-            },
-            new Bet
-            {
-                TotalOdds = 3.2m,
-                Stake = 75.00m,
-                BetDate = new DateTime(2024, 8, 17),
-                IsWinning = Enums.BetStatusEnum.Unfinished
-            },
-            new Bet
-            {
-                TotalOdds = 4.0m,
-                Stake = 150.00m,
-                BetDate = new DateTime(2024, 8, 18),
-                IsWinning = Enums.BetStatusEnum.Won
-            },
-            new Bet
-            {
-                TotalOdds = 2.0m,
-                Stake = 200.00m,
-                BetDate = new DateTime(2024, 8, 19),
-                IsWinning = Enums.BetStatusEnum.Won
-            },
-            new Bet
-            {
-                TotalOdds = 3.5m,
-                Stake = 120.00m,
-                BetDate = new DateTime(2024, 8, 20),
-                IsWinning = Enums.BetStatusEnum.Lost
-            },
-            new Bet
-            {
-                TotalOdds = 1.9m,
-                Stake = 90.00m,
-                BetDate = new DateTime(2024, 8, 21),
-                IsWinning = Enums.BetStatusEnum.Unfinished
-            }
-        };
-
-    public static void AddBet(Bet bet)
+    public class BetRepository : RepositoryBase<Bet>, IBetRepository
     {
-        bets.Add(bet);
-    }
-
-    public static List<Bet> GetBets() => bets;
-
-    public static Bet GetBetByGuid(Guid guid)
-    {
-        var bet = bets.Find(s => s.BetId == guid);
-        if (bet != null)
+        public BetRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         {
-            return new Bet
-            {
-                TotalOdds = bet.TotalOdds,
-                Stake = bet.Stake,
-                BetDate = bet.BetDate,
-                IsWinning = bet.IsWinning
-            };
         }
 
-        return null;
-    }
-
-    public static void UpdateBet(Guid id, Bet bet)
-    {
-        if (id != bet.BetId) return;
-
-        var betToUpdate = bets.Find(x => x.BetId == id);
-
-        if (betToUpdate != null)
+        public async Task<IEnumerable<Bet>> GetAllBetsAsync()
         {
-            betToUpdate.IsWinning = bet.IsWinning;
-            betToUpdate.Stake = bet.Stake;
-            betToUpdate.TotalOdds = bet.TotalOdds;
+            return await FindAll()
+                .Result
+                .OrderByDescending(x => x.BetDate)
+                .Include(b => b.EventsList)
+                .ToListAsync();
         }
-    }
 
-    public static void DeleteBet(Guid id)
-    {
-        Bet? bet = bets.Find(x => x.BetId == id);
-
-        if (bet != null)
+        public async Task<Bet> GetBetByGuid(Guid id)
         {
-            bets.Remove(bet);
+            return await FindByCondition(x => x.BetId.Equals(id))
+                .Result.FirstOrDefaultAsync();
+        }
+
+        public void CreateBet(Bet bet)
+        {
+            Create(bet);
+        }
+
+        public void DeleteBet(Bet bet)
+        {
+            Delete(bet);
+        }
+
+        public void UpdateBet(Bet bet)
+        {
+            Update(bet);
         }
     }
 }

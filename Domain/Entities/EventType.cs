@@ -8,4 +8,8 @@ public class EventType
     public int EventTypeId { get; init; }
 
     public string Name { get; set; }
+
+    //Relationships
+
+    public virtual ICollection<Event> Events { get; set; }
 }

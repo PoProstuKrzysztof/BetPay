@@ -1,21 +1,13 @@
 ﻿using BetPay.Enums;
-using Domain.Entities;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BetPay.Entities;
+namespace Domain.Entities;
 
 public class Bet
 {
-    public Bet()
-    {
-        BetId = Guid.NewGuid();
-        BetDate = DateTime.UtcNow;
-        Year = BetDate.Year;
-        Month = BetDate.Month;
-        DayOfWeek = (int)BetDate.DayOfWeek;
-    }
-
     [Key]
+    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public Guid BetId { get; init; }
 
     public decimal TotalOdds { get; set; }
@@ -27,7 +19,8 @@ public class Bet
     public int Year { get; set; }
     public int Month { get; set; }
     public int DayOfWeek { get; set; }
-    public BetStatusEnum IsWinning { get; set; } = BetStatusEnum.Unfinished;
+    public string? Bookmaker { get; set; }
+    public BetStatusEnum Status { get; set; } = BetStatusEnum.Unfinished;
 
     public bool IsTaxIncluded { get; set; } = true;
 
@@ -40,5 +33,7 @@ public class Bet
         }
     }
 
-    public List<Event> EventsList { get; set; } = new List<Event>();
+    // Relationships
+
+    public virtual ICollection<Event> EventsList { get; set; }
 }
