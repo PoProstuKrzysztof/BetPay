@@ -13,7 +13,6 @@ public class Event
     [Required]
     public double Odds { get; set; }
 
-
     public BetStatusEnum Status { get; set; } = BetStatusEnum.Unfinished;
 
     // Relationships
