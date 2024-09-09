@@ -16,7 +16,6 @@ builder.Services.AddRazorComponents()
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
 builder.Services.AddDbContextPool<RepositoryContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -30,6 +29,7 @@ builder.Services.AddDbContextPool<RepositoryContext>(options =>
 builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();
+
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ2MjcyOEAzMjM2MmUzMDJlMzBtOHNNNERlYmxLZkxiRzlVQWcwV2FHZHNRY2pUMlIreURtY21EMUduVVY4PQ==");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

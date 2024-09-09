@@ -13,16 +13,10 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
 
     public async Task<IEnumerable<Event>> GetAllEventsAsync()
     {
-        return await FindAll()
-                .Result
-                .OrderByDescending(x => x.EventId)
-                .ToListAsync();
-    }
+        return await FindAll().Result
 
-    public async Task<Event> GetEventByGuidAsync(Guid id)
-    {
-        return await FindByCondition(x => x.EventId.Equals(id))
-            .Result.FirstOrDefaultAsync();
+                .OrderByDescending(e => e.EventId)
+                .ToListAsync();
     }
 
     public void UpdateEvent(Event @event)
@@ -40,10 +34,12 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
         Delete(@event);
     }
 
-    public async Task<IEnumerable<Event>> GetEventsByBetIdAsync(Guid id)
+    public async Task<IEnumerable<Event>> GetEventsByBetIdAsync(Guid? id)
     {
         return await FindByCondition(x => x.BetId.Equals(id))
             .Result
+            .Include(c => c.Category)
+            .Include(et => et.EventType)
             .ToListAsync();
     }
 }
