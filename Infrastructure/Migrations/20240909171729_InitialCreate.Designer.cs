@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20240904120307_InitialCreate")]
+    [Migration("20240909171729_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -21,11 +21,14 @@ namespace Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BetPay.Entities.Bet", b =>
+            modelBuilder.Entity("Domain.Entities.Bet", b =>
                 {
                     b.Property<Guid>("BetId")
                         .ValueGeneratedOnAdd()
@@ -37,25 +40,13 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Bookmaker")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DayOfWeek")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsTaxIncluded")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Month")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("Stake")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TotalOdds")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.HasKey("BetId");
@@ -65,72 +56,52 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            BetId = new Guid("b455677a-e621-4615-93ec-ac5a937c7864"),
+                            BetId = new Guid("015bad62-91c7-4fae-a449-5be0457f3f98"),
                             BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Bookmaker = "SUPERBET",
-                            DayOfWeek = 3,
                             IsTaxIncluded = true,
-                            Month = 9,
                             Stake = 50m,
-                            Status = 0,
-                            TotalOdds = 2.75m,
-                            Year = 2024
+                            Status = 2
                         },
                         new
                         {
-                            BetId = new Guid("64a6ceee-8738-4a64-917f-0fa18f126821"),
+                            BetId = new Guid("f1c9658e-4e32-405b-9b7d-518800e1b64c"),
                             BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Bookmaker = "STS",
-                            DayOfWeek = 3,
                             IsTaxIncluded = true,
-                            Month = 9,
                             Stake = 100m,
-                            Status = 1,
-                            TotalOdds = 3.50m,
-                            Year = 2024
+                            Status = 2
                         },
                         new
                         {
-                            BetId = new Guid("e0968625-7e04-46ae-bca6-4f911fd44abf"),
+                            BetId = new Guid("9a7e6f75-7b74-4f9f-a07f-4a27de8972be"),
                             BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Bookmaker = "FORTUNA",
-                            DayOfWeek = 3,
                             IsTaxIncluded = true,
-                            Month = 9,
                             Stake = 200m,
-                            Status = 2,
-                            TotalOdds = 4.00m,
-                            Year = 2024
+                            Status = 2
                         },
                         new
                         {
-                            BetId = new Guid("12bdebae-b9cd-4e3a-a0ce-bd502fba039f"),
+                            BetId = new Guid("cb46de97-2c16-46f5-a9c2-569e3a4926ad"),
                             BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Bookmaker = "BETCLIC",
-                            DayOfWeek = 3,
                             IsTaxIncluded = false,
-                            Month = 9,
                             Stake = 75m,
-                            Status = 2,
-                            TotalOdds = 1.90m,
-                            Year = 2024
+                            Status = 2
                         },
                         new
                         {
-                            BetId = new Guid("c206d44e-fadd-4c21-aab4-3d76adb283b8"),
+                            BetId = new Guid("f6bd5e7a-9b6d-45bc-b8cc-0ecb390243dd"),
                             BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Bookmaker = "BETFAN",
-                            DayOfWeek = 3,
                             IsTaxIncluded = true,
-                            Month = 9,
                             Stake = 150m,
-                            Status = 0,
-                            TotalOdds = 2.25m,
-                            Year = 2024
+                            Status = 2
                         });
                 });
 
-            modelBuilder.Entity("BetPay.Entities.Category", b =>
+            modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -179,8 +150,8 @@ namespace Infrastructure.Migrations
                     b.Property<int>("EventTypeId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Odds")
-                        .HasColumnType("float");
+                    b.Property<decimal>("Odds")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -198,92 +169,92 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            EventId = new Guid("30b0d38f-84d2-4d9d-bcf5-66ca24168a89"),
-                            BetId = new Guid("b455677a-e621-4615-93ec-ac5a937c7864"),
+                            EventId = new Guid("2c838f49-e594-4cb3-877c-c9821e912c2e"),
+                            BetId = new Guid("015bad62-91c7-4fae-a449-5be0457f3f98"),
                             CategoryId = 1,
                             EventTypeId = 1,
-                            Odds = 1.5,
+                            Odds = 1.5m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("c322c407-fd42-42f4-acfd-bbd0ba241982"),
-                            BetId = new Guid("b455677a-e621-4615-93ec-ac5a937c7864"),
+                            EventId = new Guid("3c2ebcde-7914-41bd-9287-6fe85d5e1d81"),
+                            BetId = new Guid("015bad62-91c7-4fae-a449-5be0457f3f98"),
                             CategoryId = 2,
                             EventTypeId = 2,
-                            Odds = 2.0,
+                            Odds = 2.0m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("60cfb78c-bdb3-47a7-b902-a08b3914233b"),
-                            BetId = new Guid("64a6ceee-8738-4a64-917f-0fa18f126821"),
+                            EventId = new Guid("965182d1-eac8-460a-9b89-139e5a942e52"),
+                            BetId = new Guid("f1c9658e-4e32-405b-9b7d-518800e1b64c"),
                             CategoryId = 1,
                             EventTypeId = 3,
-                            Odds = 1.8,
+                            Odds = 1.8m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("79c93190-f788-4949-841b-554e7264688b"),
-                            BetId = new Guid("64a6ceee-8738-4a64-917f-0fa18f126821"),
+                            EventId = new Guid("3ebaffe4-5286-4157-8274-d1e907b5a40f"),
+                            BetId = new Guid("f1c9658e-4e32-405b-9b7d-518800e1b64c"),
                             CategoryId = 3,
                             EventTypeId = 4,
-                            Odds = 2.2000000000000002,
+                            Odds = 2.2m,
                             Status = 1
                         },
                         new
                         {
-                            EventId = new Guid("cb1c7ee1-f5c4-4cb3-b3f2-af763e766ec0"),
-                            BetId = new Guid("e0968625-7e04-46ae-bca6-4f911fd44abf"),
+                            EventId = new Guid("9a47d4c2-11ac-4c60-9f3b-41175eb98dfb"),
+                            BetId = new Guid("9a7e6f75-7b74-4f9f-a07f-4a27de8972be"),
                             CategoryId = 2,
                             EventTypeId = 1,
-                            Odds = 1.6000000000000001,
+                            Odds = 1.6m,
                             Status = 2
                         },
                         new
                         {
-                            EventId = new Guid("8d3cbeb2-3eef-4a1e-889c-d8c127fbb00e"),
-                            BetId = new Guid("e0968625-7e04-46ae-bca6-4f911fd44abf"),
+                            EventId = new Guid("d052d5d3-8386-44e1-bd14-6db8846cddb3"),
+                            BetId = new Guid("9a7e6f75-7b74-4f9f-a07f-4a27de8972be"),
                             CategoryId = 1,
                             EventTypeId = 3,
-                            Odds = 2.5,
+                            Odds = 2.5m,
                             Status = 2
                         },
                         new
                         {
-                            EventId = new Guid("280f6147-a2ed-4c88-8923-d4dbb440e50a"),
-                            BetId = new Guid("12bdebae-b9cd-4e3a-a0ce-bd502fba039f"),
+                            EventId = new Guid("d14ad669-9356-40e5-b74e-59ba7023d8ff"),
+                            BetId = new Guid("cb46de97-2c16-46f5-a9c2-569e3a4926ad"),
                             CategoryId = 3,
                             EventTypeId = 4,
-                            Odds = 2.0,
+                            Odds = 2.0m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("27ba9b01-7b6d-4751-a389-3551ea0cd049"),
-                            BetId = new Guid("12bdebae-b9cd-4e3a-a0ce-bd502fba039f"),
+                            EventId = new Guid("1d5660b7-b7e9-404e-8d14-121c385dd125"),
+                            BetId = new Guid("cb46de97-2c16-46f5-a9c2-569e3a4926ad"),
                             CategoryId = 2,
                             EventTypeId = 2,
-                            Odds = 1.7,
+                            Odds = 1.7m,
                             Status = 2
                         },
                         new
                         {
-                            EventId = new Guid("64cd3bce-96e8-41a1-9e34-6bfa6264ecf3"),
-                            BetId = new Guid("c206d44e-fadd-4c21-aab4-3d76adb283b8"),
+                            EventId = new Guid("22f0084d-490d-4c52-bcf0-6f00e24d59a0"),
+                            BetId = new Guid("f6bd5e7a-9b6d-45bc-b8cc-0ecb390243dd"),
                             CategoryId = 1,
                             EventTypeId = 3,
-                            Odds = 2.1000000000000001,
+                            Odds = 2.1m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("51154ace-bea3-4fad-9788-35761a18f75d"),
-                            BetId = new Guid("c206d44e-fadd-4c21-aab4-3d76adb283b8"),
+                            EventId = new Guid("91611eef-bf4f-480c-9ab0-152871e946b4"),
+                            BetId = new Guid("f6bd5e7a-9b6d-45bc-b8cc-0ecb390243dd"),
                             CategoryId = 3,
                             EventTypeId = 4,
-                            Odds = 2.2999999999999998,
+                            Odds = 2.3m,
                             Status = 0
                         });
                 });
@@ -329,11 +300,11 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Event", b =>
                 {
-                    b.HasOne("BetPay.Entities.Bet", "Bet")
+                    b.HasOne("Domain.Entities.Bet", "Bet")
                         .WithMany("EventsList")
                         .HasForeignKey("BetId");
 
-                    b.HasOne("BetPay.Entities.Category", "Category")
+                    b.HasOne("Domain.Entities.Category", "Category")
                         .WithMany("Events")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -352,12 +323,12 @@ namespace Infrastructure.Migrations
                     b.Navigation("EventType");
                 });
 
-            modelBuilder.Entity("BetPay.Entities.Bet", b =>
+            modelBuilder.Entity("Domain.Entities.Bet", b =>
                 {
                     b.Navigation("EventsList");
                 });
 
-            modelBuilder.Entity("BetPay.Entities.Category", b =>
+            modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
                     b.Navigation("Events");
                 });

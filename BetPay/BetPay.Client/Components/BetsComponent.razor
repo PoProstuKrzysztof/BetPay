@@ -1,17 +1,20 @@
-﻿@inject IRepositoryWrapper RepositoryWrapper
+﻿@using BetPay.Enums
+@inject IRepositoryWrapper RepositoryWrapper
 @rendermode InteractiveServer
 
 
 
-<SfGrid DataSource="Bets" AllowPaging="true" AllowSelection="true">
+<SfGrid @ref="BetGridInstance" DataSource="Bets" AllowPaging="true" AllowSelection="true">
     <GridPageSettings PageSize="7"></GridPageSettings>
     <GridEvents RowSelected="RowSelectHandler" TValue="Bet"></GridEvents>
     <GridColumns>
         <GridColumn Field="@nameof(Bet.Stake)" HeaderText="Stake"></GridColumn>
-        <GridColumn Field="@nameof(Bet.TotalOdds)" HeaderText="Total Odds"></GridColumn>
+        <GridColumn Field="@nameof(Bet.TotalOdds)" HeaderText="Total Odds" Format="0.00"></GridColumn>
         <GridColumn Field="@nameof(Bet.PotentialWin)" HeaderText="Potential Win" Format="C2"></GridColumn>
         <GridColumn Field="@nameof(Bet.BetDate)" Format="d" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
         <GridColumn Field="@nameof(Bet.Bookmaker)" HeaderText="Bookmaker"></GridColumn>
+        <GridColumn Field="@nameof(Bet.Status)" HeaderText="Status"></GridColumn>
+        <GridColumn Field="@nameof(Bet.IsTaxIncluded)"></GridColumn>
     </GridColumns>
 </SfGrid>
 
@@ -23,17 +26,27 @@
         <h2>Events for selected bet!</h2>
     </center>
 
-    <SfGrid DataSource="Events" Query="@BuildQuery()" TValue="Event">
+    <SfGrid @ref="EventGridInstance" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
+        <GridEvents TValue="Event" OnCellSave="OnEventEdit"  ></GridEvents>
+        <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Cell"></GridSelectionSettings>
+        <GridEditSettings AllowEditing="true" Mode="@EditMode.Batch" AllowAdding="true" AllowDeleting="true" NewRowPosition="NewRowPosition.Bottom"></GridEditSettings>
         <GridColumns>
-            <GridColumn Field="@nameof(Event.Odds)"></GridColumn>
-            <GridColumn Field="EventType.Name"  HeaderText="Event Type"></GridColumn>
-            <GridColumn Field="Category.Name" HeaderText="Category"></GridColumn>
-            <GridColumn Field="@nameof(Event.Status)"></GridColumn>
+            <GridColumn Field="@nameof(Event.Odds)" AllowEditing="false" HeaderText="Odds"></GridColumn>
+            <GridColumn Field="EventType.Name" AllowEditing="false" HeaderText="Event Type"></GridColumn>
+            <GridColumn Field="Category.Name" AllowEditing="false" HeaderText="Category"></GridColumn>
+            <GridColumn Field="@nameof(Event.Status)" HeaderText="Status" EditType="EditType.DropDownEdit">
+                <EditTemplate>                  
+                    <SfDropDownList ID="StatusEnum" TItem="string" TValue="StatusEnum"  DataSource="@StatusValues" @bind-Value="@ddlVal" >
+                        <DropDownListEvents TValue="StatusEnum" TItem="string" ValueChange="OnEventStatusChanged"></DropDownListEvents>
+                        <DropDownListFieldSettings Text="StatusEnum" Value="StatusEnum"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                </EditTemplate>
+            </GridColumn>
         </GridColumns>
 
     </SfGrid>
 
- }
+}
 else
 {
     <center>
@@ -45,11 +58,16 @@ else
 
 @code {
 
-
+    SfGrid<Bet> BetGridInstance { get; set; }
+    SfGrid<Event> EventGridInstance { get; set; }
     private IEnumerable<Bet> Bets { get; set; }
     private IEnumerable<Event> Events { get; set; }
     private Guid? RowIndex { get; set; }
     private bool IsBetSelected;
+    private string[] StatusValues = Enum.GetNames(typeof(StatusEnum));
+    private StatusEnum ddlVal { get; set; } = StatusEnum.Unfinished;
+
+
 
 
 
@@ -65,9 +83,26 @@ else
 
         RowIndex = Args.Data.BetId;
         IsBetSelected = true;
+    }
+
+    public async void OnEventStatusChanged(ChangeEventArgs<StatusEnum, string> args)
+    {
+
+        var ss = args.Value;
+        EventGridInstance.PreventRender(false);
 
     }
 
+    public async void OnEventEdit(CellSaveArgs<Event> args)
+    {
+
+        var updatedEvent = args.Data;
+        updatedEvent.Status = ddlVal;
+
+        RepositoryWrapper.EventRepository.UpdateEvent(args.Data);
+        await RepositoryWrapper.SaveAsync();
+
+    }
 
 
     private Query BuildQuery()

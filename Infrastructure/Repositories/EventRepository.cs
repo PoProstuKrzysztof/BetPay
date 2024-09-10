@@ -1,4 +1,4 @@
-﻿using Domain.Contracts;
+﻿using Application.Contracts;
 using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +13,25 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
 
     public async Task<IEnumerable<Event>> GetAllEventsAsync()
     {
-        return await FindAll().Result
-
+        return await FindAll()
+            .Result
+            .AsNoTracking()
                 .OrderByDescending(e => e.EventId)
+
                 .ToListAsync();
     }
 
     public void UpdateEvent(Event @event)
     {
+        var trackedEntity = RepositoryContext.ChangeTracker.Entries<Event>()
+          .FirstOrDefault(e => e.Entity.EventId == @event.EventId);
+
+        if (trackedEntity != null)
+        {
+            // Odłącz śledzony obiekt
+            trackedEntity.State = EntityState.Detached;
+        }
+
         Update(@event);
     }
 
@@ -38,6 +49,7 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
     {
         return await FindByCondition(x => x.BetId.Equals(id))
             .Result
+            .AsNoTracking()
             .Include(c => c.Category)
             .Include(et => et.EventType)
             .ToListAsync();

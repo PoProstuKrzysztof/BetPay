@@ -1,5 +1,5 @@
-﻿using Domain.Entities;
-using Domain.Contracts;
+﻿using Application.Contracts;
+using Domain.Entities;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,13 +17,17 @@ namespace Infrastructure.Repositories
                 .Result
                 .OrderByDescending(x => x.BetDate)
                 .Include(b => b.EventsList)
+                .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<Bet> GetBetByGuid(Guid id)
         {
             return await FindByCondition(x => x.BetId.Equals(id))
-                .Result.FirstOrDefaultAsync();
+                .Result
+                .Include(b => b.EventsList)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
         }
 
         public void CreateBet(Bet bet)
@@ -39,6 +43,11 @@ namespace Infrastructure.Repositories
         public void UpdateBet(Bet bet)
         {
             Update(bet);
+        }
+
+        public void ChangeBetStatus(string status, Guid betId)
+        {
+            GetBetByGuid(betId);
         }
     }
 }

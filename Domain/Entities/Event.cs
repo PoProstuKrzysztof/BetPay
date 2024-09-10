@@ -10,10 +10,9 @@ public class Event
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public Guid EventId { get; init; }
 
-    [Required]
-    public double Odds { get; set; }
+    public decimal Odds { get; set; }
 
-    public BetStatusEnum Status { get; set; } = BetStatusEnum.Unfinished;
+    public StatusEnum Status { get; set; } = StatusEnum.Unfinished;
 
     // Relationships
     public int CategoryId { get; set; }
@@ -26,4 +25,10 @@ public class Event
     public Guid? BetId { get; set; }
 
     public virtual Bet Bet { get; set; }
+
+    public void UpdateEventStatus(StatusEnum status)
+    {
+        Status = status;
+        Bet?.UpdateBetStatus();
+    }
 }

@@ -10,26 +10,60 @@ public class Bet
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public Guid BetId { get; init; }
 
-    public decimal TotalOdds { get; set; }
-
     public decimal Stake { get; set; }
 
     public DateTime BetDate { get; set; }
 
-    public int Year { get; set; }
-    public int Month { get; set; }
-    public int DayOfWeek { get; set; }
     public string? Bookmaker { get; set; }
-    public BetStatusEnum Status { get; set; } = BetStatusEnum.Unfinished;
+    public StatusEnum Status { get; private set; } = StatusEnum.Unfinished;
 
     public bool IsTaxIncluded { get; set; } = true;
 
+    [NotMapped]
     public decimal PotentialWin
     {
         get
         {
             decimal win = Math.Round(Stake * TotalOdds);
             return IsTaxIncluded ? win * 0.86M : win;
+        }
+    }
+
+    [NotMapped]
+    public decimal TotalOdds
+    {
+        get
+        {
+            decimal totalOdds = 1M;
+
+            foreach (var eventItem in EventsList)
+            {
+                totalOdds *= eventItem.Odds;
+            }
+
+            return totalOdds;
+        }
+    }
+
+    public void UpdateBetStatus()
+    {
+        if (EventsList == null || !EventsList.Any())
+        {
+            Status = StatusEnum.Unfinished;
+            return;
+        }
+
+        if (EventsList.Any(e => e.Status == StatusEnum.Lost))
+        {
+            Status = StatusEnum.Lost;
+        }
+        else if (EventsList.All(e => e.Status == StatusEnum.Won))
+        {
+            Status = StatusEnum.Won;
+        }
+        else
+        {
+            Status = StatusEnum.Unfinished;
         }
     }
 

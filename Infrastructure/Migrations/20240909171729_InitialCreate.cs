@@ -18,12 +18,8 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     BetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TotalOdds = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Stake = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     BetDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Year = table.Column<int>(type: "int", nullable: false),
-                    Month = table.Column<int>(type: "int", nullable: false),
-                    DayOfWeek = table.Column<int>(type: "int", nullable: false),
                     Bookmaker = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     IsTaxIncluded = table.Column<bool>(type: "bit", nullable: false)
@@ -64,7 +60,7 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     EventId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Odds = table.Column<double>(type: "float", nullable: false),
+                    Odds = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     EventTypeId = table.Column<int>(type: "int", nullable: false),
@@ -94,14 +90,14 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Bets",
-                columns: new[] { "BetId", "BetDate", "Bookmaker", "DayOfWeek", "IsTaxIncluded", "Month", "Stake", "Status", "TotalOdds", "Year" },
+                columns: new[] { "BetId", "BetDate", "Bookmaker", "IsTaxIncluded", "Stake", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("12bdebae-b9cd-4e3a-a0ce-bd502fba039f"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "BETCLIC", 3, false, 9, 75m, 2, 1.90m, 2024 },
-                    { new Guid("64a6ceee-8738-4a64-917f-0fa18f126821"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "STS", 3, true, 9, 100m, 1, 3.50m, 2024 },
-                    { new Guid("b455677a-e621-4615-93ec-ac5a937c7864"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "SUPERBET", 3, true, 9, 50m, 0, 2.75m, 2024 },
-                    { new Guid("c206d44e-fadd-4c21-aab4-3d76adb283b8"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "BETFAN", 3, true, 9, 150m, 0, 2.25m, 2024 },
-                    { new Guid("e0968625-7e04-46ae-bca6-4f911fd44abf"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "FORTUNA", 3, true, 9, 200m, 2, 4.00m, 2024 }
+                    { new Guid("015bad62-91c7-4fae-a449-5be0457f3f98"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "SUPERBET", true, 50m, 2 },
+                    { new Guid("9a7e6f75-7b74-4f9f-a07f-4a27de8972be"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "FORTUNA", true, 200m, 2 },
+                    { new Guid("cb46de97-2c16-46f5-a9c2-569e3a4926ad"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "BETCLIC", false, 75m, 2 },
+                    { new Guid("f1c9658e-4e32-405b-9b7d-518800e1b64c"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "STS", true, 100m, 2 },
+                    { new Guid("f6bd5e7a-9b6d-45bc-b8cc-0ecb390243dd"), new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "BETFAN", true, 150m, 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -130,16 +126,16 @@ namespace Infrastructure.Migrations
                 columns: new[] { "EventId", "BetId", "CategoryId", "EventTypeId", "Odds", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("27ba9b01-7b6d-4751-a389-3551ea0cd049"), new Guid("12bdebae-b9cd-4e3a-a0ce-bd502fba039f"), 2, 2, 1.7, 2 },
-                    { new Guid("280f6147-a2ed-4c88-8923-d4dbb440e50a"), new Guid("12bdebae-b9cd-4e3a-a0ce-bd502fba039f"), 3, 4, 2.0, 0 },
-                    { new Guid("30b0d38f-84d2-4d9d-bcf5-66ca24168a89"), new Guid("b455677a-e621-4615-93ec-ac5a937c7864"), 1, 1, 1.5, 0 },
-                    { new Guid("51154ace-bea3-4fad-9788-35761a18f75d"), new Guid("c206d44e-fadd-4c21-aab4-3d76adb283b8"), 3, 4, 2.2999999999999998, 0 },
-                    { new Guid("60cfb78c-bdb3-47a7-b902-a08b3914233b"), new Guid("64a6ceee-8738-4a64-917f-0fa18f126821"), 1, 3, 1.8, 0 },
-                    { new Guid("64cd3bce-96e8-41a1-9e34-6bfa6264ecf3"), new Guid("c206d44e-fadd-4c21-aab4-3d76adb283b8"), 1, 3, 2.1000000000000001, 0 },
-                    { new Guid("79c93190-f788-4949-841b-554e7264688b"), new Guid("64a6ceee-8738-4a64-917f-0fa18f126821"), 3, 4, 2.2000000000000002, 1 },
-                    { new Guid("8d3cbeb2-3eef-4a1e-889c-d8c127fbb00e"), new Guid("e0968625-7e04-46ae-bca6-4f911fd44abf"), 1, 3, 2.5, 2 },
-                    { new Guid("c322c407-fd42-42f4-acfd-bbd0ba241982"), new Guid("b455677a-e621-4615-93ec-ac5a937c7864"), 2, 2, 2.0, 0 },
-                    { new Guid("cb1c7ee1-f5c4-4cb3-b3f2-af763e766ec0"), new Guid("e0968625-7e04-46ae-bca6-4f911fd44abf"), 2, 1, 1.6000000000000001, 2 }
+                    { new Guid("1d5660b7-b7e9-404e-8d14-121c385dd125"), new Guid("cb46de97-2c16-46f5-a9c2-569e3a4926ad"), 2, 2, 1.7m, 2 },
+                    { new Guid("22f0084d-490d-4c52-bcf0-6f00e24d59a0"), new Guid("f6bd5e7a-9b6d-45bc-b8cc-0ecb390243dd"), 1, 3, 2.1m, 0 },
+                    { new Guid("2c838f49-e594-4cb3-877c-c9821e912c2e"), new Guid("015bad62-91c7-4fae-a449-5be0457f3f98"), 1, 1, 1.5m, 0 },
+                    { new Guid("3c2ebcde-7914-41bd-9287-6fe85d5e1d81"), new Guid("015bad62-91c7-4fae-a449-5be0457f3f98"), 2, 2, 2.0m, 0 },
+                    { new Guid("3ebaffe4-5286-4157-8274-d1e907b5a40f"), new Guid("f1c9658e-4e32-405b-9b7d-518800e1b64c"), 3, 4, 2.2m, 1 },
+                    { new Guid("91611eef-bf4f-480c-9ab0-152871e946b4"), new Guid("f6bd5e7a-9b6d-45bc-b8cc-0ecb390243dd"), 3, 4, 2.3m, 0 },
+                    { new Guid("965182d1-eac8-460a-9b89-139e5a942e52"), new Guid("f1c9658e-4e32-405b-9b7d-518800e1b64c"), 1, 3, 1.8m, 0 },
+                    { new Guid("9a47d4c2-11ac-4c60-9f3b-41175eb98dfb"), new Guid("9a7e6f75-7b74-4f9f-a07f-4a27de8972be"), 2, 1, 1.6m, 2 },
+                    { new Guid("d052d5d3-8386-44e1-bd14-6db8846cddb3"), new Guid("9a7e6f75-7b74-4f9f-a07f-4a27de8972be"), 1, 3, 2.5m, 2 },
+                    { new Guid("d14ad669-9356-40e5-b74e-59ba7023d8ff"), new Guid("cb46de97-2c16-46f5-a9c2-569e3a4926ad"), 3, 4, 2.0m, 0 }
                 });
 
             migrationBuilder.CreateIndex(

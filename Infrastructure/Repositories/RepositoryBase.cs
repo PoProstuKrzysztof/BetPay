@@ -1,4 +1,4 @@
-﻿using Domain.Contracts;
+﻿using Application.Contracts;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -17,9 +17,18 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     public async Task<IQueryable<T>> FindAll() => RepositoryContext.Set<T>().AsNoTracking();
 
     public async Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression) =>
-       RepositoryContext.Set<T>().Where(expression).AsNoTracking();
+       RepositoryContext.Set<T>()
+       .Where(expression).AsNoTracking();
 
-    public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
+    public void Update(T entity)
+    {
+        //foreach (var entry in RepositoryContext.ChangeTracker.Entries())
+        //{
+        //    Console.WriteLine($"Entity: {entry.Entity.GetType().Name}, State: {entry.State.ToString()}");
+        //}
+
+        RepositoryContext.Set<T>().Update(entity);
+    }
 
     public void Create(T entity) => RepositoryContext.Set<T>().Add(entity);
 

@@ -1,6 +1,6 @@
 ﻿namespace BetPay.Enums;
 
-public enum BetStatusEnum
+public enum StatusEnum
 {
     Won = 0,
     Lost = 1,
