@@ -26,8 +26,8 @@
         <h2>Events for selected bet!</h2>
     </center>
 
-    <SfGrid @ref="EventGridInstance" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel" })">
-        <GridEvents TValue="Event" OnCellSave="OnEventEdit"  ></GridEvents>
+    <SfGrid @ref="EventGridInstance" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add",  "Delete", "Cancel" })">
+        <GridEvents TValue="Event" OnCellSave="OnEventEdit"></GridEvents>
         <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Cell"></GridSelectionSettings>
         <GridEditSettings AllowEditing="true" Mode="@EditMode.Batch" AllowAdding="true" AllowDeleting="true" NewRowPosition="NewRowPosition.Bottom"></GridEditSettings>
         <GridColumns>
@@ -35,8 +35,8 @@
             <GridColumn Field="EventType.Name" AllowEditing="false" HeaderText="Event Type"></GridColumn>
             <GridColumn Field="Category.Name" AllowEditing="false" HeaderText="Category"></GridColumn>
             <GridColumn Field="@nameof(Event.Status)" HeaderText="Status" EditType="EditType.DropDownEdit">
-                <EditTemplate>                  
-                    <SfDropDownList ID="StatusEnum" TItem="string" TValue="StatusEnum"  DataSource="@StatusValues" @bind-Value="@ddlVal" >
+                <EditTemplate>
+                    <SfDropDownList ID="StatusEnum" TItem="string" TValue="StatusEnum" DataSource="@StatusValues" @bind-Value="@ddlVal">
                         <DropDownListEvents TValue="StatusEnum" TItem="string" ValueChange="OnEventStatusChanged"></DropDownListEvents>
                         <DropDownListFieldSettings Text="StatusEnum" Value="StatusEnum"></DropDownListFieldSettings>
                     </SfDropDownList>
@@ -65,7 +65,7 @@ else
     private Guid? RowIndex { get; set; }
     private bool IsBetSelected;
     private string[] StatusValues = Enum.GetNames(typeof(StatusEnum));
-    private StatusEnum ddlVal { get; set; } = StatusEnum.Unfinished;
+    private StatusEnum ddlVal { get; set; }
 
 
 
@@ -88,8 +88,7 @@ else
     public async void OnEventStatusChanged(ChangeEventArgs<StatusEnum, string> args)
     {
 
-        var ss = args.Value;
-        EventGridInstance.PreventRender(false);
+        ddlVal = args.Value;
 
     }
 
@@ -99,9 +98,12 @@ else
         var updatedEvent = args.Data;
         updatedEvent.Status = ddlVal;
 
-        RepositoryWrapper.EventRepository.UpdateEvent(args.Data);
-        await RepositoryWrapper.SaveAsync();
+        RepositoryWrapper.EventRepository.UpdateEvent(updatedEvent);
 
+        await RepositoryWrapper.SaveAsync();
+        await BetGridInstance.Refresh();
+        await EventGridInstance.Refresh();
+        StateHasChanged();
     }
 
 

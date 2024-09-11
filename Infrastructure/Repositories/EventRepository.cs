@@ -23,14 +23,15 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
 
     public void UpdateEvent(Event @event)
     {
-        var trackedEntity = RepositoryContext.ChangeTracker.Entries<Event>()
-          .FirstOrDefault(e => e.Entity.EventId == @event.EventId);
+        var local = RepositoryContext.Set<Event>()
+            .Local.FirstOrDefault(e => e.EventId.Equals(@event.EventId));
 
-        if (trackedEntity != null)
+        if(local != null)
         {
-            // Odłącz śledzony obiekt
-            trackedEntity.State = EntityState.Detached;
+            RepositoryContext.Entry(local).State = EntityState.Detached;
         }
+
+        RepositoryContext.Entry(@event).State = EntityState.Modified;
 
         Update(@event);
     }
