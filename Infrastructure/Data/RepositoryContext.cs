@@ -18,6 +18,8 @@ public class RepositoryContext : DbContext
 
     public virtual DbSet<EventType> EventTypes { get; set; }
 
+    public virtual DbSet<Bookmaker> Bookmakers { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -41,12 +43,30 @@ public class RepositoryContext : DbContext
         var betId4 = Guid.NewGuid();
         var betId5 = Guid.NewGuid();
 
+        modelBuilder.Entity<Bookmaker>().HasData(
+            new Bookmaker { BookmakerId = 1, Name = "Betclic" },
+            new Bookmaker { BookmakerId = 2, Name = "Superbet" },
+            new Bookmaker { BookmakerId = 3, Name = "Fortuna" },
+            new Bookmaker { BookmakerId = 4, Name = "STS" },
+            new Bookmaker { BookmakerId = 5, Name = "Betfan" },
+            new Bookmaker { BookmakerId = 6, Name = "Fuksiarz" },
+            new Bookmaker { BookmakerId = 7, Name = "LvBet" },
+            new Bookmaker { BookmakerId = 8, Name = "Betters" },
+            new Bookmaker { BookmakerId = 9, Name = "Betcris" },
+            new Bookmaker { BookmakerId = 10, Name = "GoBet" },
+            new Bookmaker { BookmakerId = 11, Name = "TotalBet" },
+            new Bookmaker { BookmakerId = 12, Name = "ForBet" },
+            new Bookmaker { BookmakerId = 13, Name = "Etoto" },
+            new Bookmaker { BookmakerId = 14, Name = "ComeOn" }
+
+            );
+
         modelBuilder.Entity<Bet>().HasData(
-            new Bet { BetId = betId1, Stake = 50m, BetDate = new DateTime(2024, 9, 2), IsTaxIncluded = true, Bookmaker = "SUPERBET" },
-            new Bet { BetId = betId2, Stake = 100m, BetDate = new DateTime(2024, 9, 2), IsTaxIncluded = true, Bookmaker = "STS" },
-            new Bet { BetId = betId3, Stake = 200m, BetDate = new DateTime(2024, 9, 2), IsTaxIncluded = true, Bookmaker = "FORTUNA" },
-            new Bet { BetId = betId4, Stake = 75m, BetDate = new DateTime(2024, 9, 2), IsTaxIncluded = false, Bookmaker = "BETCLIC" },
-            new Bet { BetId = betId5, Stake = 150m, BetDate = new DateTime(2024, 9, 2), Bookmaker = "BETFAN" }
+            new Bet { BetId = betId1, Stake = 50m, BetDate = new DateTime(2024, 9, 2), IsTaxIncluded = true, BookmakerId = 2 },
+            new Bet { BetId = betId2, Stake = 100m, BetDate = new DateTime(2024, 9, 2), IsTaxIncluded = true, BookmakerId = 3 },
+            new Bet { BetId = betId3, Stake = 200m, BetDate = new DateTime(2024, 9, 2), IsTaxIncluded = true, BookmakerId = 2 },
+            new Bet { BetId = betId4, Stake = 75m, BetDate = new DateTime(2024, 9, 2), IsTaxIncluded = false, BookmakerId = 1 },
+            new Bet { BetId = betId5, Stake = 150m, BetDate = new DateTime(2024, 9, 2), BookmakerId = 4 }
         );
 
         modelBuilder.Entity<Event>().HasData(

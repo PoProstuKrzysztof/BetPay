@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 
-public class Category
+public class Bookmaker
 {
     [Key]
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-    public int CategoryId { get; set; }
+    public int BookmakerId { get; init; }
 
     public string Name { get; set; }
 
-    // Relationships
+    public string? ImagePath { get; set; }
 
-    public virtual ICollection<Event> Events { get; set; }
+    public virtual ICollection<Bet> BetList { get; set; } = new List<Bet>();
 }

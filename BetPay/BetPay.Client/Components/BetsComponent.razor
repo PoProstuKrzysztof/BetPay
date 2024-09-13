@@ -4,17 +4,19 @@
 
 
 
-<SfGrid @ref="BetGridInstance" DataSource="Bets" AllowPaging="true" AllowSelection="true">
-    <GridPageSettings PageSize="7"></GridPageSettings>
-    <GridEvents RowSelected="RowSelectHandler" TValue="Bet"></GridEvents>
+<SfGrid @ref="BetGridInstance" DataSource="Bets" Allow AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Cancel", "Update" })">
+    <GridPageSettings PageSize="10"></GridPageSettings>
+    <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
+    <GridEvents RowSelected="RowSelectHandler" TValue="Bet"  OnActionComplete="BetActionsHandler"></GridEvents>
     <GridColumns>
+        <GridColumn Field="@nameof(Bet.BetId)" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
         <GridColumn Field="@nameof(Bet.Stake)" HeaderText="Stake"></GridColumn>
-        <GridColumn Field="@nameof(Bet.TotalOdds)" HeaderText="Total Odds" Format="0.00"></GridColumn>
-        <GridColumn Field="@nameof(Bet.PotentialWin)" HeaderText="Potential Win" Format="C2"></GridColumn>
-        <GridColumn Field="@nameof(Bet.BetDate)" Format="d" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
+        <GridColumn Field="@nameof(Bet.TotalOdds)" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
+        <GridColumn Field="@nameof(Bet.PotentialWin)" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
+        <GridColumn Field="@nameof(Bet.BetDate)"  Format="d" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
         <GridColumn Field="@nameof(Bet.Bookmaker)" HeaderText="Bookmaker"></GridColumn>
         <GridColumn Field="@nameof(Bet.Status)" HeaderText="Status"></GridColumn>
-        <GridColumn Field="@nameof(Bet.IsTaxIncluded)"></GridColumn>
+        <GridColumn Field="@nameof(Bet.IsTaxIncluded)" ></GridColumn>
     </GridColumns>
 </SfGrid>
 
@@ -26,11 +28,12 @@
         <h2>Events for selected bet!</h2>
     </center>
 
-    <SfGrid @ref="EventGridInstance" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add",  "Delete", "Cancel" })">
+    <SfGrid @ref="EventGridInstance" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Cancel" })">
         <GridEvents TValue="Event" OnCellSave="OnEventEdit"></GridEvents>
         <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Cell"></GridSelectionSettings>
         <GridEditSettings AllowEditing="true" Mode="@EditMode.Batch" AllowAdding="true" AllowDeleting="true" NewRowPosition="NewRowPosition.Bottom"></GridEditSettings>
         <GridColumns>
+            <GridColumn Field="@nameof(Event.EventId)" IsPrimaryKey="true" IsIdentity="true" Visible="false"></GridColumn>
             <GridColumn Field="@nameof(Event.Odds)" AllowEditing="false" HeaderText="Odds"></GridColumn>
             <GridColumn Field="EventType.Name" AllowEditing="false" HeaderText="Event Type"></GridColumn>
             <GridColumn Field="Category.Name" AllowEditing="false" HeaderText="Category"></GridColumn>
@@ -60,8 +63,10 @@ else
 
     SfGrid<Bet> BetGridInstance { get; set; }
     SfGrid<Event> EventGridInstance { get; set; }
+
     private IEnumerable<Bet> Bets { get; set; }
     private IEnumerable<Event> Events { get; set; }
+
     private Guid? RowIndex { get; set; }
     private bool IsBetSelected;
     private string[] StatusValues = Enum.GetNames(typeof(StatusEnum));
@@ -101,11 +106,33 @@ else
         RepositoryWrapper.EventRepository.UpdateEvent(updatedEvent);
 
         await RepositoryWrapper.SaveAsync();
+        StateHasChanged();
         await BetGridInstance.Refresh();
         await EventGridInstance.Refresh();
-        StateHasChanged();
+
+
     }
 
+    public async void BetActionsHandler(ActionEventArgs<Bet> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            if(args.Action == "Add")
+            {
+                RepositoryWrapper.BetRepository.CreateBet(args.Data);
+                await RepositoryWrapper.SaveAsync();
+                BetGridInstance.Refresh();
+            }
+        }
+        else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            RepositoryWrapper.BetRepository.DeleteBet(args.Data);
+            await RepositoryWrapper.SaveAsync();
+            BetGridInstance.Refresh();
+        }
+        
+
+    }
 
     private Query BuildQuery()
     {

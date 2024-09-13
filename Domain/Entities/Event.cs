@@ -1,5 +1,4 @@
-﻿
-using BetPay.Enums;
+﻿using BetPay.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -25,7 +24,7 @@ public class Event
 
     public Guid? BetId { get; set; }
 
-    public virtual Bet Bet { get; set; }
+    public virtual Bet? Bet { get; set; }
 
     public void UpdateEventStatus(StatusEnum status)
     {

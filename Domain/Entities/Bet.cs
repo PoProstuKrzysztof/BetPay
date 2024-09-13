@@ -14,26 +14,35 @@ public class Bet
 
     public DateTime BetDate { get; set; }
 
-    public string? Bookmaker { get; set; }
     public StatusEnum Status { get; private set; } = StatusEnum.Unfinished;
 
     public bool IsTaxIncluded { get; set; } = true;
 
     [NotMapped]
-    public decimal PotentialWin
+    public decimal? PotentialWin
     {
         get
         {
-            decimal win = Math.Round(Stake * TotalOdds);
-            return IsTaxIncluded ? win * 0.86M : win;
+            if (TotalOdds != 0)
+            {
+                decimal win = Math.Round((decimal)(Stake * TotalOdds));
+                return IsTaxIncluded ? win * 0.86M : win;
+            }
+
+            return 0;
         }
     }
 
     [NotMapped]
-    public decimal TotalOdds
+    public decimal? TotalOdds
     {
         get
         {
+            if (EventsList.Equals(null))
+            {
+                return 0;
+            }
+
             decimal totalOdds = 1M;
 
             foreach (var eventItem in EventsList)
@@ -69,5 +78,8 @@ public class Bet
 
     // Relationships
 
-    public virtual ICollection<Event> EventsList { get; set; }
+    public virtual ICollection<Event> EventsList { get; set; } = new List<Event>();
+
+    public int? BookmakerId { get; set; }
+    public virtual Bookmaker? Bookmaker { get; set; }
 }
