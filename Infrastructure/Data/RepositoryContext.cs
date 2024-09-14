@@ -35,6 +35,7 @@ public class RepositoryContext : DbContext
             new EventType { EventTypeId = 2, Name = "Statistical" },
             new EventType { EventTypeId = 3, Name = "1X2" },
             new EventType { EventTypeId = 4, Name = "Above/Under" }
+
         );
 
         var betId1 = Guid.NewGuid();

@@ -17,7 +17,7 @@ namespace Infrastructure.Repositories
                 .Result
                 .OrderByDescending(x => x.BetDate)
                 .Include(b => b.EventsList)
-                .AsNoTracking()
+                .Include(b => b.Bookmaker)
                 .ToListAsync();
         }
 
@@ -25,18 +25,33 @@ namespace Infrastructure.Repositories
         {
             return await FindByCondition(x => x.BetId.Equals(id))
                 .Result
-                .Include(b => b.EventsList)
-                .AsNoTracking()
+                .Include(el => el.EventsList)
+                .Include(b => b.Bookmaker)
                 .FirstOrDefaultAsync();
         }
 
         public void CreateBet(Bet bet)
         {
+            var bookmaker = RepositoryContext.Set<Bookmaker>()
+                .FirstOrDefault(x => x.BookmakerId == bet.BookmakerId);
+            RepositoryContext.Attach(bookmaker);
+
+            bet.Bookmaker = bookmaker;
             Create(bet);
         }
 
         public void DeleteBet(Bet bet)
         {
+            var local = RepositoryContext.Set<Bet>()
+                .Local.FirstOrDefault(e => e.BetId.Equals(bet.BetId));
+
+            if (local != null)
+            {
+                RepositoryContext.Entry(local).State = EntityState.Detached;
+            }
+
+            RepositoryContext.Entry(bet).State = EntityState.Deleted;
+
             Delete(bet);
         }
 

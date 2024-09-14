@@ -1,37 +1,73 @@
 ﻿using Application.Contracts;
 using Infrastructure.Data;
 
-namespace Infrastructure.Repositories;
-
-public class RepositoryWrapper : IRepositoryWrapper
+namespace Infrastructure.Repositories
 {
-    private readonly RepositoryContext _context;
-    private IBetRepository _betRepository;
-    private IEventRepository _eventRepository;
-
-    public RepositoryWrapper(RepositoryContext context)
+    public class RepositoryWrapper : IRepositoryWrapper
     {
-        _context = context;
-    }
+        private readonly RepositoryContext _context;
+        private IBetRepository _betRepository;
+        private IEventRepository _eventRepository;
+        private IBookmakerRepository _bookmakerRepository;
+        private IEventTypeRepository _eventTypeRepository;
+        private ICategoryRepository _categoryRepository;
 
-    public IEventRepository EventRepository
-    {
-        get
+        public RepositoryWrapper(RepositoryContext context)
         {
-            return _eventRepository ??= new EventRepository(_context);
+            _context = context;
         }
-    }
 
-    public IBetRepository BetRepository
-    {
-        get
+        public IEventRepository EventRepository
         {
-            return _betRepository ??= new BetRepository(_context);
+            get
+            {
+                return _eventRepository ??= new EventRepository(_context);
+            }
         }
-    }
 
-    public async Task SaveAsync()
-    {
-        await _context.SaveChangesAsync();
+        public IBookmakerRepository BookmakerRepository
+        {
+            get
+            {
+                return _bookmakerRepository ??= new BookmakerRepository(_context);
+            }
+        }
+
+        public IEventTypeRepository EventTypeRepository
+        {
+            get
+            {
+                return _eventTypeRepository ??= new EventTypeRepository(_context);
+            }
+        }
+
+        public ICategoryRepository CategoryRepository
+        {
+            get
+            {
+                return _categoryRepository ??= new CategoryRepository(_context);
+            }
+        }
+
+        public IBetRepository BetRepository
+        {
+            get
+            {
+                return _betRepository ??= new BetRepository(_context);
+            }
+        }
+
+        public IEventTypeRepository EventTypeRepostiory
+        {
+            get
+            {
+                return _eventTypeRepository ??= new EventTypeRepository(_context);
+            }
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

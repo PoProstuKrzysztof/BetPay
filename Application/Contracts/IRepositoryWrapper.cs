@@ -6,5 +6,11 @@ public interface IRepositoryWrapper
 
     IBetRepository BetRepository { get; }
 
+    IBookmakerRepository BookmakerRepository { get; }
+
+    ICategoryRepository CategoryRepository { get; }
+
+    IEventTypeRepository EventTypeRepostiory { get; }
+
     Task SaveAsync();
 }

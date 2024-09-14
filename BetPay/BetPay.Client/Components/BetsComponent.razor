@@ -4,19 +4,26 @@
 
 
 
-<SfGrid @ref="BetGridInstance" DataSource="Bets" Allow AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Cancel", "Update" })">
+<SfGrid @ref="BetGridInstance" DataSource="Bets" Allow AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Edit", "Delete", "Update", "Cancel"})">
     <GridPageSettings PageSize="10"></GridPageSettings>
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
-    <GridEvents RowSelected="RowSelectHandler" TValue="Bet"  OnActionComplete="BetActionsHandler"></GridEvents>
+    <GridEvents RowSelected="RowSelectHandler" TValue="Bet" OnActionComplete="BetActionsHandler"></GridEvents>
     <GridColumns>
-        <GridColumn Field="@nameof(Bet.BetId)" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
+        <GridColumn Field="@nameof(Bet.BetId)" Visible="false" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
         <GridColumn Field="@nameof(Bet.Stake)" HeaderText="Stake"></GridColumn>
-        <GridColumn Field="@nameof(Bet.TotalOdds)" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
-        <GridColumn Field="@nameof(Bet.PotentialWin)" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
-        <GridColumn Field="@nameof(Bet.BetDate)"  Format="d" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
-        <GridColumn Field="@nameof(Bet.Bookmaker)" HeaderText="Bookmaker"></GridColumn>
+        <GridColumn Field="@nameof(Bet.TotalOdds)" AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
+        <GridColumn Field="@nameof(Bet.PotentialWin)" AllowAdding="false" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
+        <GridColumn Field="@nameof(Bet.BetDate)" DefaultValue="DateTime.Today" Format="d" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
+        <GridColumn Field="Bookmaker.Name" HeaderText="Bookmaker" ForeignKeyField="BookmakerId" EditType="EditType.DropDownEdit">
+            <EditTemplate>
+                <SfDropDownList ID="Bookmakers" TValue="int" TItem="Bookmaker" PopupHeight="230px" Placeholder="Bookmaker" DataSource="Bookmakers">
+                    <DropDownListEvents TValue="int" TItem="Bookmaker" ValueChange="OnBookmakerSelect"></DropDownListEvents>
+                    <DropDownListFieldSettings Text="Name" Value="BookmakerId"></DropDownListFieldSettings>
+                </SfDropDownList>
+            </EditTemplate>
+        </GridColumn>
         <GridColumn Field="@nameof(Bet.Status)" HeaderText="Status"></GridColumn>
-        <GridColumn Field="@nameof(Bet.IsTaxIncluded)" ></GridColumn>
+        <GridColumn Field="@nameof(Bet.IsTaxIncluded)" DisplayAsCheckBox="true" AllowEditing="false"></GridColumn>
     </GridColumns>
 </SfGrid>
 
@@ -28,18 +35,32 @@
         <h2>Events for selected bet!</h2>
     </center>
 
-    <SfGrid @ref="EventGridInstance" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Cancel" })">
-        <GridEvents TValue="Event" OnCellSave="OnEventEdit"></GridEvents>
-        <GridSelectionSettings Mode="Syncfusion.Blazor.Grids.SelectionMode.Cell"></GridSelectionSettings>
-        <GridEditSettings AllowEditing="true" Mode="@EditMode.Batch" AllowAdding="true" AllowDeleting="true" NewRowPosition="NewRowPosition.Bottom"></GridEditSettings>
+    <SfGrid @ref="EventGridInstance" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
+        <GridEvents TValue="Event" OnActionComplete="EventActionHandler"></GridEvents>
+        <GridSelectionSettings></GridSelectionSettings>
+        <GridEditSettings AllowEditing="true" AllowAdding="true" AllowDeleting="true" NewRowPosition="NewRowPosition.Bottom"></GridEditSettings>
         <GridColumns>
             <GridColumn Field="@nameof(Event.EventId)" IsPrimaryKey="true" IsIdentity="true" Visible="false"></GridColumn>
             <GridColumn Field="@nameof(Event.Odds)" AllowEditing="false" HeaderText="Odds"></GridColumn>
-            <GridColumn Field="EventType.Name" AllowEditing="false" HeaderText="Event Type"></GridColumn>
-            <GridColumn Field="Category.Name" AllowEditing="false" HeaderText="Category"></GridColumn>
+            <GridColumn Field="EventType.Name" AllowAdding="true" AllowEditing="false" HeaderText="Event Type" EditType="EditType.DropDownEdit">
+                <EditTemplate>
+                    <SfDropDownList TValue="int" TItem="EventType" DataSource="@EventTypes" PopupHeight="230px" Placeholder="Select Event Type">
+                        <DropDownListFieldSettings Text="Name" Value="EventTypeId"></DropDownListFieldSettings>
+                        <DropDownListEvents TValue="int" TItem="EventType" ValueChange="OnEventTypeChanged"></DropDownListEvents>
+                    </SfDropDownList>
+                </EditTemplate>
+            </GridColumn>
+            <GridColumn Field="Category.Name" AllowAdding="true" AllowEditing="false" HeaderText="Category" EditType="EditType.DropDownEdit">
+                <EditTemplate>
+                    <SfDropDownList TValue="int" TItem="Category" DataSource="@Categories" PopupHeight="230px" Placeholder="Select Category">
+                        <DropDownListFieldSettings Text="Name" Value="CategoryId"></DropDownListFieldSettings>
+                        <DropDownListEvents TValue="int" TItem="Category" ValueChange="OnCategoryChanged"></DropDownListEvents>
+                    </SfDropDownList>
+                </EditTemplate>
+            </GridColumn>
             <GridColumn Field="@nameof(Event.Status)" HeaderText="Status" EditType="EditType.DropDownEdit">
                 <EditTemplate>
-                    <SfDropDownList ID="StatusEnum" TItem="string" TValue="StatusEnum" DataSource="@StatusValues" @bind-Value="@ddlVal">
+                    <SfDropDownList ID="StatusEnums" TItem="string" TValue="StatusEnum" DataSource="@StatusValues"  @bind-Value="@EventStatusEnumVal">
                         <DropDownListEvents TValue="StatusEnum" TItem="string" ValueChange="OnEventStatusChanged"></DropDownListEvents>
                         <DropDownListFieldSettings Text="StatusEnum" Value="StatusEnum"></DropDownListFieldSettings>
                     </SfDropDownList>
@@ -63,14 +84,18 @@ else
 
     SfGrid<Bet> BetGridInstance { get; set; }
     SfGrid<Event> EventGridInstance { get; set; }
-
-    private IEnumerable<Bet> Bets { get; set; }
-    private IEnumerable<Event> Events { get; set; }
-
-    private Guid? RowIndex { get; set; }
-    private bool IsBetSelected;
-    private string[] StatusValues = Enum.GetNames(typeof(StatusEnum));
-    private StatusEnum ddlVal { get; set; }
+    public IEnumerable<Bet> Bets { get; set; }
+    public IEnumerable<Event> Events { get; set; }
+    public IEnumerable<Bookmaker> Bookmakers { get; set; }
+    public IEnumerable<Category> Categories { get; set; }
+    public IEnumerable<EventType> EventTypes { get; set; }
+    public Guid? RowIndex { get; set; }
+    public bool IsBetSelected;
+    public string[] StatusValues = Enum.GetNames(typeof(StatusEnum));
+    public StatusEnum EventStatusEnumVal { get; set; }
+    public Bookmaker BookmakerVal { get; set; }
+    public Category CategoryVal { get; set; }
+    public EventType EventTypeVal { get; set; }
 
 
 
@@ -80,6 +105,9 @@ else
     {
         Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
         Events = await RepositoryWrapper.EventRepository.GetAllEventsAsync();
+        Bookmakers = await RepositoryWrapper.BookmakerRepository.GetAllBookmakersAsync();
+        Categories = await RepositoryWrapper.CategoryRepository.GetAllCategoriesAsync();
+        EventTypes = await RepositoryWrapper.EventTypeRepostiory.GetAllEventTypesAsync();
 
     }
 
@@ -93,44 +121,82 @@ else
     public async void OnEventStatusChanged(ChangeEventArgs<StatusEnum, string> args)
     {
 
-        ddlVal = args.Value;
+        EventStatusEnumVal = args.Value;
 
     }
 
-    public async void OnEventEdit(CellSaveArgs<Event> args)
+    public async void OnEventTypeChanged(ChangeEventArgs<int, EventType> args)
     {
+        EventTypeVal = args.ItemData;
+    }
 
-        var updatedEvent = args.Data;
-        updatedEvent.Status = ddlVal;
+    public async void OnCategoryChanged(ChangeEventArgs<int, Category> args)
+    {
+        CategoryVal = args.ItemData;
+    }
 
-        RepositoryWrapper.EventRepository.UpdateEvent(updatedEvent);
-
-        await RepositoryWrapper.SaveAsync();
-        StateHasChanged();
-        await BetGridInstance.Refresh();
-        await EventGridInstance.Refresh();
+    public async void OnBookmakerSelect(ChangeEventArgs<int, Bookmaker> args)
+    {
+        BookmakerVal = args.ItemData;
+    }
 
 
+
+    public async void EventActionHandler(ActionEventArgs<Event> args)
+    {
+        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        {
+            if (args.Action == "Add")
+            {
+
+                if (CategoryVal != null && EventTypeVal != null)
+                {
+                    args.Data.BetId = RowIndex;
+                    args.Data.CategoryId = CategoryVal.CategoryId;
+                    args.Data.EventTypeId = EventTypeVal.EventTypeId;
+                    RepositoryWrapper.EventRepository.CreateEvent(args.Data);
+                    await RepositoryWrapper.SaveAsync();
+                    await EventGridInstance.Refresh();
+                    Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
+                    await BetGridInstance.Refresh();
+                    
+                }
+
+                args.Cancel = true;
+
+
+
+            }
+        }
+        else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        {
+            RepositoryWrapper.EventRepository.Delete(args.Data);
+            await RepositoryWrapper.SaveAsync();
+            await EventGridInstance.Refresh();
+        }
     }
 
     public async void BetActionsHandler(ActionEventArgs<Bet> args)
     {
         if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
         {
-            if(args.Action == "Add")
+            if (args.Action == "Add")
             {
+
+                args.Data.BookmakerId = BookmakerVal.BookmakerId;
+
                 RepositoryWrapper.BetRepository.CreateBet(args.Data);
                 await RepositoryWrapper.SaveAsync();
-                BetGridInstance.Refresh();
+                await BetGridInstance.Refresh();
             }
         }
         else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
         {
             RepositoryWrapper.BetRepository.DeleteBet(args.Data);
             await RepositoryWrapper.SaveAsync();
-            BetGridInstance.Refresh();
+            await BetGridInstance.Refresh();
         }
-        
+
 
     }
 

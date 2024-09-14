@@ -21,11 +21,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
        .AsNoTracking()
        .Where(expression);
 
-    public void Update(T entity)
-    {
-
-        RepositoryContext.Set<T>().Update(entity);
-    }
+    public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
 
     public void Create(T entity) => RepositoryContext.Set<T>().Add(entity);
 

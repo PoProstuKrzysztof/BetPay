@@ -7,8 +7,8 @@ namespace Domain.Entities;
 public class Bet
 {
     [Key]
-    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-    public Guid BetId { get; init; }
+    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
+    public Guid BetId { get; init; } = Guid.NewGuid();
 
     public decimal Stake { get; set; }
 
@@ -38,7 +38,7 @@ public class Bet
     {
         get
         {
-            if (EventsList.Equals(null))
+            if (EventsList == null || !EventsList.Any())
             {
                 return 0;
             }
@@ -81,5 +81,6 @@ public class Bet
     public virtual ICollection<Event> EventsList { get; set; } = new List<Event>();
 
     public int? BookmakerId { get; set; }
+
     public virtual Bookmaker? Bookmaker { get; set; }
 }
