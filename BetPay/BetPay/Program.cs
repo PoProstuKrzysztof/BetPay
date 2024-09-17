@@ -1,6 +1,6 @@
 using Application;
+using Application.Contracts;
 using BetPay.Components;
-using Domain.Contracts;
 using Infrastructure;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
@@ -25,6 +25,8 @@ builder.Services.AddDbContextPool<RepositoryContext>(options =>
             sqlOptions.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
         });
     options.UseLazyLoadingProxies();
+    options.EnableDetailedErrors();
+    options.EnableSensitiveDataLogging();
 });
 builder.Services.AddSyncfusionBlazor();
 

@@ -1,4 +1,5 @@
 ﻿using BetPay.Enums;
+using Domain.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,33 +8,79 @@ namespace Domain.Entities;
 public class Bet
 {
     [Key]
-    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-    public Guid BetId { get; init; }
-
-    public decimal TotalOdds { get; set; }
+    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
+    public Guid BetId { get; init; } = Guid.NewGuid();
 
     public decimal Stake { get; set; }
 
     public DateTime BetDate { get; set; }
 
-    public int Year { get; set; }
-    public int Month { get; set; }
-    public int DayOfWeek { get; set; }
-    public string? Bookmaker { get; set; }
-    public BetStatusEnum Status { get; set; } = BetStatusEnum.Unfinished;
-
-    public bool IsTaxIncluded { get; set; } = true;
-
-    public decimal PotentialWin
+    public StatusEnum? Status
     {
         get
         {
-            decimal win = Math.Round(Stake * TotalOdds);
-            return IsTaxIncluded ? win * 0.86M : win;
+            if (EventsList == null || !EventsList.Any())
+            {
+                return StatusEnum.Unfinished;
+            }
+
+            if (EventsList.Any(e => e.Status == StatusEnum.Lost))
+            {
+                return StatusEnum.Lost;
+            }
+            else if (EventsList.All(e => e.Status == StatusEnum.Won))
+            {
+                return StatusEnum.Won;
+            }
+
+            return StatusEnum.Unfinished;
+        }
+    }
+
+    public bool IsTaxIncluded { get; set; } = true;
+
+    [NotMapped]
+    public decimal? PotentialWin
+    {
+        get
+        {
+            if (TotalOdds != 0)
+            {
+                decimal win = Math.Round((decimal)(Stake * TotalOdds));
+                return IsTaxIncluded ? win * 0.86M : win;
+            }
+
+            return 0;
+        }
+    }
+
+    [NotMapped]
+    public decimal? TotalOdds
+    {
+        get
+        {
+            if (EventsList == null || !EventsList.Any())
+            {
+                return 0;
+            }
+
+            decimal totalOdds = 1M;
+
+            foreach (var eventItem in EventsList)
+            {
+                totalOdds *= eventItem.Odds;
+            }
+
+            return totalOdds;
         }
     }
 
     // Relationships
 
-    public virtual ICollection<Event> EventsList { get; set; }
+    public virtual ICollection<Event> EventsList { get; set; } = new List<Event>();
+
+    [CustomValidationsBookmakerId]
+    public int BookmakerId { get; set; }
+
+    public virtual Bookmaker? Bookmaker { get; set; }
 }

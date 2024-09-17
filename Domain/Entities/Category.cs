@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 
 public class Category
 {
     [Key]
+    [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
     public int CategoryId { get; set; }
 
     public string Name { get; set; }

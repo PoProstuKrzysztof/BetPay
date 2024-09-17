@@ -10,10 +10,15 @@
     <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\BetPay.Client\BetPay.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Blazor.Buttons" Version="26.2.13" />
     <PackageReference Include="Syncfusion.Blazor.Calendars" Version="26.2.13" />
     <PackageReference Include="Syncfusion.Blazor.Charts" Version="26.2.13" />
     <PackageReference Include="Syncfusion.Blazor.Core" Version="26.2.13" />
+    <PackageReference Include="Syncfusion.Blazor.DataForm" Version="26.2.13" />
     <PackageReference Include="Syncfusion.Blazor.Grid" Version="26.2.13" />
     <PackageReference Include="Syncfusion.Blazor.Navigations" Version="26.2.13" />
     <PackageReference Include="Syncfusion.Blazor.Spinner" Version="26.2.13" />
