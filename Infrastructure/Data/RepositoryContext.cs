@@ -59,7 +59,7 @@ public class RepositoryContext : DbContext
         var betId5 = Guid.NewGuid();
 
         modelBuilder.Entity<Bookmaker>().HasData(
-            new Bookmaker { BookmakerId = 1, Name = "Betclic" },
+            new Bookmaker { BookmakerId = 1, Name = "Betclic", ImagePath = "/Images/Bookmakers/betclic-icon.jpg" },
             new Bookmaker { BookmakerId = 2, Name = "Superbet" },
             new Bookmaker { BookmakerId = 3, Name = "Fortuna" },
             new Bookmaker { BookmakerId = 4, Name = "STS" },

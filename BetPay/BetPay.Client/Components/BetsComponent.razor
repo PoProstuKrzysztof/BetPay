@@ -22,6 +22,16 @@
                 </SfDropDownList>
             </EditTemplate>
         </GridForeignColumn>
+        <GridColumn HeaderText="Bookmaker Icon">
+            <Template>
+                @{
+                    var bookmaker = (context as Bet).Bookmaker;
+                    <div class="bookmaker-icon-container">
+                        <img src="@(bookmaker.ImagePath)" />
+                    </div>
+                }
+            </Template>
+        </GridColumn>
         <GridColumn Field="@nameof(Bet.Status)" AllowAdding="false" AllowEditing="false" HeaderText="Status"></GridColumn>
         <GridColumn Field="@nameof(Bet.IsTaxIncluded)" DisplayAsCheckBox="true" AllowEditing="false"></GridColumn>
     </GridColumns>
