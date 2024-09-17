@@ -27,15 +27,29 @@ public class RepositoryContext : DbContext
         modelBuilder.Entity<Category>().HasData(
             new Category { CategoryId = 1, Name = "Football" },
             new Category { CategoryId = 2, Name = "Soccer" },
-            new Category { CategoryId = 3, Name = "Tennis" }
+            new Category { CategoryId = 3, Name = "Tennis" },
+             new Category { CategoryId = 4, Name = "Basketball" }
         );
 
         modelBuilder.Entity<EventType>().HasData(
             new EventType { EventTypeId = 1, Name = "BTTS" },
-            new EventType { EventTypeId = 2, Name = "Statistical" },
-            new EventType { EventTypeId = 3, Name = "1X2" },
-            new EventType { EventTypeId = 4, Name = "Above/Under" }
-
+            new EventType { EventTypeId = 2, Name = "1X2" },
+            new EventType { EventTypeId = 3, Name = "Over/Under Goals" },
+            new EventType { EventTypeId = 4, Name = "Corners" },
+            new EventType { EventTypeId = 5, Name = "Yellow Cards" },
+            new EventType { EventTypeId = 6, Name = "Correct Score" },
+            new EventType { EventTypeId = 7, Name = "Double Chance" },
+            new EventType { EventTypeId = 8, Name = "First Goal Scorer" },
+            new EventType { EventTypeId = 9, Name = "Last Goal Scorer" },
+            new EventType { EventTypeId = 10, Name = "Player to Score Anytime" },
+            new EventType { EventTypeId = 11, Name = "Clean Sheet" },
+            new EventType { EventTypeId = 12, Name = "Team to Win Both Halves" },
+            new EventType { EventTypeId = 13, Name = "Half-Time Result" },
+            new EventType { EventTypeId = 14, Name = "Full-Time Result" },
+            new EventType { EventTypeId = 15, Name = "Half-Time/Full-Time" },
+            new EventType { EventTypeId = 16, Name = "Team to Score First" },
+            new EventType { EventTypeId = 17, Name = "First Half Goals" },
+            new EventType { EventTypeId = 18, Name = "Second Half Goals" }
         );
 
         var betId1 = Guid.NewGuid();
@@ -61,6 +75,12 @@ public class RepositoryContext : DbContext
             new Bookmaker { BookmakerId = 14, Name = "ComeOn" }
 
             );
+
+        modelBuilder.Entity<Bet>()
+        .HasMany(b => b.EventsList)
+        .WithOne(e => e.Bet)
+        .HasForeignKey(e => e.BetId)
+        .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Bet>().HasData(
             new Bet { BetId = betId1, Stake = 50m, BetDate = new DateTime(2024, 9, 2), IsTaxIncluded = true, BookmakerId = 2 },

@@ -7,7 +7,7 @@ public class EventType
 {
     [Key]
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-    public int EventTypeId { get; init; }
+    public int EventTypeId { get; set; }
 
     public string Name { get; set; }
 

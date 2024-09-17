@@ -52,13 +52,14 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
         @event.Bet = bet;
         @event.Category = category;
         @event.EventType = eventType;
+
         Create(@event);
     }
 
     public void DeleteEvent(Event @event)
     {
         var local = RepositoryContext.Set<Event>()
-    .Local.FirstOrDefault(e => e.BetId.Equals(other: @event.EventId));
+        .Local.FirstOrDefault(e => e.BetId.Equals(other: @event.EventId));
 
         if (local != null)
         {

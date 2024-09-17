@@ -25,10 +25,4 @@ public class Event
     public Guid? BetId { get; set; }
 
     public virtual Bet? Bet { get; set; }
-
-    public void UpdateEventStatus(StatusEnum status)
-    {
-        Status = status;
-        Bet?.UpdateBetStatus();
-    }
 }

@@ -1,4 +1,5 @@
 ﻿using BetPay.Enums;
+using Domain.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,7 +15,27 @@ public class Bet
 
     public DateTime BetDate { get; set; }
 
-    public StatusEnum Status { get; private set; } = StatusEnum.Unfinished;
+    public StatusEnum? Status
+    {
+        get
+        {
+            if (EventsList == null || !EventsList.Any())
+            {
+                return StatusEnum.Unfinished;
+            }
+
+            if (EventsList.Any(e => e.Status == StatusEnum.Lost))
+            {
+                return StatusEnum.Lost;
+            }
+            else if (EventsList.All(e => e.Status == StatusEnum.Won))
+            {
+                return StatusEnum.Won;
+            }
+
+            return StatusEnum.Unfinished;
+        }
+    }
 
     public bool IsTaxIncluded { get; set; } = true;
 
@@ -54,33 +75,12 @@ public class Bet
         }
     }
 
-    public void UpdateBetStatus()
-    {
-        if (EventsList == null || !EventsList.Any())
-        {
-            Status = StatusEnum.Unfinished;
-            return;
-        }
-
-        if (EventsList.Any(e => e.Status == StatusEnum.Lost))
-        {
-            Status = StatusEnum.Lost;
-        }
-        else if (EventsList.All(e => e.Status == StatusEnum.Won))
-        {
-            Status = StatusEnum.Won;
-        }
-        else
-        {
-            Status = StatusEnum.Unfinished;
-        }
-    }
-
     // Relationships
 
     public virtual ICollection<Event> EventsList { get; set; } = new List<Event>();
 
-    public int? BookmakerId { get; set; }
+    [CustomValidationsBookmakerId]
+    public int BookmakerId { get; set; }
 
     public virtual Bookmaker? Bookmaker { get; set; }
 }
