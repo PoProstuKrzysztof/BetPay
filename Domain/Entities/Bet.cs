@@ -15,6 +15,10 @@ public class Bet
 
     public DateTime BetDate { get; set; }
 
+
+    /// <summary>
+    /// Check the status of the bet based on the event's statuses involved in this bet 
+    /// </summary>
     public StatusEnum? Status
     {
         get
@@ -37,8 +41,13 @@ public class Bet
         }
     }
 
+
     public bool IsTaxIncluded { get; set; } = true;
 
+
+    /// <summary>
+    /// In Poland, the tax on betting is 14%. When above 2280 zł, an additional 10% is applied. 
+    /// </summary>
     [NotMapped]
     public decimal? PotentialWin
     {
@@ -47,6 +56,15 @@ public class Bet
             if (TotalOdds != 0)
             {
                 decimal win = Math.Round((decimal)(Stake * TotalOdds));
+
+                // Apply 10% if above 2280
+                if(win > 2280)
+                {
+                    win = win * 0.90M;
+                }
+
+
+                // Apply tax if tax is included
                 return IsTaxIncluded ? win * 0.86M : win;
             }
 
@@ -54,6 +72,10 @@ public class Bet
         }
     }
 
+
+    /// <summary>
+    /// Total odds of the bet calculated based on sum of related events odds.
+    /// </summary>
     [NotMapped]
     public decimal? TotalOdds
     {

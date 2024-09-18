@@ -1,6 +1,7 @@
 ﻿using Application.Contracts;
 using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
@@ -13,9 +14,18 @@ public class BookmakerRepository : RepositoryBase<Bookmaker>, IBookmakerReposito
 
     public async Task<IEnumerable<Bookmaker>> GetAllBookmakersAsync()
     {
-        return await FindAll()
-            .Result
-            .OrderBy(x => x.BookmakerId)
-            .ToListAsync();
+        try
+        {
+            return await FindAll()
+                    .Result
+                    .OrderBy(x => x.BookmakerId)
+                    .ToListAsync();
+
+        }
+        catch (Exception ex)
+        {
+
+            throw new RetrieveException("Failed to retrieve bookmakers.",nameof(Bookmaker),ex);
+        }
     }
 }

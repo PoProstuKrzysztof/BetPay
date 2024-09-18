@@ -12,7 +12,10 @@ public class Event
 
     public decimal Odds { get; set; }
 
+
     public StatusEnum Status { get; set; } = StatusEnum.Unfinished;
+
+
 
     // Relationships
     public int CategoryId { get; set; }

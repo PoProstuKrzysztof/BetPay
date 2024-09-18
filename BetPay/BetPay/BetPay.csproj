@@ -14,15 +14,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Charts" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Core" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.DataForm" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Themes" Version="26.2.13" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="26.2.14" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="26.2.14" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="26.2.14" />
+    <PackageReference Include="Syncfusion.Blazor.Core" Version="26.2.14" />
+    <PackageReference Include="Syncfusion.Blazor.DataForm" Version="26.2.14" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="26.2.14" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="26.2.14" />
+    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="26.2.14" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="26.2.14" />
   </ItemGroup>
 
   <ItemGroup>

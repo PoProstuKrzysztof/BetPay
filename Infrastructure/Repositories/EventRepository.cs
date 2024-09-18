@@ -1,6 +1,7 @@
 ﻿using Application.Contracts;
 using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
@@ -13,70 +14,100 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
 
     public async Task<IEnumerable<Event>> GetAllEventsAsync()
     {
-        return await FindAll()
-            .Result
-            .OrderByDescending(e => e.EventId)
-            .ToListAsync();
+        try
+        {
+            return await FindAll()
+               .Result
+               .OrderByDescending(e => e.EventId)
+               .ToListAsync();
+        }
+        catch (Exception ex)
+        {
+
+            throw new RetrieveException("Failed to retrieve events.", nameof(Event), ex);
+
+        }
     }
 
     public void UpdateEvent(Event @event)
     {
-        var local = RepositoryContext.Set<Event>()
-            .Local.FirstOrDefault(e => e.EventId.Equals(@event.EventId));
-
-        if (local != null)
+        try
         {
-            RepositoryContext.Entry(local).State = EntityState.Detached;
+            var local = RepositoryContext.Set<Event>()
+               .Local.FirstOrDefault(e => e.EventId.Equals(@event.EventId));
+
+            if (local != null)
+            {
+                RepositoryContext.Entry(local).State = EntityState.Detached;
+            }
+
+            RepositoryContext.Entry(@event).State = EntityState.Modified;
+
+            Update(@event);
         }
+        catch (Exception ex)
+        {
 
-        RepositoryContext.Entry(@event).State = EntityState.Modified;
+            throw new UpdateException($"Failed to update event with ID: {@event.EventId} .", nameof(Event), ex);
 
-        Update(@event);
+        }
     }
 
     public void CreateEvent(Event @event)
     {
-        var bet = RepositoryContext.Set<Bet>()
-            .FirstOrDefault(b => b.BetId == @event.BetId);
+        try
+        {
 
-        var eventType = RepositoryContext.Set<EventType>()
-            .FirstOrDefault(et => et.EventTypeId == @event.EventTypeId);
+            var bet = RepositoryContext.Set<Bet>()
+                .FirstOrDefault(b => b.BetId == @event.BetId);
 
-        var category = RepositoryContext.Set<Category>()
-            .FirstOrDefault(c => c.CategoryId == @event.CategoryId);
+            var eventType = RepositoryContext.Set<EventType>()
+                .FirstOrDefault(et => et.EventTypeId == @event.EventTypeId);
 
-        RepositoryContext.Attach(category);
-        RepositoryContext.Attach(eventType);
-        RepositoryContext.Attach(bet);
+            var category = RepositoryContext.Set<Category>()
+                .FirstOrDefault(c => c.CategoryId == @event.CategoryId);
 
-        @event.Bet = bet;
-        @event.Category = category;
-        @event.EventType = eventType;
+            RepositoryContext.Attach(category);
+            RepositoryContext.Attach(eventType);
+            RepositoryContext.Attach(bet);
 
-        Create(@event);
+            @event.Bet = bet;
+            @event.Category = category;
+            @event.EventType = eventType;
+
+            Create(@event);
+        }
+        catch (Exception ex)
+        {
+
+            throw new CreateException("Failed to create event.", nameof(Event), ex);
+
+        }
     }
 
     public void DeleteEvent(Event @event)
     {
-        var local = RepositoryContext.Set<Event>()
-        .Local.FirstOrDefault(e => e.BetId.Equals(other: @event.EventId));
-
-        if (local != null)
+        try
         {
-            RepositoryContext.Entry(local).State = EntityState.Detached;
+            var local = RepositoryContext.Set<Event>()
+            .Local.FirstOrDefault(e => e.BetId.Equals(other: @event.EventId));
+
+            if (local != null)
+            {
+                RepositoryContext.Entry(local).State = EntityState.Detached;
+            }
+
+            RepositoryContext.Entry(@event).State = EntityState.Deleted;
+
+            Delete(@event);
         }
+        catch (Exception ex)
+        {
 
-        RepositoryContext.Entry(@event).State = EntityState.Deleted;
+            throw new DeleteException($"Failed to delete event with ID: {@event.EventId}.", nameof(Event), ex);
 
-        Delete(@event);
+        }
     }
 
-    public async Task<IEnumerable<Event>> GetEventsByBetIdAsync(Guid? id)
-    {
-        return await FindByCondition(x => x.BetId.Equals(id))
-            .Result
-            .Include(c => c.Category)
-            .Include(et => et.EventType)
-            .ToListAsync();
-    }
+
 }

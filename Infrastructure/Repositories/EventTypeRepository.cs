@@ -1,6 +1,7 @@
 ﻿using Application.Contracts;
 using Domain.Entities;
 using Infrastructure.Data;
+using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
@@ -13,10 +14,19 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<EventType>> GetAllEventTypesAsync()
         {
-            return await FindAll()
-                .Result
-                .OrderBy(x => x.EventTypeId)
-                .ToListAsync();
+            try
+            {
+                return await FindAll()
+                        .Result
+                        .OrderBy(x => x.EventTypeId)
+                        .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw new RetrieveException("Failed to retrieve event types.", nameof(EventType), ex);
+
+            }
         }
     }
 }

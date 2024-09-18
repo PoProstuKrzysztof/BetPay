@@ -8,8 +8,6 @@ public interface IBetRepository : IRepositoryBase<Bet>
 
     Task<Bet> GetBetByGuid(Guid id);
 
-    void ChangeBetStatus(string status, Guid betId);
-
     void DeleteBet(Bet bet);
 
     void UpdateBet(Bet bet);
