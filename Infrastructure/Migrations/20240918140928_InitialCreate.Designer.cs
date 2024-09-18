@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20240917144758_InitialCreate")]
+    [Migration("20240918140928_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -54,41 +54,153 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            BetId = new Guid("88992eca-f894-4176-8c67-55c6ac5ae202"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BetId = new Guid("56606df7-634e-488a-a66a-ab3ed1340404"),
+                            BetDate = new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 2,
                             IsTaxIncluded = true,
                             Stake = 50m
                         },
                         new
                         {
-                            BetId = new Guid("8477d938-3269-4c5c-a9ab-7fd8d1031428"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BetId = new Guid("054fe7b7-27f9-493f-9133-df2e8bcf5894"),
+                            BetDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 3,
                             IsTaxIncluded = true,
                             Stake = 100m
                         },
                         new
                         {
-                            BetId = new Guid("119d366d-790d-4c6e-a314-3ab01bb479d1"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            BookmakerId = 2,
-                            IsTaxIncluded = true,
+                            BetId = new Guid("62f5c2af-4375-4499-98cf-572749a51b5f"),
+                            BetDate = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 1,
+                            IsTaxIncluded = false,
                             Stake = 200m
                         },
                         new
                         {
-                            BetId = new Guid("4b3a30ec-31f9-49c2-afdd-b0e4d9b07c9a"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            BookmakerId = 1,
+                            BetId = new Guid("e439a252-b890-41ee-ab00-a02c15a7cc99"),
+                            BetDate = new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 4,
                             IsTaxIncluded = false,
                             Stake = 75m
                         },
                         new
                         {
-                            BetId = new Guid("3196411c-96e9-4801-82db-d71a4e15898a"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BetId = new Guid("e72472cf-ec75-4128-9015-c78e51947f72"),
+                            BetDate = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 11,
+                            IsTaxIncluded = true,
+                            Stake = 150m
+                        },
+                        new
+                        {
+                            BetId = new Guid("8e026f46-4d89-4ea4-8807-b2a7c77ba13b"),
+                            BetDate = new DateTime(2024, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 5,
+                            IsTaxIncluded = true,
+                            Stake = 120m
+                        },
+                        new
+                        {
+                            BetId = new Guid("20856cdf-d0d2-434d-952a-095f35f56adf"),
+                            BetDate = new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 13,
+                            IsTaxIncluded = true,
+                            Stake = 90m
+                        },
+                        new
+                        {
+                            BetId = new Guid("2b145187-99ca-4311-845c-31ab4b92804e"),
+                            BetDate = new DateTime(2024, 2, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 10,
+                            IsTaxIncluded = true,
+                            Stake = 60m
+                        },
+                        new
+                        {
+                            BetId = new Guid("46f1ab93-bc71-4fb9-a1d8-38df79356619"),
+                            BetDate = new DateTime(2024, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 1,
+                            IsTaxIncluded = true,
+                            Stake = 40m
+                        },
+                        new
+                        {
+                            BetId = new Guid("ee1611d2-68f2-4bf5-ad7a-74f2a49c6121"),
+                            BetDate = new DateTime(2024, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 7,
+                            IsTaxIncluded = true,
+                            Stake = 80m
+                        },
+                        new
+                        {
+                            BetId = new Guid("3eac28ae-3c55-4819-8e4e-e5bbe160309a"),
+                            BetDate = new DateTime(2024, 8, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 4,
+                            IsTaxIncluded = true,
+                            Stake = 110m
+                        },
+                        new
+                        {
+                            BetId = new Guid("62a473e9-5b1f-4176-b61a-089b5dc0e9e0"),
+                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 2,
+                            IsTaxIncluded = true,
+                            Stake = 70m
+                        },
+                        new
+                        {
+                            BetId = new Guid("9bdee23b-918f-4e5e-b353-1558706087b2"),
+                            BetDate = new DateTime(2024, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 3,
+                            IsTaxIncluded = true,
+                            Stake = 95m
+                        },
+                        new
+                        {
+                            BetId = new Guid("4a109156-7bd6-44ee-9f14-b5d3f570b6ff"),
+                            BetDate = new DateTime(2024, 9, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 13,
+                            IsTaxIncluded = true,
+                            Stake = 105m
+                        },
+                        new
+                        {
+                            BetId = new Guid("aa6daec8-dbc3-4eaa-8ad0-92b10894e53e"),
+                            BetDate = new DateTime(2024, 10, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 5,
+                            IsTaxIncluded = true,
+                            Stake = 130m
+                        },
+                        new
+                        {
+                            BetId = new Guid("5c7173da-2bcf-4477-8239-b6e5bd75b26f"),
+                            BetDate = new DateTime(2024, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 11,
+                            IsTaxIncluded = true,
+                            Stake = 85m
+                        },
+                        new
+                        {
+                            BetId = new Guid("010a8681-e495-4db5-a798-80f74e65a72f"),
+                            BetDate = new DateTime(2024, 10, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 10,
+                            IsTaxIncluded = true,
+                            Stake = 45m
+                        },
+                        new
+                        {
+                            BetId = new Guid("59dffedb-dd1d-448b-aa78-c904d710da1d"),
+                            BetDate = new DateTime(2024, 11, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 1,
+                            IsTaxIncluded = true,
+                            Stake = 65m
+                        },
+                        new
+                        {
+                            BetId = new Guid("4ae85ac0-c731-4725-8ec6-ceab35450376"),
+                            BetDate = new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 7,
                             IsTaxIncluded = true,
                             Stake = 150m
                         });
@@ -119,21 +231,25 @@ namespace Infrastructure.Migrations
                         new
                         {
                             BookmakerId = 2,
+                            ImagePath = "/Images/Bookmakers/superbet-icon.jpg",
                             Name = "Superbet"
                         },
                         new
                         {
                             BookmakerId = 3,
+                            ImagePath = "/Images/Bookmakers/fortuna-icon.jpg",
                             Name = "Fortuna"
                         },
                         new
                         {
                             BookmakerId = 4,
+                            ImagePath = "/Images/Bookmakers/sts-icon.jpg",
                             Name = "STS"
                         },
                         new
                         {
                             BookmakerId = 5,
+                            ImagePath = "/Images/Bookmakers/betfan-icon.jpg",
                             Name = "Betfan"
                         },
                         new
@@ -144,6 +260,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             BookmakerId = 7,
+                            ImagePath = "/Images/Bookmakers/lvbet-icon.jpg",
                             Name = "LvBet"
                         },
                         new
@@ -159,11 +276,13 @@ namespace Infrastructure.Migrations
                         new
                         {
                             BookmakerId = 10,
+                            ImagePath = "/Images/Bookmakers/gobet-icon.jpg",
                             Name = "GoBet"
                         },
                         new
                         {
                             BookmakerId = 11,
+                            ImagePath = "/Images/Bookmakers/totalbet-icon.jpg",
                             Name = "TotalBet"
                         },
                         new
@@ -174,6 +293,7 @@ namespace Infrastructure.Migrations
                         new
                         {
                             BookmakerId = 13,
+                            ImagePath = "/Images/Bookmakers/etoto-icon.jpg",
                             Name = "Etoto"
                         },
                         new
@@ -255,8 +375,8 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            EventId = new Guid("82b8818b-39d5-4630-be91-57bdede8dcce"),
-                            BetId = new Guid("88992eca-f894-4176-8c67-55c6ac5ae202"),
+                            EventId = new Guid("43f0117f-0526-403b-8f29-e0b579158694"),
+                            BetId = new Guid("56606df7-634e-488a-a66a-ab3ed1340404"),
                             CategoryId = 1,
                             EventTypeId = 1,
                             Odds = 1.5m,
@@ -264,8 +384,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("77fef067-022f-4399-9e34-67bbf8668d6b"),
-                            BetId = new Guid("88992eca-f894-4176-8c67-55c6ac5ae202"),
+                            EventId = new Guid("775646ef-f9d7-482c-aba0-2bc2b883a1a4"),
+                            BetId = new Guid("56606df7-634e-488a-a66a-ab3ed1340404"),
                             CategoryId = 2,
                             EventTypeId = 2,
                             Odds = 2.0m,
@@ -273,75 +393,138 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("5ee05351-240c-45f5-8bb1-eaeba3d95f26"),
-                            BetId = new Guid("8477d938-3269-4c5c-a9ab-7fd8d1031428"),
-                            CategoryId = 1,
+                            EventId = new Guid("dc40bafb-abd2-4c2b-bf29-adfc2784d9ce"),
+                            BetId = new Guid("56606df7-634e-488a-a66a-ab3ed1340404"),
+                            CategoryId = 3,
                             EventTypeId = 3,
-                            Odds = 1.8m,
+                            Odds = 1.7m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("976e7541-2219-4d26-bf7c-2bc9eb3310cc"),
-                            BetId = new Guid("8477d938-3269-4c5c-a9ab-7fd8d1031428"),
-                            CategoryId = 3,
-                            EventTypeId = 4,
-                            Odds = 2.2m,
+                            EventId = new Guid("b8dca998-a42e-4a32-a140-238ac26832f8"),
+                            BetId = new Guid("054fe7b7-27f9-493f-9133-df2e8bcf5894"),
+                            CategoryId = 2,
+                            EventTypeId = 1,
+                            Odds = 1.6m,
                             Status = 1
                         },
                         new
                         {
-                            EventId = new Guid("0e5619ae-5944-495c-93e4-8e799f87e7d8"),
-                            BetId = new Guid("119d366d-790d-4c6e-a314-3ab01bb479d1"),
-                            CategoryId = 2,
-                            EventTypeId = 1,
-                            Odds = 1.6m,
-                            Status = 2
-                        },
-                        new
-                        {
-                            EventId = new Guid("b618d659-9482-41a2-b1f8-37d1d830c6db"),
-                            BetId = new Guid("119d366d-790d-4c6e-a314-3ab01bb479d1"),
+                            EventId = new Guid("24a11241-5020-4726-b0a5-fc8df4246d2c"),
+                            BetId = new Guid("054fe7b7-27f9-493f-9133-df2e8bcf5894"),
                             CategoryId = 1,
-                            EventTypeId = 3,
-                            Odds = 2.5m,
-                            Status = 2
-                        },
-                        new
-                        {
-                            EventId = new Guid("467df1db-38ba-4d23-b348-f2e497ac249d"),
-                            BetId = new Guid("4b3a30ec-31f9-49c2-afdd-b0e4d9b07c9a"),
-                            CategoryId = 3,
                             EventTypeId = 4,
-                            Odds = 2.0m,
+                            Odds = 2.3m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("b414e518-0500-4688-9d28-06c80d13f58a"),
-                            BetId = new Guid("4b3a30ec-31f9-49c2-afdd-b0e4d9b07c9a"),
+                            EventId = new Guid("6515529f-bda4-4548-931e-ec330d983327"),
+                            BetId = new Guid("054fe7b7-27f9-493f-9133-df2e8bcf5894"),
                             CategoryId = 2,
-                            EventTypeId = 2,
-                            Odds = 1.7m,
-                            Status = 2
-                        },
-                        new
-                        {
-                            EventId = new Guid("c89b8292-0e03-4c45-bc51-95b202783508"),
-                            BetId = new Guid("3196411c-96e9-4801-82db-d71a4e15898a"),
-                            CategoryId = 1,
-                            EventTypeId = 3,
+                            EventTypeId = 5,
                             Odds = 2.1m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("fe70ff17-cdef-432f-a15c-3c3ba9d02f2e"),
-                            BetId = new Guid("3196411c-96e9-4801-82db-d71a4e15898a"),
+                            EventId = new Guid("1f62cdb9-2271-4c23-a875-b0d6c4e5ad69"),
+                            BetId = new Guid("054fe7b7-27f9-493f-9133-df2e8bcf5894"),
+                            CategoryId = 1,
+                            EventTypeId = 6,
+                            Odds = 1.8m,
+                            Status = 2
+                        },
+                        new
+                        {
+                            EventId = new Guid("602e3c6c-4cb4-4e22-abc9-1fd4a5f6b5fc"),
+                            BetId = new Guid("62f5c2af-4375-4499-98cf-572749a51b5f"),
+                            CategoryId = 2,
+                            EventTypeId = 3,
+                            Odds = 1.5m,
+                            Status = 0
+                        },
+                        new
+                        {
+                            EventId = new Guid("6e14b4c6-1c30-48c7-8889-e84196369c68"),
+                            BetId = new Guid("62f5c2af-4375-4499-98cf-572749a51b5f"),
+                            CategoryId = 1,
+                            EventTypeId = 1,
+                            Odds = 1.7m,
+                            Status = 0
+                        },
+                        new
+                        {
+                            EventId = new Guid("43fb44f0-6f06-481e-a6ab-c0b8ae8268fc"),
+                            BetId = new Guid("62f5c2af-4375-4499-98cf-572749a51b5f"),
                             CategoryId = 3,
                             EventTypeId = 4,
-                            Odds = 2.3m,
+                            Odds = 2.4m,
                             Status = 0
+                        },
+                        new
+                        {
+                            EventId = new Guid("17e58c2d-4aaf-480d-a094-cbb408ddc385"),
+                            BetId = new Guid("62f5c2af-4375-4499-98cf-572749a51b5f"),
+                            CategoryId = 2,
+                            EventTypeId = 5,
+                            Odds = 2.1m,
+                            Status = 2
+                        },
+                        new
+                        {
+                            EventId = new Guid("695b9a7a-6e39-4a9e-903c-29a5fc13cf97"),
+                            BetId = new Guid("62f5c2af-4375-4499-98cf-572749a51b5f"),
+                            CategoryId = 1,
+                            EventTypeId = 6,
+                            Odds = 2.5m,
+                            Status = 1
+                        },
+                        new
+                        {
+                            EventId = new Guid("58004cc9-4a6e-435d-99dd-7a8d2fe10f50"),
+                            BetId = new Guid("e439a252-b890-41ee-ab00-a02c15a7cc99"),
+                            CategoryId = 3,
+                            EventTypeId = 4,
+                            Odds = 2.0m,
+                            Status = 0
+                        },
+                        new
+                        {
+                            EventId = new Guid("44b21f53-351e-4c95-b55a-ae482d3a7ab9"),
+                            BetId = new Guid("e439a252-b890-41ee-ab00-a02c15a7cc99"),
+                            CategoryId = 2,
+                            EventTypeId = 1,
+                            Odds = 1.6m,
+                            Status = 0
+                        },
+                        new
+                        {
+                            EventId = new Guid("e3f3fa73-712c-439f-9337-9af0185bd3b2"),
+                            BetId = new Guid("e72472cf-ec75-4128-9015-c78e51947f72"),
+                            CategoryId = 1,
+                            EventTypeId = 3,
+                            Odds = 1.9m,
+                            Status = 1
+                        },
+                        new
+                        {
+                            EventId = new Guid("a7ff257c-3697-4c56-ab85-4b5d0840f3b9"),
+                            BetId = new Guid("e72472cf-ec75-4128-9015-c78e51947f72"),
+                            CategoryId = 2,
+                            EventTypeId = 2,
+                            Odds = 2.2m,
+                            Status = 0
+                        },
+                        new
+                        {
+                            EventId = new Guid("4e5e6bb2-7b65-4f67-9451-0ed49f2fbc71"),
+                            BetId = new Guid("e72472cf-ec75-4128-9015-c78e51947f72"),
+                            CategoryId = 3,
+                            EventTypeId = 5,
+                            Odds = 1.5m,
+                            Status = 2
                         });
                 });
 

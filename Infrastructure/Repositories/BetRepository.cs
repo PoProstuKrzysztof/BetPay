@@ -38,7 +38,7 @@ namespace Infrastructure.Repositories
                     .Result
                     .Include(el => el.EventsList)
                     .Include(b => b.Bookmaker)
-                    .FirstOrDefaultAsync();
+                    .FirstAsync();
             }
             catch (Exception ex)
             {

@@ -59,13 +59,13 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
         {
 
             var bet = RepositoryContext.Set<Bet>()
-                .FirstOrDefault(b => b.BetId == @event.BetId);
+                .First(b => b.BetId == @event.BetId);
 
             var eventType = RepositoryContext.Set<EventType>()
-                .FirstOrDefault(et => et.EventTypeId == @event.EventTypeId);
+                .First(et => et.EventTypeId == @event.EventTypeId);
 
             var category = RepositoryContext.Set<Category>()
-                .FirstOrDefault(c => c.CategoryId == @event.CategoryId);
+                .First(c => c.CategoryId == @event.CategoryId);
 
             RepositoryContext.Attach(category);
             RepositoryContext.Attach(eventType);

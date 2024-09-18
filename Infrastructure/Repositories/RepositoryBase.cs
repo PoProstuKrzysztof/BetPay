@@ -14,12 +14,12 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
         RepositoryContext = repositoryContext;
     }
 
-    public async Task<IQueryable<T>> FindAll() => RepositoryContext.Set<T>().AsNoTracking();
+    public Task<IQueryable<T>> FindAll() => Task.FromResult(RepositoryContext.Set<T>().AsNoTracking());
 
-    public async Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression) =>
-       RepositoryContext.Set<T>()
+    public Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression) =>
+       Task.FromResult( RepositoryContext.Set<T>()
        .AsNoTracking()
-       .Where(expression);
+       .Where(expression));
 
     public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
 
