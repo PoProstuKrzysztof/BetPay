@@ -73,24 +73,21 @@ public class RepositoryContext : DbContext
         var betId19 = Guid.NewGuid();
         var betId20 = Guid.NewGuid();
 
-
-
-
         modelBuilder.Entity<Bookmaker>().HasData(
             new Bookmaker { BookmakerId = 1, Name = "Betclic", ImagePath = "/Images/Bookmakers/betclic-icon.jpg" },
             new Bookmaker { BookmakerId = 2, Name = "Superbet", ImagePath = "/Images/Bookmakers/superbet-icon.jpg" },
             new Bookmaker { BookmakerId = 3, Name = "Fortuna", ImagePath = "/Images/Bookmakers/fortuna-icon.jpg" },
             new Bookmaker { BookmakerId = 4, Name = "STS", ImagePath = "/Images/Bookmakers/sts-icon.jpg" },
             new Bookmaker { BookmakerId = 5, Name = "Betfan", ImagePath = "/Images/Bookmakers/betfan-icon.jpg" },
-            new Bookmaker { BookmakerId = 6, Name = "Fuksiarz" },
+            new Bookmaker { BookmakerId = 6, Name = "Fuksiarz", ImagePath = "/Images/Bookmakers/fuksiarz-icon.jpg" },
             new Bookmaker { BookmakerId = 7, Name = "LvBet", ImagePath = "/Images/Bookmakers/lvbet-icon.jpg" },
-            new Bookmaker { BookmakerId = 8, Name = "Betters" },
-            new Bookmaker { BookmakerId = 9, Name = "Betcris" },
+            new Bookmaker { BookmakerId = 8, Name = "Betters", ImagePath = "/Images/Bookmakers/betters-icon.jpg" },
+            new Bookmaker { BookmakerId = 9, Name = "Betcris", ImagePath = "/Images/Bookmakers/betcris-icon.jpg" },
             new Bookmaker { BookmakerId = 10, Name = "GoBet", ImagePath = "/Images/Bookmakers/gobet-icon.jpg" },
             new Bookmaker { BookmakerId = 11, Name = "TotalBet", ImagePath = "/Images/Bookmakers/totalbet-icon.jpg" },
-            new Bookmaker { BookmakerId = 12, Name = "ForBet" },
+            new Bookmaker { BookmakerId = 12, Name = "ForBet", ImagePath = "/Images/Bookmakers/forbet-icon.jpg" },
             new Bookmaker { BookmakerId = 13, Name = "Etoto", ImagePath = "/Images/Bookmakers/etoto-icon.jpg" },
-            new Bookmaker { BookmakerId = 14, Name = "ComeOn" }
+            new Bookmaker { BookmakerId = 14, Name = "ComeOn", ImagePath = "/Images/Bookmakers/ComeOn-icon.jpg" }
 
             );
 
@@ -155,6 +152,5 @@ public class RepositoryContext : DbContext
             new Event { EventId = Guid.NewGuid(), Odds = 2.2m, CategoryId = 2, EventTypeId = 2, BetId = betId5, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 1.5m, CategoryId = 3, EventTypeId = 5, BetId = betId5, Status = StatusEnum.Unfinished }
         );
-    
     }
 }

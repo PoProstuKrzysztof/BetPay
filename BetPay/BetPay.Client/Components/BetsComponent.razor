@@ -1,4 +1,6 @@
-﻿@using BetPay.Enums
+﻿
+
+@using BetPay.Enums
 @using Syncfusion.Blazor.DropDowns
 @inject IRepositoryWrapper RepositoryWrapper
 @rendermode InteractiveServer
@@ -16,22 +18,43 @@
         <GridColumn Field="@nameof(Bet.PotentialWin)" AllowAdding="false" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
         <GridColumn Field="@nameof(Bet.BetDate)" DefaultValue="DateTime.Today" Format="d" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
         <GridForeignColumn Field="@nameof(Bookmaker.BookmakerId)" HeaderText="Bookmaker" ValidationRules="new ValidationRules{Min =  1}" ForeignDataSource="Bookmakers" ForeignKeyValue="Name" EditType="EditType.DropDownEdit">
-            <EditTemplate>
-                <SfDropDownList ID="BookmakerId" @bind-Value="((context as Bet).BookmakerId)" TValue="int" TItem="Bookmaker" PopupHeight="230px" Placeholder="Bookmaker" DataSource="Bookmakers">
-                    <DropDownListFieldSettings Text="Name" Value="BookmakerId"></DropDownListFieldSettings>
-                </SfDropDownList>
-            </EditTemplate>
-        </GridForeignColumn>
-        <GridColumn HeaderText="Bookmaker Icon">
             <Template>
                 @{
                     var bookmaker = (context as Bet).Bookmaker;
                     <div class="bookmaker-icon-container">
-                        <img src="@(bookmaker.ImagePath)" />
+                        <img src="@bookmaker?.ImagePath" alt="@bookmaker?.Name" />
                     </div>
+
                 }
             </Template>
-        </GridColumn>
+            <EditTemplate>
+                <SfDropDownList @bind-value="@((context as Bet).BookmakerId)" TValue="int" TItem="Bookmaker" PopupHeight="230px" Placeholder="Bookmaker" DataSource="Bookmakers">
+                    <DropDownListTemplates TItem="Bookmaker">
+                        <ItemTemplate Context="bookmaker">
+                            @{
+
+                                <div class="bookmaker-icon-container">
+                                    <img src="@bookmaker.ImagePath" alt="@bookmaker.Name" />
+                                </div>
+
+                            }
+                        </ItemTemplate>
+                        <ValueTemplate Context="bookmaker">
+                            @{
+
+                                <div class="bookmaker-icon-container">
+                                    <img src="@bookmaker.ImagePath" alt="@bookmaker.Name" />
+                                </div>
+
+                            }
+                        </ValueTemplate>
+
+                    </DropDownListTemplates>
+                    <DropDownListFieldSettings Value="BookmakerId"></DropDownListFieldSettings>
+                </SfDropDownList>
+            </EditTemplate>
+        </GridForeignColumn>
+
         <GridColumn Field="@nameof(Bet.Status)" AllowAdding="false" AllowEditing="false" HeaderText="Status"></GridColumn>
         <GridColumn Field="@nameof(Bet.IsTaxIncluded)" DisplayAsCheckBox="true" AllowEditing="false"></GridColumn>
     </GridColumns>
@@ -51,22 +74,22 @@
         <GridEditSettings AllowEditing="true" AllowAdding="true" AllowDeleting="true" NewRowPosition="NewRowPosition.Bottom"></GridEditSettings>
         <GridColumns>
             <GridColumn Field="@nameof(Event.EventId)" IsPrimaryKey="true" IsIdentity="true" Visible="false"></GridColumn>
-            <GridColumn Field="@nameof(Event.Odds)"  HeaderText="Odds"></GridColumn>
-            <GridForeignColumn  Field="@nameof(EventType.EventTypeId)" HeaderText="Event Type" TValue="EventType" ForeignDataSource="EventTypes" ForeignKeyValue="Name">
-                <EditTemplate>
-                    <SfDropDownList @bind-value="@((context as Event).EventTypeId)" ID="EventTypeId" DataSource="EventTypes" TItem="EventType" TValue="int">
-                        <DropDownListFieldSettings Text="Name" Value="EventTypeId"></DropDownListFieldSettings>
-                    </SfDropDownList>
-                </EditTemplate>
-            </GridForeignColumn>
-            <GridForeignColumn  Field="@nameof(Category.CategoryId)" HeaderText="Category" TValue="Category" ForeignDataSource="Categories" ForeignKeyValue="Name">
+            <GridColumn Field="@nameof(Event.Odds)" HeaderText="Odds"></GridColumn>
+
+            <GridForeignColumn Field="@nameof(Category.CategoryId)" HeaderText="Category" TValue="Category" ForeignDataSource="Categories" ForeignKeyValue="Name">
                 <EditTemplate>
                     <SfDropDownList @bind-value="@((context as Event).CategoryId)" ID="CategoryId" DataSource="Categories" TItem="Category" TValue="int">
                         <DropDownListFieldSettings Text="Name" Value="CategoryId"></DropDownListFieldSettings>
                     </SfDropDownList>
                 </EditTemplate>
             </GridForeignColumn>
-
+            <GridForeignColumn Field="@nameof(EventType.EventTypeId)" HeaderText="Event Type" TValue="EventType" ForeignDataSource="EventTypes" ForeignKeyValue="Name">
+                <EditTemplate>
+                    <SfDropDownList @bind-value="@((context as Event).EventTypeId)" ID="EventTypeId" DataSource="EventTypes" TItem="EventType" TValue="int">
+                        <DropDownListFieldSettings Text="Name" Value="EventTypeId"></DropDownListFieldSettings>
+                    </SfDropDownList>
+                </EditTemplate>
+            </GridForeignColumn>
             <GridColumn Field="@nameof(Event.Status)" HeaderText="Status" EditType="EditType.DropDownEdit">
                 <EditTemplate>
                     <SfDropDownList TItem="string" TValue="StatusEnum" DataSource="StatusValues" @bind-value="((context as Event).Status)">
