@@ -1,5 +1,4 @@
-﻿using BetPay.Enums;
-using Domain.Enums;
+﻿using Domain.Enums;
 using Domain.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

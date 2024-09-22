@@ -1,5 +1,4 @@
-﻿using BetPay.Enums;
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 

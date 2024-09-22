@@ -18,6 +18,7 @@ namespace Infrastructure.Repositories
             {
                 return await FindAll()
                 .Result
+                .OrderByDescending(x => x.BetDate)
                 .Include(b => b.EventsList)
                 .Include(b => b.Bookmaker)
                 .ToListAsync();
