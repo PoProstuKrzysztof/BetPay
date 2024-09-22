@@ -119,20 +119,21 @@ namespace Infrastructure.Migrations
                 columns: new[] { "BookmakerId", "ImagePath", "Name" },
                 values: new object[,]
                 {
-                    { 1, "/Images/Bookmakers/betclic-icon.jpg", "Betclic" },
-                    { 2, "/Images/Bookmakers/superbet-icon.jpg", "Superbet" },
-                    { 3, "/Images/Bookmakers/fortuna-icon.jpg", "Fortuna" },
-                    { 4, "/Images/Bookmakers/sts-icon.jpg", "STS" },
-                    { 5, "/Images/Bookmakers/betfan-icon.jpg", "Betfan" },
-                    { 6, "/Images/Bookmakers/fuksiarz-icon.jpg", "Fuksiarz" },
-                    { 7, "/Images/Bookmakers/lvbet-icon.jpg", "LvBet" },
-                    { 8, "/Images/Bookmakers/betters-icon.jpg", "Betters" },
-                    { 9, "/Images/Bookmakers/betcris-icon.jpg", "Betcris" },
-                    { 10, "/Images/Bookmakers/gobet-icon.jpg", "GoBet" },
-                    { 11, "/Images/Bookmakers/totalbet-icon.jpg", "TotalBet" },
-                    { 12, "/Images/Bookmakers/forbet-icon.jpg", "ForBet" },
-                    { 13, "/Images/Bookmakers/etoto-icon.jpg", "Etoto" },
-                    { 14, "/Images/Bookmakers/ComeOn-icon.jpg", "ComeOn" }
+                    { 1, "/Images/Bookmakers/betclic.png", "Betclic" },
+                    { 2, "/Images/Bookmakers/superbet.png", "Superbet" },
+                    { 3, "/Images/Bookmakers/fortuna.png", "Fortuna" },
+                    { 4, "/Images/Bookmakers/sts.png", "STS" },
+                    { 5, "/Images/Bookmakers/betfan.png", "Betfan" },
+                    { 6, "/Images/Bookmakers/fuksiarz.png", "Fuksiarz" },
+                    { 7, "/Images/Bookmakers/lvbet.png", "LvBet" },
+                    { 8, "/Images/Bookmakers/betters.png", "Betters" },
+                    { 9, "/Images/Bookmakers/betcris.png", "Betcris" },
+                    { 10, "/Images/Bookmakers/gobet.png", "GoBet" },
+                    { 11, "/Images/Bookmakers/totalbet.png", "TotalBet" },
+                    { 12, "/Images/Bookmakers/forbet.png", "ForBet" },
+                    { 13, "/Images/Bookmakers/etoto.png", "Etoto" },
+                    { 14, "/Images/Bookmakers/comeon.png", "ComeOn" },
+                    { 15, "/Images/Bookmakers/pzbuk.png", "Pzbuk" }
                 });
 
             migrationBuilder.InsertData(
@@ -150,11 +151,11 @@ namespace Infrastructure.Migrations
                 columns: new[] { "BetId", "BetDate", "BookmakerId", "IsTaxIncluded", "LivePrematch", "Stake" },
                 values: new object[,]
                 {
-                    { new Guid("01418e64-446a-42c9-9a88-fec52649f3f0"), new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, 75m },
-                    { new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"), new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, true, 2, 100m },
-                    { new Guid("1fe6ad59-16e3-465e-bfc4-ba99030a5f9d"), new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, true, 2, 50m },
-                    { new Guid("5f150559-7a21-489f-ae6c-673ed010918a"), new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, true, 1, 150m },
-                    { new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"), new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, 200m }
+                    { new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"), new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, true, 2, 50m },
+                    { new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"), new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, true, 1, 150m },
+                    { new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, true, 2, 100m },
+                    { new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"), new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, 75m },
+                    { new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, 200m }
                 });
 
             migrationBuilder.InsertData(
@@ -199,23 +200,23 @@ namespace Infrastructure.Migrations
                 columns: new[] { "EventId", "BetId", "CategoryId", "EventTypeId", "Odds", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("1bf6661c-eee1-4717-86b9-2a9047984e6d"), new Guid("5f150559-7a21-489f-ae6c-673ed010918a"), 3, 5, 1.5m, 2 },
-                    { new Guid("1e6ef780-82b4-4c16-b00f-352e3310010e"), new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"), 2, 3, 1.5m, 0 },
-                    { new Guid("357614f0-6ed2-48ab-ab18-3eeb6a39d793"), new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"), 2, 1, 1.6m, 1 },
-                    { new Guid("3cd1f025-ffaa-4b4f-8f67-f42d15d6fe0d"), new Guid("1fe6ad59-16e3-465e-bfc4-ba99030a5f9d"), 2, 2, 2.0m, 0 },
-                    { new Guid("4e48c07a-1b43-4750-ac5e-bfa5f864061e"), new Guid("5f150559-7a21-489f-ae6c-673ed010918a"), 2, 2, 2.2m, 0 },
-                    { new Guid("5116eef5-1d1e-427d-a069-a0507f37e545"), new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"), 2, 5, 2.1m, 0 },
-                    { new Guid("54e8adb7-616a-45b7-8b09-8815137c07d0"), new Guid("1fe6ad59-16e3-465e-bfc4-ba99030a5f9d"), 3, 3, 1.7m, 0 },
-                    { new Guid("563bc69f-122b-4ba6-b542-58bb6f51381c"), new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"), 2, 5, 2.1m, 2 },
-                    { new Guid("7e74b77f-8cce-4eb5-94fb-ea1971c680af"), new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"), 1, 6, 2.5m, 1 },
-                    { new Guid("81130f25-3d3b-4a95-820f-7352607cd045"), new Guid("1fe6ad59-16e3-465e-bfc4-ba99030a5f9d"), 1, 1, 1.5m, 0 },
-                    { new Guid("924848d6-691e-4f5a-a6e2-276cbc333a7c"), new Guid("01418e64-446a-42c9-9a88-fec52649f3f0"), 3, 4, 2.0m, 0 },
-                    { new Guid("b8a16683-03a5-452f-84c4-2a95b25d0a19"), new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"), 1, 6, 1.8m, 2 },
-                    { new Guid("d3581729-8c26-4b07-a337-5688879070de"), new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"), 3, 4, 2.4m, 0 },
-                    { new Guid("e06d5ff0-b4e8-4c1b-b7e8-90828a9c9809"), new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"), 1, 4, 2.3m, 0 },
-                    { new Guid("ec5524e1-da64-4242-a704-45f61640dcb2"), new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"), 1, 1, 1.7m, 0 },
-                    { new Guid("f132f339-0b45-40d2-80af-ad63e2c293b4"), new Guid("5f150559-7a21-489f-ae6c-673ed010918a"), 1, 3, 1.9m, 1 },
-                    { new Guid("f75588f9-1919-4284-b15b-18d5b1c088b1"), new Guid("01418e64-446a-42c9-9a88-fec52649f3f0"), 2, 1, 1.6m, 0 }
+                    { new Guid("1110967a-1c71-44a7-a622-ae147926e1da"), new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"), 1, 3, 1.9m, 1 },
+                    { new Guid("19b3a016-e039-49be-bbb5-cfc095a7a24a"), new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), 1, 4, 2.3m, 0 },
+                    { new Guid("28ef59d5-28c1-4854-b610-9b86a63cf258"), new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"), 3, 5, 1.5m, 2 },
+                    { new Guid("2ab3b3af-36a2-42aa-a9a9-e64d119b0a60"), new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"), 3, 4, 2.0m, 0 },
+                    { new Guid("3100856d-8f88-4c42-acdb-4087bffe548e"), new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), 1, 6, 1.8m, 2 },
+                    { new Guid("35b8614f-ceaf-4813-a614-b1fa0d88b9b1"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 1, 1, 1.7m, 0 },
+                    { new Guid("37525da5-1c03-4cfb-93fb-ed57f507daf7"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 2, 3, 1.5m, 0 },
+                    { new Guid("5b81ccb0-359b-4ded-8e03-8e6dc8d40959"), new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"), 1, 1, 1.5m, 0 },
+                    { new Guid("5c403e6e-f4b7-47c3-a65c-732871264915"), new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"), 2, 2, 2.0m, 0 },
+                    { new Guid("77d1367e-03a1-406a-a949-e610b3637768"), new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"), 2, 1, 1.6m, 0 },
+                    { new Guid("823733d7-0f13-4a24-b03e-7bdd470d3451"), new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"), 3, 3, 1.7m, 0 },
+                    { new Guid("b3728fd0-22e7-4b11-8dee-1b2766236697"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 1, 6, 2.5m, 1 },
+                    { new Guid("bf4b8267-7d3a-4168-b96a-d6045c5653a6"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 3, 4, 2.4m, 0 },
+                    { new Guid("bf805418-066e-4376-8d7f-cc5b5d108026"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 2, 5, 2.1m, 2 },
+                    { new Guid("dae0e025-e800-47d5-aa24-f4bf3a18ea9f"), new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), 2, 5, 2.1m, 0 },
+                    { new Guid("e3c40e8d-2540-4fa5-b027-ecea630958e8"), new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"), 2, 2, 2.2m, 0 },
+                    { new Guid("fe4bb787-3f80-4521-a996-75d45e8923af"), new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), 2, 1, 1.6m, 1 }
                 });
 
             migrationBuilder.CreateIndex(

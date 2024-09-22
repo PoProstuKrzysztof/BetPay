@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20240922091343_InitialCreate")]
+    [Migration("20240922135504_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -57,7 +57,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            BetId = new Guid("1fe6ad59-16e3-465e-bfc4-ba99030a5f9d"),
+                            BetId = new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"),
                             BetDate = new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 2,
                             IsTaxIncluded = true,
@@ -66,7 +66,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"),
+                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
                             BetDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 3,
                             IsTaxIncluded = true,
@@ -75,7 +75,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"),
+                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
                             BetDate = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 1,
                             IsTaxIncluded = false,
@@ -84,7 +84,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("01418e64-446a-42c9-9a88-fec52649f3f0"),
+                            BetId = new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"),
                             BetDate = new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 1,
                             IsTaxIncluded = false,
@@ -93,7 +93,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("5f150559-7a21-489f-ae6c-673ed010918a"),
+                            BetId = new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"),
                             BetDate = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 5,
                             IsTaxIncluded = true,
@@ -121,86 +121,92 @@ namespace Infrastructure.Migrations
                         new
                         {
                             BookmakerId = 1,
-                            ImagePath = "/Images/Bookmakers/betclic-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/betclic.png",
                             Name = "Betclic"
                         },
                         new
                         {
                             BookmakerId = 2,
-                            ImagePath = "/Images/Bookmakers/superbet-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/superbet.png",
                             Name = "Superbet"
                         },
                         new
                         {
                             BookmakerId = 3,
-                            ImagePath = "/Images/Bookmakers/fortuna-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/fortuna.png",
                             Name = "Fortuna"
                         },
                         new
                         {
                             BookmakerId = 4,
-                            ImagePath = "/Images/Bookmakers/sts-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/sts.png",
                             Name = "STS"
                         },
                         new
                         {
                             BookmakerId = 5,
-                            ImagePath = "/Images/Bookmakers/betfan-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/betfan.png",
                             Name = "Betfan"
                         },
                         new
                         {
                             BookmakerId = 6,
-                            ImagePath = "/Images/Bookmakers/fuksiarz-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/fuksiarz.png",
                             Name = "Fuksiarz"
                         },
                         new
                         {
                             BookmakerId = 7,
-                            ImagePath = "/Images/Bookmakers/lvbet-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/lvbet.png",
                             Name = "LvBet"
                         },
                         new
                         {
                             BookmakerId = 8,
-                            ImagePath = "/Images/Bookmakers/betters-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/betters.png",
                             Name = "Betters"
                         },
                         new
                         {
                             BookmakerId = 9,
-                            ImagePath = "/Images/Bookmakers/betcris-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/betcris.png",
                             Name = "Betcris"
                         },
                         new
                         {
                             BookmakerId = 10,
-                            ImagePath = "/Images/Bookmakers/gobet-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/gobet.png",
                             Name = "GoBet"
                         },
                         new
                         {
                             BookmakerId = 11,
-                            ImagePath = "/Images/Bookmakers/totalbet-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/totalbet.png",
                             Name = "TotalBet"
                         },
                         new
                         {
                             BookmakerId = 12,
-                            ImagePath = "/Images/Bookmakers/forbet-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/forbet.png",
                             Name = "ForBet"
                         },
                         new
                         {
                             BookmakerId = 13,
-                            ImagePath = "/Images/Bookmakers/etoto-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/etoto.png",
                             Name = "Etoto"
                         },
                         new
                         {
                             BookmakerId = 14,
-                            ImagePath = "/Images/Bookmakers/ComeOn-icon.jpg",
+                            ImagePath = "/Images/Bookmakers/comeon.png",
                             Name = "ComeOn"
+                        },
+                        new
+                        {
+                            BookmakerId = 15,
+                            ImagePath = "/Images/Bookmakers/pzbuk.png",
+                            Name = "Pzbuk"
                         });
                 });
 
@@ -271,8 +277,8 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            EventId = new Guid("81130f25-3d3b-4a95-820f-7352607cd045"),
-                            BetId = new Guid("1fe6ad59-16e3-465e-bfc4-ba99030a5f9d"),
+                            EventId = new Guid("5b81ccb0-359b-4ded-8e03-8e6dc8d40959"),
+                            BetId = new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"),
                             CategoryId = 1,
                             EventTypeId = 1,
                             Odds = 1.5m,
@@ -280,8 +286,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("3cd1f025-ffaa-4b4f-8f67-f42d15d6fe0d"),
-                            BetId = new Guid("1fe6ad59-16e3-465e-bfc4-ba99030a5f9d"),
+                            EventId = new Guid("5c403e6e-f4b7-47c3-a65c-732871264915"),
+                            BetId = new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"),
                             CategoryId = 2,
                             EventTypeId = 2,
                             Odds = 2.0m,
@@ -289,8 +295,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("54e8adb7-616a-45b7-8b09-8815137c07d0"),
-                            BetId = new Guid("1fe6ad59-16e3-465e-bfc4-ba99030a5f9d"),
+                            EventId = new Guid("823733d7-0f13-4a24-b03e-7bdd470d3451"),
+                            BetId = new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"),
                             CategoryId = 3,
                             EventTypeId = 3,
                             Odds = 1.7m,
@@ -298,8 +304,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("357614f0-6ed2-48ab-ab18-3eeb6a39d793"),
-                            BetId = new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"),
+                            EventId = new Guid("fe4bb787-3f80-4521-a996-75d45e8923af"),
+                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
                             CategoryId = 2,
                             EventTypeId = 1,
                             Odds = 1.6m,
@@ -307,8 +313,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("e06d5ff0-b4e8-4c1b-b7e8-90828a9c9809"),
-                            BetId = new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"),
+                            EventId = new Guid("19b3a016-e039-49be-bbb5-cfc095a7a24a"),
+                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
                             CategoryId = 1,
                             EventTypeId = 4,
                             Odds = 2.3m,
@@ -316,8 +322,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("5116eef5-1d1e-427d-a069-a0507f37e545"),
-                            BetId = new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"),
+                            EventId = new Guid("dae0e025-e800-47d5-aa24-f4bf3a18ea9f"),
+                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
                             CategoryId = 2,
                             EventTypeId = 5,
                             Odds = 2.1m,
@@ -325,8 +331,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("b8a16683-03a5-452f-84c4-2a95b25d0a19"),
-                            BetId = new Guid("0a50eda4-ce05-4c73-914e-e35f37227d27"),
+                            EventId = new Guid("3100856d-8f88-4c42-acdb-4087bffe548e"),
+                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
                             CategoryId = 1,
                             EventTypeId = 6,
                             Odds = 1.8m,
@@ -334,8 +340,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("1e6ef780-82b4-4c16-b00f-352e3310010e"),
-                            BetId = new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"),
+                            EventId = new Guid("37525da5-1c03-4cfb-93fb-ed57f507daf7"),
+                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
                             CategoryId = 2,
                             EventTypeId = 3,
                             Odds = 1.5m,
@@ -343,8 +349,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("ec5524e1-da64-4242-a704-45f61640dcb2"),
-                            BetId = new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"),
+                            EventId = new Guid("35b8614f-ceaf-4813-a614-b1fa0d88b9b1"),
+                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
                             CategoryId = 1,
                             EventTypeId = 1,
                             Odds = 1.7m,
@@ -352,8 +358,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("d3581729-8c26-4b07-a337-5688879070de"),
-                            BetId = new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"),
+                            EventId = new Guid("bf4b8267-7d3a-4168-b96a-d6045c5653a6"),
+                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
                             CategoryId = 3,
                             EventTypeId = 4,
                             Odds = 2.4m,
@@ -361,8 +367,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("563bc69f-122b-4ba6-b542-58bb6f51381c"),
-                            BetId = new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"),
+                            EventId = new Guid("bf805418-066e-4376-8d7f-cc5b5d108026"),
+                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
                             CategoryId = 2,
                             EventTypeId = 5,
                             Odds = 2.1m,
@@ -370,8 +376,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("7e74b77f-8cce-4eb5-94fb-ea1971c680af"),
-                            BetId = new Guid("71cc4ab8-9fe0-4925-8c8b-e0acc8c7ef2c"),
+                            EventId = new Guid("b3728fd0-22e7-4b11-8dee-1b2766236697"),
+                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
                             CategoryId = 1,
                             EventTypeId = 6,
                             Odds = 2.5m,
@@ -379,8 +385,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("924848d6-691e-4f5a-a6e2-276cbc333a7c"),
-                            BetId = new Guid("01418e64-446a-42c9-9a88-fec52649f3f0"),
+                            EventId = new Guid("2ab3b3af-36a2-42aa-a9a9-e64d119b0a60"),
+                            BetId = new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"),
                             CategoryId = 3,
                             EventTypeId = 4,
                             Odds = 2.0m,
@@ -388,8 +394,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("f75588f9-1919-4284-b15b-18d5b1c088b1"),
-                            BetId = new Guid("01418e64-446a-42c9-9a88-fec52649f3f0"),
+                            EventId = new Guid("77d1367e-03a1-406a-a949-e610b3637768"),
+                            BetId = new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"),
                             CategoryId = 2,
                             EventTypeId = 1,
                             Odds = 1.6m,
@@ -397,8 +403,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("f132f339-0b45-40d2-80af-ad63e2c293b4"),
-                            BetId = new Guid("5f150559-7a21-489f-ae6c-673ed010918a"),
+                            EventId = new Guid("1110967a-1c71-44a7-a622-ae147926e1da"),
+                            BetId = new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"),
                             CategoryId = 1,
                             EventTypeId = 3,
                             Odds = 1.9m,
@@ -406,8 +412,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("4e48c07a-1b43-4750-ac5e-bfa5f864061e"),
-                            BetId = new Guid("5f150559-7a21-489f-ae6c-673ed010918a"),
+                            EventId = new Guid("e3c40e8d-2540-4fa5-b027-ecea630958e8"),
+                            BetId = new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"),
                             CategoryId = 2,
                             EventTypeId = 2,
                             Odds = 2.2m,
@@ -415,8 +421,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("1bf6661c-eee1-4717-86b9-2a9047984e6d"),
-                            BetId = new Guid("5f150559-7a21-489f-ae6c-673ed010918a"),
+                            EventId = new Guid("28ef59d5-28c1-4854-b610-9b86a63cf258"),
+                            BetId = new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"),
                             CategoryId = 3,
                             EventTypeId = 5,
                             Odds = 1.5m,

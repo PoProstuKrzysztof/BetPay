@@ -1,21 +1,21 @@
 ﻿@using Domain.Enums
 @using Syncfusion.Blazor.DropDowns
 @inject IRepositoryWrapper RepositoryWrapper
-@rendermode InteractiveServer
 
 
 
-<SfGrid @ref="BetGridInstance" DataSource="Bets" Allow AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel"})">
+
+<SfGrid @ref="BetGridInstance" DataSource="Bets" AllowGrouping="true" AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel"})">
     <GridPageSettings PageSize="5"></GridPageSettings>
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
     <GridEvents RowSelected="RowSelectHandler" TValue="Bet" OnActionComplete="BetActionsHandler"></GridEvents>
     <GridColumns>
         <GridColumn Field="@nameof(Bet.BetId)" Visible="false" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
-        <GridColumn Field="@nameof(Bet.Stake)" Type="ColumnType.Decimal" ValidationRules="new ValidationRules{ Required = true, Range=[1,99999]}" HeaderText="Stake"></GridColumn>
-        <GridColumn Field="@nameof(Bet.TotalOdds)" AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
-        <GridColumn Field="@nameof(Bet.PotentialWin)" AllowAdding="false" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
-        <GridColumn Field="@nameof(Bet.BetDate)" DefaultValue="DateTime.Today" Format="d" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
-        <GridForeignColumn Field="@nameof(Bookmaker.BookmakerId)" HeaderText="Bookmaker" ValidationRules="new ValidationRules{Min =  1}" ForeignDataSource="Bookmakers" ForeignKeyValue="Name" EditType="EditType.DropDownEdit">
+        <GridColumn Field="@nameof(Bet.Stake)" TextAlign="TextAlign.Right" Type="ColumnType.Decimal" ValidationRules="new ValidationRules{ Required = true, Range=[1,99999]}" HeaderText="Stake"></GridColumn>
+        <GridColumn Field="@nameof(Bet.TotalOdds)" TextAlign="TextAlign.Left" AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
+        <GridColumn Field="@nameof(Bet.PotentialWin)" TextAlign="TextAlign.Right" AllowAdding="false" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
+        <GridColumn Field="@nameof(Bet.BetDate)" DefaultValue="DateTime.Today" Format="dd MMM yyyy" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
+        <GridForeignColumn Field="@nameof(Bookmaker.BookmakerId)" TextAlign="TextAlign.Left" HeaderText="Bookmaker" ValidationRules="new ValidationRules{Min =  1}" ForeignDataSource="Bookmakers" ForeignKeyValue="Name" EditType="EditType.DropDownEdit">
             <Template>
                 @{
                     var bookmaker = (context as Bet).Bookmaker;
@@ -53,14 +53,41 @@
             </EditTemplate>
         </GridForeignColumn>
 
-        <GridColumn Field="@nameof(Bet.Status)" AllowAdding="false" AllowEditing="false" HeaderText="Status"></GridColumn>
-        <GridColumn Field="@nameof(Bet.LivePrematch)" HeaderText="State" EditType="EditType.DropDownEdit">
+        <GridColumn Field="@nameof(Bet.Status)" AllowAdding="false" AllowEditing="false" HeaderText="Status" TextAlign="TextAlign.Center">
+            <Template>
+                @{
+                    var bet = (context as Bet);
+
+                    @if (bet.Status == StatusEnum.Won)
+                    {
+                        <div class="status-won">
+                            <span>@bet.Status</span>
+                        </div>
+                    }
+                    @if (bet.Status == StatusEnum.Lost)
+                    {
+                        <div class="status-lost">
+                            <span>@bet.Status</span>
+                        </div>
+                    }
+                    @if (bet.Status == StatusEnum.Unfinished)
+                    {
+                        <div class="status-unfinished">
+                            <span>@bet.Status</span>
+                        </div>
+                    }
+
+                }
+            </Template>
+        </GridColumn>
+
+        <GridColumn Field="@nameof(Bet.IsTaxIncluded)" HeaderText="Tax" DisplayAsCheckBox="true" TextAlign="TextAlign.Right"></GridColumn>
+        <GridColumn Field="@nameof(Bet.LivePrematch)" TextAlign="TextAlign.Left" HeaderText="State" EditType="EditType.DropDownEdit">
             <EditTemplate>
                 <SfDropDownList @bind-value="((context as Bet).LivePrematch)" TItem="string" TValue="LivePrematchEnum" DataSource="LivePrematchEnumValues">
                 </SfDropDownList>
             </EditTemplate>
         </GridColumn>
-        <GridColumn Field="@nameof(Bet.IsTaxIncluded)" DisplayAsCheckBox="true"></GridColumn>
     </GridColumns>
 </SfGrid>
 
@@ -68,9 +95,6 @@
 
 @if (IsBetSelected)
 {
-    <center>
-        <h2>Events for selected bet!</h2>
-    </center>
 
     <SfGrid @ref="EventGridInstance" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
         <GridEvents TValue="Event" OnActionComplete="EventActionHandler"></GridEvents>
@@ -98,6 +122,31 @@
             </GridForeignColumn>
 
             <GridColumn Field="@nameof(Event.Status)" HeaderText="Status" EditType="EditType.DropDownEdit">
+                <Template>
+                    @{
+                        var status = (context as Event).Status;
+
+                        @if (status == StatusEnum.Won)
+                        {
+                            <div class="status-won">
+                                <span>@status</span>
+                            </div>
+                        }
+                        @if (status == StatusEnum.Lost)
+                        {
+                            <div class="status-lost">
+                                <span>@status</span>
+                            </div>
+                        }
+                        @if (status == StatusEnum.Unfinished)
+                        {
+                            <div class="status-unfinished">
+                                <span>@status</span>
+                            </div>
+                        }
+
+                    }
+                </Template>
                 <EditTemplate>
                     <SfDropDownList TItem="string" TValue="StatusEnum" DataSource="StatusValues" @bind-value="((context as Event).Status)">
                     </SfDropDownList>
@@ -108,13 +157,10 @@
     </SfGrid>
 
 }
-else
-{
-    <center>
-        <h2>Select bet to display events!</h2>
-    </center>
 
-}
+
+
+
 
 
 @code {

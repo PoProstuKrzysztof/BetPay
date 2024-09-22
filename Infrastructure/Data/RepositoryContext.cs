@@ -70,20 +70,21 @@ public class RepositoryContext : DbContext
         var betId5 = Guid.NewGuid();
 
         modelBuilder.Entity<Bookmaker>().HasData(
-            new Bookmaker { BookmakerId = 1, Name = "Betclic", ImagePath = "/Images/Bookmakers/betclic-icon.jpg" },
-            new Bookmaker { BookmakerId = 2, Name = "Superbet", ImagePath = "/Images/Bookmakers/superbet-icon.jpg" },
-            new Bookmaker { BookmakerId = 3, Name = "Fortuna", ImagePath = "/Images/Bookmakers/fortuna-icon.jpg" },
-            new Bookmaker { BookmakerId = 4, Name = "STS", ImagePath = "/Images/Bookmakers/sts-icon.jpg" },
-            new Bookmaker { BookmakerId = 5, Name = "Betfan", ImagePath = "/Images/Bookmakers/betfan-icon.jpg" },
-            new Bookmaker { BookmakerId = 6, Name = "Fuksiarz", ImagePath = "/Images/Bookmakers/fuksiarz-icon.jpg" },
-            new Bookmaker { BookmakerId = 7, Name = "LvBet", ImagePath = "/Images/Bookmakers/lvbet-icon.jpg" },
-            new Bookmaker { BookmakerId = 8, Name = "Betters", ImagePath = "/Images/Bookmakers/betters-icon.jpg" },
-            new Bookmaker { BookmakerId = 9, Name = "Betcris", ImagePath = "/Images/Bookmakers/betcris-icon.jpg" },
-            new Bookmaker { BookmakerId = 10, Name = "GoBet", ImagePath = "/Images/Bookmakers/gobet-icon.jpg" },
-            new Bookmaker { BookmakerId = 11, Name = "TotalBet", ImagePath = "/Images/Bookmakers/totalbet-icon.jpg" },
-            new Bookmaker { BookmakerId = 12, Name = "ForBet", ImagePath = "/Images/Bookmakers/forbet-icon.jpg" },
-            new Bookmaker { BookmakerId = 13, Name = "Etoto", ImagePath = "/Images/Bookmakers/etoto-icon.jpg" },
-            new Bookmaker { BookmakerId = 14, Name = "ComeOn", ImagePath = "/Images/Bookmakers/ComeOn-icon.jpg" }
+            new Bookmaker { BookmakerId = 1, Name = "Betclic", ImagePath = "/Images/Bookmakers/betclic.png" },
+            new Bookmaker { BookmakerId = 2, Name = "Superbet", ImagePath = "/Images/Bookmakers/superbet.png" },
+            new Bookmaker { BookmakerId = 3, Name = "Fortuna", ImagePath = "/Images/Bookmakers/fortuna.png" },
+            new Bookmaker { BookmakerId = 4, Name = "STS", ImagePath = "/Images/Bookmakers/sts.png" },
+            new Bookmaker { BookmakerId = 5, Name = "Betfan", ImagePath = "/Images/Bookmakers/betfan.png" },
+            new Bookmaker { BookmakerId = 6, Name = "Fuksiarz", ImagePath = "/Images/Bookmakers/fuksiarz.png" },
+            new Bookmaker { BookmakerId = 7, Name = "LvBet", ImagePath = "/Images/Bookmakers/lvbet.png" },
+            new Bookmaker { BookmakerId = 8, Name = "Betters", ImagePath = "/Images/Bookmakers/betters.png" },
+            new Bookmaker { BookmakerId = 9, Name = "Betcris", ImagePath = "/Images/Bookmakers/betcris.png" },
+            new Bookmaker { BookmakerId = 10, Name = "GoBet", ImagePath = "/Images/Bookmakers/gobet.png" },
+            new Bookmaker { BookmakerId = 11, Name = "TotalBet", ImagePath = "/Images/Bookmakers/totalbet.png" },
+            new Bookmaker { BookmakerId = 12, Name = "ForBet", ImagePath = "/Images/Bookmakers/forbet.png" },
+            new Bookmaker { BookmakerId = 13, Name = "Etoto", ImagePath = "/Images/Bookmakers/etoto.png" },
+            new Bookmaker { BookmakerId = 14, Name = "ComeOn", ImagePath = "/Images/Bookmakers/comeon.png" },
+            new Bookmaker { BookmakerId = 15, Name = "Pzbuk", ImagePath = "/Images/Bookmakers/pzbuk.png" }
 
             );
 

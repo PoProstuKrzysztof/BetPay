@@ -24,4 +24,8 @@
     <PackageReference Include="Syncfusion.Blazor.Themes" Version="26.2.14" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Bookmakers\" />
+  </ItemGroup>
+
 </Project>
