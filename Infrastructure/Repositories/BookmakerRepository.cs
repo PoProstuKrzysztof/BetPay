@@ -20,12 +20,10 @@ public class BookmakerRepository : RepositoryBase<Bookmaker>, IBookmakerReposito
                     .Result
                     .OrderBy(x => x.BookmakerId)
                     .ToListAsync();
-
         }
         catch (Exception ex)
         {
-
-            throw new RetrieveException("Failed to retrieve bookmakers.",nameof(Bookmaker),ex);
+            throw new RetrieveException("Failed to retrieve bookmakers.", nameof(Bookmaker), ex);
         }
     }
 }

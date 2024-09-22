@@ -14,4 +14,6 @@ public class Category
     // Relationships
 
     public virtual ICollection<Event> Events { get; set; }
+
+    public virtual ICollection<EventType>? EventTypes { get; set; }
 }

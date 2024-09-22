@@ -18,14 +18,11 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
         {
             return await FindAll()
                .Result
-               .OrderByDescending(e => e.EventId)
                .ToListAsync();
         }
         catch (Exception ex)
         {
-
             throw new RetrieveException("Failed to retrieve events.", nameof(Event), ex);
-
         }
     }
 
@@ -47,9 +44,7 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
         }
         catch (Exception ex)
         {
-
             throw new UpdateException($"Failed to update event with ID: {@event.EventId} .", nameof(Event), ex);
-
         }
     }
 
@@ -57,7 +52,6 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
     {
         try
         {
-
             var bet = RepositoryContext.Set<Bet>()
                 .First(b => b.BetId == @event.BetId);
 
@@ -75,13 +69,13 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
             @event.Category = category;
             @event.EventType = eventType;
 
+            RepositoryContext.Entry(@event).State = EntityState.Added;
+
             Create(@event);
         }
         catch (Exception ex)
         {
-
             throw new CreateException("Failed to create event.", nameof(Event), ex);
-
         }
     }
 
@@ -103,11 +97,7 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
         }
         catch (Exception ex)
         {
-
             throw new DeleteException($"Failed to delete event with ID: {@event.EventId}.", nameof(Event), ex);
-
         }
     }
-
-
 }

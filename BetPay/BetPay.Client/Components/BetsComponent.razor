@@ -1,6 +1,4 @@
-﻿
-
-@using BetPay.Enums
+﻿@using BetPay.Enums
 @using Syncfusion.Blazor.DropDowns
 @inject IRepositoryWrapper RepositoryWrapper
 @rendermode InteractiveServer
@@ -76,20 +74,23 @@
             <GridColumn Field="@nameof(Event.EventId)" IsPrimaryKey="true" IsIdentity="true" Visible="false"></GridColumn>
             <GridColumn Field="@nameof(Event.Odds)" HeaderText="Odds"></GridColumn>
 
-            <GridForeignColumn Field="@nameof(Category.CategoryId)" HeaderText="Category" TValue="Category" ForeignDataSource="Categories" ForeignKeyValue="Name">
+            <GridForeignColumn Field="@nameof(Category.CategoryId)" HeaderText="Category" TValue="Category"  ForeignDataSource="Categories" ForeignKeyValue="Name">
                 <EditTemplate>
-                    <SfDropDownList @bind-value="@((context as Event).CategoryId)" ID="CategoryId" DataSource="Categories" TItem="Category" TValue="int">
+                    <SfDropDownList @bind-value="@((context as Event).CategoryId)" TItem="Category" TValue="int" ID="CategoryId" Placeholder="Select category" DataSource="Categories">
                         <DropDownListFieldSettings Text="Name" Value="CategoryId"></DropDownListFieldSettings>
+                        <DropDownListEvents TItem="Category" TValue="int" ValueChange="ChangeCategory"></DropDownListEvents>
                     </SfDropDownList>
                 </EditTemplate>
             </GridForeignColumn>
-            <GridForeignColumn Field="@nameof(EventType.EventTypeId)" HeaderText="Event Type" TValue="EventType" ForeignDataSource="EventTypes" ForeignKeyValue="Name">
+
+            <GridForeignColumn  Field="@nameof(EventType.EventTypeId)" HeaderText="Event Type" TValue="EventType" ForeignDataSource="EventTypes" ForeignKeyValue="Name">
                 <EditTemplate>
-                    <SfDropDownList @bind-value="@((context as Event).EventTypeId)" ID="EventTypeId" DataSource="EventTypes" TItem="EventType" TValue="int">
+                    <SfDropDownList @bind-value="@((context as Event).EventTypeId)" Enabled="EnableEventTypeDropDown" Query="EventTypeQuery" TItem="EventType" TValue="int" ID="EventTypeId" PopupHeight="Auto" Placeholder="Select event type" DataSource="EventTypes">
                         <DropDownListFieldSettings Text="Name" Value="EventTypeId"></DropDownListFieldSettings>
                     </SfDropDownList>
                 </EditTemplate>
             </GridForeignColumn>
+
             <GridColumn Field="@nameof(Event.Status)" HeaderText="Status" EditType="EditType.DropDownEdit">
                 <EditTemplate>
                     <SfDropDownList TItem="string" TValue="StatusEnum" DataSource="StatusValues" @bind-value="((context as Event).Status)">
@@ -121,8 +122,12 @@ else
     public IEnumerable<Category>? Categories { get; set; }
     public IEnumerable<EventType>? EventTypes { get; set; }
 
-    public Guid? RowIndex { get; set; }
+    public Query EventTypeQuery { get; set; } = null;
+
     public bool IsBetSelected;
+    public bool EnableEventTypeDropDown;
+
+    public Guid? RowIndex { get; set; }
     public string[] StatusValues = Enum.GetNames(typeof(StatusEnum));
 
 
@@ -177,8 +182,10 @@ else
         else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
         {
             RepositoryWrapper.EventRepository.Delete(args.Data);
+            Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
             await RepositoryWrapper.SaveAsync();
             await EventGridInstance.Refresh();
+            await BetGridInstance.Refresh();
         }
 
 
@@ -206,6 +213,16 @@ else
 
 
     }
+
+
+
+    public void ChangeCategory(ChangeEventArgs<int,Category> args)
+    {
+        EnableEventTypeDropDown = args.Value > 0 ? true : false;
+        this.EventTypeQuery = new Query().Where(new WhereFilter() { Field = "CategoryId", Operator = "equal", value = args.Value, IgnoreCase = false, IgnoreAccent= false });
+        EventGridInstance.PreventRender(false);
+    }
+
 
     private Query BuildQuery()
     {

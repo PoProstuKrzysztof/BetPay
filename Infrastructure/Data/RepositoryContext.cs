@@ -1,5 +1,6 @@
 ﻿using BetPay.Enums;
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data;
@@ -26,52 +27,48 @@ public class RepositoryContext : DbContext
 
         modelBuilder.Entity<Category>().HasData(
             new Category { CategoryId = 1, Name = "Football" },
-            new Category { CategoryId = 2, Name = "Soccer" },
-            new Category { CategoryId = 3, Name = "Tennis" },
-             new Category { CategoryId = 4, Name = "Basketball" }
+            new Category { CategoryId = 2, Name = "Tennis" },
+             new Category { CategoryId = 3, Name = "Basketball" }
         );
 
         modelBuilder.Entity<EventType>().HasData(
-            new EventType { EventTypeId = 1, Name = "BTTS" },
-            new EventType { EventTypeId = 2, Name = "1X2" },
-            new EventType { EventTypeId = 3, Name = "Over/Under Goals" },
-            new EventType { EventTypeId = 4, Name = "Corners" },
-            new EventType { EventTypeId = 5, Name = "Yellow Cards" },
-            new EventType { EventTypeId = 6, Name = "Correct Score" },
-            new EventType { EventTypeId = 7, Name = "Double Chance" },
-            new EventType { EventTypeId = 8, Name = "First Goal Scorer" },
-            new EventType { EventTypeId = 9, Name = "Last Goal Scorer" },
-            new EventType { EventTypeId = 10, Name = "Player to Score Anytime" },
-            new EventType { EventTypeId = 11, Name = "Clean Sheet" },
-            new EventType { EventTypeId = 12, Name = "Team to Win Both Halves" },
-            new EventType { EventTypeId = 13, Name = "Half-Time Result" },
-            new EventType { EventTypeId = 14, Name = "Full-Time Result" },
-            new EventType { EventTypeId = 15, Name = "Half-Time/Full-Time" },
-            new EventType { EventTypeId = 16, Name = "Team to Score First" },
-            new EventType { EventTypeId = 17, Name = "First Half Goals" },
-            new EventType { EventTypeId = 18, Name = "Second Half Goals" }
-        );
+     new EventType { EventTypeId = 1, Name = "BTTS", CategoryId = 1 },
+     new EventType { EventTypeId = 2, Name = "1X2", CategoryId = 1 },
+     new EventType { EventTypeId = 3, Name = "Over/Under Goals", CategoryId = 1 },
+     new EventType { EventTypeId = 4, Name = "Corners", CategoryId = 1 },
+     new EventType { EventTypeId = 5, Name = "Yellow Cards", CategoryId = 1 },
+     new EventType { EventTypeId = 6, Name = "Correct Score", CategoryId = 1 },
+     new EventType { EventTypeId = 7, Name = "Double Chance", CategoryId = 1 },
+     new EventType { EventTypeId = 8, Name = "First Goal Scorer", CategoryId = 1 },
+     new EventType { EventTypeId = 9, Name = "Last Goal Scorer", CategoryId = 1 },
+     new EventType { EventTypeId = 10, Name = "Player to Score Anytime", CategoryId = 1 },
+     new EventType { EventTypeId = 11, Name = "Clean Sheet", CategoryId = 1 },
+     new EventType { EventTypeId = 12, Name = "Team to Win Both Halves", CategoryId = 1 },
+     new EventType { EventTypeId = 13, Name = "Half-Time Result", CategoryId = 1 },
+     new EventType { EventTypeId = 14, Name = "Full-Time Result", CategoryId = 1 },
+     new EventType { EventTypeId = 15, Name = "Half-Time/Full-Time", CategoryId = 1 },
+     new EventType { EventTypeId = 16, Name = "Team to Score First", CategoryId = 1 },
+     new EventType { EventTypeId = 17, Name = "First Half Goals", CategoryId = 1 },
+     new EventType { EventTypeId = 18, Name = "Second Half Goals", CategoryId = 1 },
+     new EventType { EventTypeId = 19, Name = "Total Aces", CategoryId = 2 },
+    new EventType { EventTypeId = 20, Name = "Total Double Faults", CategoryId = 2 },
+    new EventType { EventTypeId = 21, Name = "Set Winner", CategoryId = 2 },
+    new EventType { EventTypeId = 22, Name = "Match Winner", CategoryId = 2 },
+    new EventType { EventTypeId = 23, Name = "First Set Winner", CategoryId = 2 },
+    new EventType { EventTypeId = 24, Name = "Total Games Over/Under", CategoryId = 2 },
+     new EventType { EventTypeId = 25, Name = "First Basket Scorer", CategoryId = 3 },
+    new EventType { EventTypeId = 26, Name = "Total Points Over/Under", CategoryId = 3 },
+    new EventType { EventTypeId = 27, Name = "Winning Margin", CategoryId = 3 },
+    new EventType { EventTypeId = 28, Name = "Most Assists", CategoryId = 3 },
+    new EventType { EventTypeId = 29, Name = "Total Rebounds", CategoryId = 3 },
+    new EventType { EventTypeId = 30, Name = "First Team to Score 20 Points", CategoryId = 3 }
+ );
 
         var betId1 = Guid.NewGuid();
         var betId2 = Guid.NewGuid();
         var betId3 = Guid.NewGuid();
         var betId4 = Guid.NewGuid();
         var betId5 = Guid.NewGuid();
-        var betId6 = Guid.NewGuid();
-        var betId7 = Guid.NewGuid();
-        var betId8 = Guid.NewGuid();
-        var betId9 = Guid.NewGuid();
-        var betId10 = Guid.NewGuid();
-        var betId11 = Guid.NewGuid();
-        var betId12 = Guid.NewGuid();
-        var betId13 = Guid.NewGuid();
-        var betId14 = Guid.NewGuid();
-        var betId15 = Guid.NewGuid();
-        var betId16 = Guid.NewGuid();
-        var betId17 = Guid.NewGuid();
-        var betId18 = Guid.NewGuid();
-        var betId19 = Guid.NewGuid();
-        var betId20 = Guid.NewGuid();
 
         modelBuilder.Entity<Bookmaker>().HasData(
             new Bookmaker { BookmakerId = 1, Name = "Betclic", ImagePath = "/Images/Bookmakers/betclic-icon.jpg" },
@@ -91,66 +88,62 @@ public class RepositoryContext : DbContext
 
             );
 
-        modelBuilder.Entity<Bet>()
-        .HasMany(b => b.EventsList)
-        .WithOne(e => e.Bet)
-        .HasForeignKey(e => e.BetId)
-        .OnDelete(DeleteBehavior.Cascade);
-
         modelBuilder.Entity<Bet>().HasData(
-        new Bet { BetId = betId1, Stake = 50m, BetDate = new DateTime(2023, 7, 2), IsTaxIncluded = true, BookmakerId = 2 },
-        new Bet { BetId = betId2, Stake = 100m, BetDate = new DateTime(2023, 5, 10), IsTaxIncluded = true, BookmakerId = 3 },
-        new Bet { BetId = betId3, Stake = 200m, BetDate = new DateTime(2023, 8, 15), IsTaxIncluded = false, BookmakerId = 1 },
-        new Bet { BetId = betId4, Stake = 75m, BetDate = new DateTime(2023, 9, 2), IsTaxIncluded = false, BookmakerId = 4 },
-        new Bet { BetId = betId5, Stake = 150m, BetDate = new DateTime(2023, 12, 1), BookmakerId = 11 },
+        new Bet { BetId = betId1, Stake = 50m, BetDate = new DateTime(2023, 7, 2), IsTaxIncluded = true, BookmakerId = 2, LivePrematch = LivePrematchEnum.Prematch },
+        new Bet { BetId = betId2, Stake = 100m, BetDate = new DateTime(2023, 5, 10), IsTaxIncluded = true, BookmakerId = 3, LivePrematch = LivePrematchEnum.Prematch },
+        new Bet { BetId = betId3, Stake = 200m, BetDate = new DateTime(2023, 8, 15), IsTaxIncluded = false, BookmakerId = 1, LivePrematch = LivePrematchEnum.Prematch },
+        new Bet { BetId = betId4, Stake = 75m, BetDate = new DateTime(2023, 9, 2), IsTaxIncluded = false, BookmakerId = 1, LivePrematch = LivePrematchEnum.Live },
+        new Bet { BetId = betId5, Stake = 150m, BetDate = new DateTime(2023, 12, 1), IsTaxIncluded = true, BookmakerId = 5, LivePrematch = LivePrematchEnum.Live }
 
-        // Zakłady z bieżącego roku
-        new Bet { BetId = betId6, Stake = 120m, BetDate = new DateTime(2024, 3, 14), BookmakerId = 5 },
-        new Bet { BetId = betId7, Stake = 90m, BetDate = new DateTime(2024, 4, 20), BookmakerId = 13 },
-        new Bet { BetId = betId8, Stake = 60m, BetDate = new DateTime(2024, 2, 5), BookmakerId = 10 },
-        new Bet { BetId = betId9, Stake = 40m, BetDate = new DateTime(2024, 6, 30), BookmakerId = 1 },
-        new Bet { BetId = betId10, Stake = 80m, BetDate = new DateTime(2024, 7, 15), BookmakerId = 7 },
-
-        new Bet { BetId = betId11, Stake = 110m, BetDate = new DateTime(2024, 8, 18), BookmakerId = 4 },
-        new Bet { BetId = betId12, Stake = 70m, BetDate = new DateTime(2024, 9, 2), BookmakerId = 2 },
-        new Bet { BetId = betId13, Stake = 95m, BetDate = new DateTime(2024, 9, 5), BookmakerId = 3 },
-        new Bet { BetId = betId14, Stake = 105m, BetDate = new DateTime(2024, 9, 8), BookmakerId = 13 },
-        new Bet { BetId = betId15, Stake = 130m, BetDate = new DateTime(2024, 10, 10), BookmakerId = 5 },
-
-        new Bet { BetId = betId16, Stake = 85m, BetDate = new DateTime(2024, 10, 15), BookmakerId = 11 },
-        new Bet { BetId = betId17, Stake = 45m, BetDate = new DateTime(2024, 10, 20), BookmakerId = 10 },
-        new Bet { BetId = betId18, Stake = 65m, BetDate = new DateTime(2024, 11, 2), BookmakerId = 1 },
-        new Bet { BetId = betId19, Stake = 150m, BetDate = new DateTime(2024, 12, 1), BookmakerId = 7 }
     );
 
-        // Zdarzenia
         modelBuilder.Entity<Event>().HasData(
-            // Zakład 1 - 3 zdarzenia
+
             new Event { EventId = Guid.NewGuid(), Odds = 1.5m, CategoryId = 1, EventTypeId = 1, BetId = betId1, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 2.0m, CategoryId = 2, EventTypeId = 2, BetId = betId1, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 1.7m, CategoryId = 3, EventTypeId = 3, BetId = betId1, Status = StatusEnum.Won },
 
-            // Zakład 2 - 4 zdarzenia
             new Event { EventId = Guid.NewGuid(), Odds = 1.6m, CategoryId = 2, EventTypeId = 1, BetId = betId2, Status = StatusEnum.Lost },
             new Event { EventId = Guid.NewGuid(), Odds = 2.3m, CategoryId = 1, EventTypeId = 4, BetId = betId2, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 2.1m, CategoryId = 2, EventTypeId = 5, BetId = betId2, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 1.8m, CategoryId = 1, EventTypeId = 6, BetId = betId2, Status = StatusEnum.Unfinished },
 
-            // Zakład 3 - 5 zdarzenia
             new Event { EventId = Guid.NewGuid(), Odds = 1.5m, CategoryId = 2, EventTypeId = 3, BetId = betId3, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 1.7m, CategoryId = 1, EventTypeId = 1, BetId = betId3, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 2.4m, CategoryId = 3, EventTypeId = 4, BetId = betId3, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 2.1m, CategoryId = 2, EventTypeId = 5, BetId = betId3, Status = StatusEnum.Unfinished },
             new Event { EventId = Guid.NewGuid(), Odds = 2.5m, CategoryId = 1, EventTypeId = 6, BetId = betId3, Status = StatusEnum.Lost },
 
-            // Zakład 4 - 2 zdarzenia
             new Event { EventId = Guid.NewGuid(), Odds = 2.0m, CategoryId = 3, EventTypeId = 4, BetId = betId4, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 1.6m, CategoryId = 2, EventTypeId = 1, BetId = betId4, Status = StatusEnum.Won },
 
-            // Zakład 5 - 3 zdarzenia
             new Event { EventId = Guid.NewGuid(), Odds = 1.9m, CategoryId = 1, EventTypeId = 3, BetId = betId5, Status = StatusEnum.Lost },
             new Event { EventId = Guid.NewGuid(), Odds = 2.2m, CategoryId = 2, EventTypeId = 2, BetId = betId5, Status = StatusEnum.Won },
             new Event { EventId = Guid.NewGuid(), Odds = 1.5m, CategoryId = 3, EventTypeId = 5, BetId = betId5, Status = StatusEnum.Unfinished }
         );
+
+        modelBuilder.Entity<Bet>()
+       .HasMany(b => b.EventsList)
+       .WithOne(e => e.Bet)
+       .HasForeignKey(e => e.BetId)
+       .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Event>()
+        .HasOne(e => e.Category)
+        .WithMany(c => c.Events)
+        .HasForeignKey(e => e.CategoryId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Event>()
+        .HasOne(e => e.EventType)
+        .WithMany(et => et.Events)
+        .HasForeignKey(e => e.EventTypeId)
+        .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<EventType>()
+        .HasOne(et => et.Category)
+        .WithMany(c => c.EventTypes)
+        .HasForeignKey(et => et.CategoryId)
+        .OnDelete(DeleteBehavior.Restrict);
     }
 }

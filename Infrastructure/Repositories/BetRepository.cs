@@ -3,7 +3,6 @@ using Domain.Entities;
 using Infrastructure.Data;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repositories
 {
@@ -19,7 +18,6 @@ namespace Infrastructure.Repositories
             {
                 return await FindAll()
                 .Result
-                .OrderByDescending(x => x.BetDate)
                 .Include(b => b.EventsList)
                 .Include(b => b.Bookmaker)
                 .ToListAsync();
@@ -53,7 +51,6 @@ namespace Infrastructure.Repositories
                 var bookmaker = RepositoryContext.Set<Bookmaker>()
                 .First(x => x.BookmakerId == bet.BookmakerId);
 
-
                 if (bookmaker == null)
                 {
                     throw new CreateException("Bookmaker not found for bet creation.", nameof(Bet));
@@ -62,13 +59,14 @@ namespace Infrastructure.Repositories
                 RepositoryContext.Attach(bookmaker);
                 bet.Bookmaker = bookmaker;
 
+                RepositoryContext.Entry(bet).State = EntityState.Added;
+
                 Create(bet);
             }
             catch (Exception ex)
             {
                 throw new CreateException("Failed to create bet.", nameof(Bet), ex);
             }
-
         }
 
         public void DeleteBet(Bet bet)
@@ -113,7 +111,5 @@ namespace Infrastructure.Repositories
                 throw new UpdateException($"Failed to update bet with ID: {bet.BetId}.", nameof(Bet), ex);
             }
         }
-
-
     }
 }
