@@ -12,8 +12,8 @@
     <GridColumns>
         <GridColumn Field="@nameof(Bet.BetId)" Visible="false" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
         <GridColumn Field="@nameof(Bet.Stake)" TextAlign="TextAlign.Right" Type="ColumnType.Decimal" ValidationRules="new ValidationRules{ Required = true, Range=[1,99999]}" HeaderText="Stake"></GridColumn>
-        <GridColumn Field="@nameof(Bet.TotalOdds)" TextAlign="TextAlign.Left" AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
-        <GridColumn Field="@nameof(Bet.PotentialWin)" TextAlign="TextAlign.Right" AllowAdding="false" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
+        <GridColumn Field="@nameof(Bet.TotalOdds)" TextAlign="TextAlign.Left"   AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
+        <GridColumn Field="@nameof(Bet.PotentialWin)" AllowAdding="false" TextAlign="TextAlign.Center" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
         <GridColumn Field="@nameof(Bet.BetDate)" DefaultValue="DateTime.Today" Format="dd MMM yyyy" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
         <GridForeignColumn Field="@nameof(Bookmaker.BookmakerId)" TextAlign="TextAlign.Left" HeaderText="Bookmaker" ValidationRules="new ValidationRules{Min =  1}" ForeignDataSource="Bookmakers" ForeignKeyValue="Name" EditType="EditType.DropDownEdit">
             <Template>
@@ -81,7 +81,7 @@
             </Template>
         </GridColumn>
 
-        <GridColumn Field="@nameof(Bet.IsTaxIncluded)" HeaderText="Tax" DisplayAsCheckBox="true" TextAlign="TextAlign.Right"></GridColumn>
+        <GridColumn Field="@nameof(Bet.IsTaxIncluded)" HeaderText="Tax" DisplayAsCheckBox="true" TextAlign="TextAlign.Center"></GridColumn>
         <GridColumn Field="@nameof(Bet.LivePrematch)" TextAlign="TextAlign.Left" HeaderText="State" EditType="EditType.DropDownEdit">
             <EditTemplate>
                 <SfDropDownList @bind-value="((context as Bet).LivePrematch)" TItem="string" TValue="LivePrematchEnum" DataSource="LivePrematchEnumValues">
@@ -96,7 +96,7 @@
 @if (IsBetSelected)
 {
 
-    <SfGrid @ref="EventGridInstance" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
+    <SfGrid @ref="EventGridInstance" Height="200px"  EnableStickyHeader="true" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
         <GridEvents TValue="Event" OnActionComplete="EventActionHandler"></GridEvents>
         <GridSelectionSettings></GridSelectionSettings>
         <GridEditSettings AllowEditing="true" AllowAdding="true" AllowDeleting="true" NewRowPosition="NewRowPosition.Bottom"></GridEditSettings>
@@ -234,9 +234,9 @@
         }
         else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
         {
-            RepositoryWrapper.EventRepository.Delete(args.Data);
-            Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
+            RepositoryWrapper.EventRepository.Delete(args.Data);            
             await RepositoryWrapper.SaveAsync();
+            Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
             await EventGridInstance.Refresh();
             await BetGridInstance.Refresh();
         }

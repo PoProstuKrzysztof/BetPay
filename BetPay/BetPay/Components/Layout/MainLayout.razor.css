@@ -6,12 +6,15 @@
 
 main {
     flex: 1;
+    background-color:#FAF9F6;
 }
 
 .sidebar {
-    background-image: linear-gradient(150deg, #2b2e4a, #3e345e, #57386e, #723b78, #903c7a, #af3d73, #cd3f63, #e84545);
-    ;
+    background-color: #191C24;
+    overflow: hidden;   
 }
+
+
 
    
 
