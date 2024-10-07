@@ -2,20 +2,12 @@
 @using Syncfusion.Blazor.DropDowns
 @inject IRepositoryWrapper RepositoryWrapper
 
-
-
-
 <SfGrid @ref="BetGridInstance" DataSource="Bets" AllowGrouping="true" AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel"})">
     <GridPageSettings PageSize="5"></GridPageSettings>
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
     <GridEvents RowSelected="RowSelectHandler" TValue="Bet" OnActionComplete="BetActionsHandler"></GridEvents>
     <GridColumns>
-        <GridColumn Field="@nameof(Bet.BetId)" Visible="false" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
-        <GridColumn Field="@nameof(Bet.Stake)" TextAlign="TextAlign.Right" Type="ColumnType.Decimal" ValidationRules="new ValidationRules{ Required = true, Range=[1,99999]}" HeaderText="Stake"></GridColumn>
-        <GridColumn Field="@nameof(Bet.TotalOdds)" TextAlign="TextAlign.Left"   AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
-        <GridColumn Field="@nameof(Bet.PotentialWin)" AllowAdding="false" TextAlign="TextAlign.Center" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
-        <GridColumn Field="@nameof(Bet.BetDate)" DefaultValue="DateTime.Today" Format="dd MMM yyyy" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
-        <GridForeignColumn Field="@nameof(Bookmaker.BookmakerId)" TextAlign="TextAlign.Left" HeaderText="Bookmaker" ValidationRules="new ValidationRules{Min =  1}" ForeignDataSource="Bookmakers" ForeignKeyValue="Name" EditType="EditType.DropDownEdit">
+          <GridForeignColumn Field="@nameof(Bookmaker.BookmakerId)" TextAlign="TextAlign.Left" HeaderText="Bookmaker" ValidationRules="new ValidationRules{Min =  1}" ForeignDataSource="Bookmakers" ForeignKeyValue="Name" EditType="EditType.DropDownEdit">
             <Template>
                 @{
                     var bookmaker = (context as Bet).Bookmaker;
@@ -52,6 +44,11 @@
                 </SfDropDownList>
             </EditTemplate>
         </GridForeignColumn>
+        <GridColumn Field="@nameof(Bet.BetId)" Visible="false" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
+        <GridColumn Field="@nameof(Bet.Stake)" TextAlign="TextAlign.Right" Type="ColumnType.Decimal" ValidationRules="new ValidationRules{ Required = true, Range=[1,99999]}" HeaderText="Stake"></GridColumn>
+        <GridColumn Field="@nameof(Bet.TotalOdds)" TextAlign="TextAlign.Left"   AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
+        <GridColumn Field="@nameof(Bet.PotentialWin)" AllowAdding="false" TextAlign="TextAlign.Center" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
+        <GridColumn Field="@nameof(Bet.BetDate)" DefaultValue="DateTime.Today" Format="dd MMM yyyy" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
 
         <GridColumn Field="@nameof(Bet.Status)" AllowAdding="false" AllowEditing="false" HeaderText="Status" TextAlign="TextAlign.Center">
             <Template>

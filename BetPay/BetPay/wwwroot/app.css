@@ -5,11 +5,11 @@ html, body {
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 .nav-link {
-    font-size: 18px;
+    font-size: 1.125rem;
 }
 
 a, .btn-link {
@@ -61,15 +61,16 @@ h1:focus {
 }
 
 .bookmaker-icon-container {
-    height: 70px;
-    width: 100px;
+    height: 100%;
+    width: 100%;
     align-content: center;
 }
 
-    .bookmaker-icon-container img {
-        width: 100%;
-        border-radius: 20px;
-    }
+.bookmaker-icon-container img {
+        width: 100px;
+        border-radius:10px;
+        padding:5px;
+}
 
 ul {
     list-style-type: none;
@@ -117,8 +118,10 @@ ul {
     
 }
 
-.e-headertext {  
-    font-size: 16px;
+
+
+.e-headertext {
+    font-size: 1rem;
 }
 
 .e-rowcell {
@@ -142,7 +145,7 @@ main {
 }
 
 .nav-item .nav-link {
-    font-size: 18px;
+    font-size: 1.25rem;
     color: #0B1623;
 }
 
