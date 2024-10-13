@@ -6,6 +6,7 @@
     <GridPageSettings PageSize="5"></GridPageSettings>
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
     <GridEvents RowSelected="RowSelectHandler" TValue="Bet" OnActionComplete="BetActionsHandler"></GridEvents>
+    <GridColumn Field="@nameof(Bet.BetId)" Visible="false" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
     <GridColumns>
           <GridForeignColumn Field="@nameof(Bookmaker.BookmakerId)" TextAlign="TextAlign.Left" HeaderText="Bookmaker" ValidationRules="new ValidationRules{Min =  1}" ForeignDataSource="Bookmakers" ForeignKeyValue="Name" EditType="EditType.DropDownEdit">
             <Template>
@@ -44,12 +45,10 @@
                 </SfDropDownList>
             </EditTemplate>
         </GridForeignColumn>
-        <GridColumn Field="@nameof(Bet.BetId)" Visible="false" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
-        <GridColumn Field="@nameof(Bet.Stake)" TextAlign="TextAlign.Right" Type="ColumnType.Decimal" ValidationRules="new ValidationRules{ Required = true, Range=[1,99999]}" HeaderText="Stake"></GridColumn>
+        <GridColumn Field="@nameof(Bet.Stake)" TextAlign="TextAlign.Left" Type="ColumnType.Decimal" ValidationRules="new ValidationRules{ Required = true, Range=[1,99999]}" HeaderText="Stake"></GridColumn>
         <GridColumn Field="@nameof(Bet.TotalOdds)" TextAlign="TextAlign.Left"   AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
         <GridColumn Field="@nameof(Bet.PotentialWin)" AllowAdding="false" TextAlign="TextAlign.Center" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
         <GridColumn Field="@nameof(Bet.BetDate)" DefaultValue="DateTime.Today" Format="dd MMM yyyy" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
-
         <GridColumn Field="@nameof(Bet.Status)" AllowAdding="false" AllowEditing="false" HeaderText="Status" TextAlign="TextAlign.Center">
             <Template>
                 @{
@@ -73,7 +72,6 @@
                             <span>@bet.Status</span>
                         </div>
                     }
-
                 }
             </Template>
         </GridColumn>
@@ -110,9 +108,17 @@
                 </EditTemplate>
             </GridForeignColumn>
 
+            <GridForeignColumn Field="@nameof(LeagueTournament.LeagueTournamentId)" HeaderText="Competition" TValue="LeagueTournament" ForeignDataSource="LeagueTournaments" ForeignKeyValue="Name">
+                <EditTemplate>
+                    <SfDropDownList @bind-value="@((context as Event).LeagueTournamentId)" TItem="LeagueTournament" Enabled="EnableEventTypeDropDown" TValue="int" Query="LeagueTournamentQuery" ID="LeagueTournamentId" Placeholder="Select competition" DataSource="LeagueTournaments">
+                        <DropDownListFieldSettings Text="Name" Value="LeagueTournamentId"></DropDownListFieldSettings>                      
+                    </SfDropDownList>
+                </EditTemplate>
+            </GridForeignColumn>
+
             <GridForeignColumn Field="@nameof(EventType.EventTypeId)" HeaderText="Event Type" TValue="EventType" ForeignDataSource="EventTypes" ForeignKeyValue="Name">
                 <EditTemplate>
-                    <SfDropDownList @bind-value="@((context as Event).EventTypeId)" Enabled="EnableEventTypeDropDown" Query="EventTypeQuery" TItem="EventType" TValue="int" ID="EventTypeId" PopupHeight="Auto" Placeholder="Select event type" DataSource="EventTypes">
+                    <SfDropDownList @bind-value="@((context as Event).EventTypeId)" Enabled="EnableEventTypeDropDown" Query="EventTypeQuery" TItem="EventType" TValue="int" ID="EventTypeId" PopupHeight="200px" Placeholder="Select event type" DataSource="EventTypes">
                         <DropDownListFieldSettings Text="Name" Value="EventTypeId"></DropDownListFieldSettings>
                     </SfDropDownList>
                 </EditTemplate>
@@ -170,8 +176,10 @@
     public IEnumerable<Bookmaker>? Bookmakers { get; set; }
     public IEnumerable<Category>? Categories { get; set; }
     public IEnumerable<EventType>? EventTypes { get; set; }
+    public IEnumerable<LeagueTournament>? LeagueTournaments { get; set; }
 
-    public Query EventTypeQuery { get; set; } = null;
+    public Query? EventTypeQuery { get; set; }
+    public Query? LeagueTournamentQuery { get; set; }
 
     public bool IsBetSelected;
     public bool EnableEventTypeDropDown;
@@ -188,6 +196,7 @@
         Bookmakers = await RepositoryWrapper.BookmakerRepository.GetAllBookmakersAsync();
         Categories = await RepositoryWrapper.CategoryRepository.GetAllCategoriesAsync();
         EventTypes = await RepositoryWrapper.EventTypeRepostiory.GetAllEventTypesAsync();
+        LeagueTournaments = await RepositoryWrapper.LeagueTournamentRepository.GetAllLeagueTournamentsAsync();
 
     }
 
@@ -204,7 +213,9 @@
     {
         if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
         {
-            if (args.Action == "Add")
+            if (args.Action == "Add" && 
+            !args.Data.EventTypeId.Equals(0) || 
+            !args.Data.CategoryId.Equals(0))
             {
 
                 args.Data.BetId = RowIndex;
@@ -270,6 +281,7 @@
     {
         EnableEventTypeDropDown = args.Value > 0 ? true : false;
         this.EventTypeQuery = new Query().Where(new WhereFilter() { Field = "CategoryId", Operator = "equal", value = args.Value, IgnoreCase = false, IgnoreAccent = false });
+        this.LeagueTournamentQuery = new Query().Where(new WhereFilter() { Field = "CategoryId", Operator = "equal", value = args.Value, IgnoreCase = false, IgnoreAccent = false });
         EventGridInstance.PreventRender(false);
     }
 
@@ -286,8 +298,5 @@
         {
             return new Query();
         }
-
     }
-
 }
-

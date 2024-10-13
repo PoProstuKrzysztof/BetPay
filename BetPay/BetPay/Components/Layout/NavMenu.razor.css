@@ -17,7 +17,7 @@
 
 
 .navbar-brand {
-    font-size: 1.7rem;
+    font-size: 1.6rem;
     pointer-events: none;
     color: #f6e8df;
 }
@@ -43,7 +43,7 @@
 }
 
 .nav-item {
-    font-size: 0.9rem;
+    font-size: 1.20rem;
     padding-bottom: 0.5rem;
 }
 

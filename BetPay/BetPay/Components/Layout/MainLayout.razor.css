@@ -6,17 +6,13 @@
 
 main {
     flex: 1;
-    background-color:#FAF9F6;
+    background-color: #FAF9F6;
 }
 
 .sidebar {
     background-color: #191C24;
-    overflow: hidden;   
+    overflow: hidden;
 }
-
-
-
-   
 
 @media (min-width: 641px) {
     .page {
@@ -29,7 +25,6 @@ main {
         position: sticky;
         top: 0;
     }
-
 }
 
 #blazor-error-ui {

@@ -22,6 +22,10 @@ public class Event
     public int EventTypeId { get; set; }
     public virtual EventType EventType { get; set; }
 
+    public int LeagueTournamentId { get; set; }
+
+    public virtual LeagueTournament LeagueTournament { get; set; }
+
     public Guid? BetId { get; set; }
 
     public virtual Bet? Bet { get; set; }

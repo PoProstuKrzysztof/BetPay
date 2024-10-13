@@ -1,19 +1,9 @@
-
-
 html, body {
     font-family: "Outfit", sans-serif;
     font-optical-sizing: auto;
     font-weight: 300;
     font-style: normal;
     font-size: 1rem;
-}
-
-.nav-link {
-    font-size: 1.125rem;
-}
-
-a, .btn-link {
-    color: #006bb7;
 }
 
 .btn-primary {
@@ -66,37 +56,35 @@ h1:focus {
     align-content: center;
 }
 
-.bookmaker-icon-container img {
+    .bookmaker-icon-container img {
         width: 100px;
-        border-radius:10px;
-        padding:5px;
-}
+        border-radius: 10px;
+        padding: 5px;
+    }
 
 ul {
     list-style-type: none;
 }
 
 .status-unfinished {
-    
     background-color: #f7dfa4;
 }
 
 .status-lost {
-   
     background-color: #c34237;
     color: aliceblue;
 }
 
-.status-won {    
+.status-won {
     background-color: #BDE2B9;
 }
 
-.status-won, .status-unfinished, .status-lost{
+.status-won, .status-unfinished, .status-lost {
     border-radius: 5px;
-    font-weight:600;
-    text-transform:uppercase;
+    font-weight: 600;
+    text-transform: uppercase;
     letter-spacing: 2px;
-    padding:4px;
+    padding: 4px;
 }
 
 .e-columnheader {
@@ -115,10 +103,7 @@ ul {
     font-optical-sizing: auto;
     font-weight: 800;
     font-style: normal;
-    
 }
-
-
 
 .e-headertext {
     font-size: 1rem;
@@ -135,8 +120,7 @@ ul {
     box-sizing: content-box;
 }
 
-
-.e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame{
+.e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame {
     width: 500px;
 }
 
@@ -145,11 +129,10 @@ main {
 }
 
 .nav-item .nav-link {
-    font-size: 1.25rem;
+    font-size: 1.12rem;
     color: #0B1623;
 }
 
 .fa-solid, .fas {
     width: 2rem;
 }
-

@@ -12,5 +12,7 @@ public interface IRepositoryWrapper
 
     IEventTypeRepository EventTypeRepostiory { get; }
 
+    ILeagueTournamentRepository LeagueTournamentRepository { get; }
+
     Task SaveAsync();
 }

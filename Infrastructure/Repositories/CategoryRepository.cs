@@ -14,7 +14,6 @@ public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
 
     public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
     {
-
         try
         {
             return await FindAll()
@@ -24,8 +23,7 @@ public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
         }
         catch (Exception ex)
         {
-
-            throw new RetrieveException("Failed to retrieve categories.",nameof(Category),ex);
+            throw new RetrieveException("Failed to retrieve categories.", nameof(Category), ex);
         }
     }
 }

@@ -81,6 +81,26 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LeagueTournaments",
+                columns: table => new
+                {
+                    LeagueTournamentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LeagueTournaments", x => x.LeagueTournamentId);
+                    table.ForeignKey(
+                        name: "FK_LeagueTournaments_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "CategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Events",
                 columns: table => new
                 {
@@ -89,7 +109,9 @@ namespace Infrastructure.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     EventTypeId = table.Column<int>(type: "int", nullable: false),
-                    BetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    LeagueTournamentId = table.Column<int>(type: "int", nullable: false),
+                    BetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LeagueTournamentId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -112,6 +134,17 @@ namespace Infrastructure.Migrations
                         principalTable: "EventTypes",
                         principalColumn: "EventTypeId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Events_LeagueTournaments_LeagueTournamentId",
+                        column: x => x.LeagueTournamentId,
+                        principalTable: "LeagueTournaments",
+                        principalColumn: "LeagueTournamentId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Events_LeagueTournaments_LeagueTournamentId1",
+                        column: x => x.LeagueTournamentId1,
+                        principalTable: "LeagueTournaments",
+                        principalColumn: "LeagueTournamentId");
                 });
 
             migrationBuilder.InsertData(
@@ -151,11 +184,11 @@ namespace Infrastructure.Migrations
                 columns: new[] { "BetId", "BetDate", "BookmakerId", "IsTaxIncluded", "LivePrematch", "Stake" },
                 values: new object[,]
                 {
-                    { new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"), new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, true, 2, 50m },
-                    { new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"), new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, true, 1, 150m },
-                    { new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, true, 2, 100m },
-                    { new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"), new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, 75m },
-                    { new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, 200m }
+                    { new Guid("14636804-0b37-45d9-aa36-7d14a6f7507c"), new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, 200m },
+                    { new Guid("200172fa-bd84-4789-9226-557d8d68f49a"), new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, true, 1, 150m },
+                    { new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, true, 2, 100m },
+                    { new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"), new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, true, 2, 50m },
+                    { new Guid("80c93edd-1f3f-460b-9181-25800030f568"), new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, 75m }
                 });
 
             migrationBuilder.InsertData(
@@ -196,27 +229,44 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Events",
-                columns: new[] { "EventId", "BetId", "CategoryId", "EventTypeId", "Odds", "Status" },
+                table: "LeagueTournaments",
+                columns: new[] { "LeagueTournamentId", "CategoryId", "Name" },
                 values: new object[,]
                 {
-                    { new Guid("1110967a-1c71-44a7-a622-ae147926e1da"), new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"), 1, 3, 1.9m, 1 },
-                    { new Guid("19b3a016-e039-49be-bbb5-cfc095a7a24a"), new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), 1, 4, 2.3m, 0 },
-                    { new Guid("28ef59d5-28c1-4854-b610-9b86a63cf258"), new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"), 3, 5, 1.5m, 2 },
-                    { new Guid("2ab3b3af-36a2-42aa-a9a9-e64d119b0a60"), new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"), 3, 4, 2.0m, 0 },
-                    { new Guid("3100856d-8f88-4c42-acdb-4087bffe548e"), new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), 1, 6, 1.8m, 2 },
-                    { new Guid("35b8614f-ceaf-4813-a614-b1fa0d88b9b1"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 1, 1, 1.7m, 0 },
-                    { new Guid("37525da5-1c03-4cfb-93fb-ed57f507daf7"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 2, 3, 1.5m, 0 },
-                    { new Guid("5b81ccb0-359b-4ded-8e03-8e6dc8d40959"), new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"), 1, 1, 1.5m, 0 },
-                    { new Guid("5c403e6e-f4b7-47c3-a65c-732871264915"), new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"), 2, 2, 2.0m, 0 },
-                    { new Guid("77d1367e-03a1-406a-a949-e610b3637768"), new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"), 2, 1, 1.6m, 0 },
-                    { new Guid("823733d7-0f13-4a24-b03e-7bdd470d3451"), new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"), 3, 3, 1.7m, 0 },
-                    { new Guid("b3728fd0-22e7-4b11-8dee-1b2766236697"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 1, 6, 2.5m, 1 },
-                    { new Guid("bf4b8267-7d3a-4168-b96a-d6045c5653a6"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 3, 4, 2.4m, 0 },
-                    { new Guid("bf805418-066e-4376-8d7f-cc5b5d108026"), new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"), 2, 5, 2.1m, 2 },
-                    { new Guid("dae0e025-e800-47d5-aa24-f4bf3a18ea9f"), new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), 2, 5, 2.1m, 0 },
-                    { new Guid("e3c40e8d-2540-4fa5-b027-ecea630958e8"), new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"), 2, 2, 2.2m, 0 },
-                    { new Guid("fe4bb787-3f80-4521-a996-75d45e8923af"), new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"), 2, 1, 1.6m, 1 }
+                    { 1, 1, "Premier League" },
+                    { 2, 1, "La Liga" },
+                    { 3, 1, "Serie A" },
+                    { 4, 1, "Bundesliga" },
+                    { 5, 1, "Ligue 1" },
+                    { 6, 1, "UEFA Champions League" },
+                    { 7, 1, "UEFA Europa League" },
+                    { 8, 1, "Euro Cup" },
+                    { 9, 1, "Copa America" },
+                    { 10, 1, "FIFA World Cup" },
+                    { 11, 2, "Wimbledon" },
+                    { 12, 2, "Roland Garros" },
+                    { 13, 2, "US Open" },
+                    { 14, 2, "Australian Open" },
+                    { 15, 2, "ATP Finals" },
+                    { 16, 3, "NBA Finals" },
+                    { 17, 3, "EuroLeague" },
+                    { 18, 3, "FIBA World Cup" },
+                    { 19, 3, "NCAA March Madness" },
+                    { 20, 3, "Olympic Basketball Tournament" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Events",
+                columns: new[] { "EventId", "BetId", "CategoryId", "EventTypeId", "LeagueTournamentId", "LeagueTournamentId1", "Odds", "Status" },
+                values: new object[,]
+                {
+                    { new Guid("4b299938-1ea6-4593-a8e5-ae02ddb57b21"), new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"), 1, 1, 1, null, 1.5m, 0 },
+                    { new Guid("70b9fd2c-7aa8-461f-a15f-5518a67c3f93"), new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), 2, 1, 7, null, 1.6m, 1 },
+                    { new Guid("9aecac05-e02b-4cad-9910-fbc5b399fc04"), new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), 1, 6, 2, null, 1.8m, 2 },
+                    { new Guid("a9d1e0da-021c-47ae-a6b9-45e57df93a7c"), new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"), 3, 3, 2, null, 1.7m, 0 },
+                    { new Guid("ae364343-1aae-409e-969b-6941d2170466"), new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), 2, 5, 10, null, 2.1m, 0 },
+                    { new Guid("c2391e47-1e8b-4b2c-8232-787f3e93c4c9"), new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"), 2, 2, 8, null, 2.0m, 0 },
+                    { new Guid("d39011eb-7f7d-4b2b-95c1-850c2815f356"), new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), 1, 4, 6, null, 2.3m, 0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -240,8 +290,23 @@ namespace Infrastructure.Migrations
                 column: "EventTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Events_LeagueTournamentId",
+                table: "Events",
+                column: "LeagueTournamentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Events_LeagueTournamentId1",
+                table: "Events",
+                column: "LeagueTournamentId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EventTypes_CategoryId",
                 table: "EventTypes",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LeagueTournaments_CategoryId",
+                table: "LeagueTournaments",
                 column: "CategoryId");
         }
 
@@ -256,6 +321,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "EventTypes");
+
+            migrationBuilder.DropTable(
+                name: "LeagueTournaments");
 
             migrationBuilder.DropTable(
                 name: "Bookmakers");

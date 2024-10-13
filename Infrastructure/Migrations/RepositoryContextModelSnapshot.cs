@@ -54,7 +54,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            BetId = new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"),
+                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
                             BetDate = new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 2,
                             IsTaxIncluded = true,
@@ -63,7 +63,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
                             BetDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 3,
                             IsTaxIncluded = true,
@@ -72,7 +72,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
+                            BetId = new Guid("14636804-0b37-45d9-aa36-7d14a6f7507c"),
                             BetDate = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 1,
                             IsTaxIncluded = false,
@@ -81,7 +81,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"),
+                            BetId = new Guid("80c93edd-1f3f-460b-9181-25800030f568"),
                             BetDate = new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 1,
                             IsTaxIncluded = false,
@@ -90,7 +90,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"),
+                            BetId = new Guid("200172fa-bd84-4789-9226-557d8d68f49a"),
                             BetDate = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 5,
                             IsTaxIncluded = true,
@@ -255,6 +255,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("EventTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("LeagueTournamentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LeagueTournamentId1")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Odds")
                         .HasColumnType("decimal(18,2)");
 
@@ -269,160 +275,81 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("EventTypeId");
 
+                    b.HasIndex("LeagueTournamentId");
+
+                    b.HasIndex("LeagueTournamentId1");
+
                     b.ToTable("Events");
 
                     b.HasData(
                         new
                         {
-                            EventId = new Guid("5b81ccb0-359b-4ded-8e03-8e6dc8d40959"),
-                            BetId = new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"),
+                            EventId = new Guid("4b299938-1ea6-4593-a8e5-ae02ddb57b21"),
+                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
                             CategoryId = 1,
                             EventTypeId = 1,
+                            LeagueTournamentId = 1,
                             Odds = 1.5m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("5c403e6e-f4b7-47c3-a65c-732871264915"),
-                            BetId = new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"),
+                            EventId = new Guid("c2391e47-1e8b-4b2c-8232-787f3e93c4c9"),
+                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
                             CategoryId = 2,
                             EventTypeId = 2,
+                            LeagueTournamentId = 8,
                             Odds = 2.0m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("823733d7-0f13-4a24-b03e-7bdd470d3451"),
-                            BetId = new Guid("08687ca2-81d0-4816-9f78-bdc1edb2d47d"),
+                            EventId = new Guid("a9d1e0da-021c-47ae-a6b9-45e57df93a7c"),
+                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
                             CategoryId = 3,
                             EventTypeId = 3,
+                            LeagueTournamentId = 2,
                             Odds = 1.7m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("fe4bb787-3f80-4521-a996-75d45e8923af"),
-                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
+                            EventId = new Guid("70b9fd2c-7aa8-461f-a15f-5518a67c3f93"),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
                             CategoryId = 2,
                             EventTypeId = 1,
+                            LeagueTournamentId = 7,
                             Odds = 1.6m,
                             Status = 1
                         },
                         new
                         {
-                            EventId = new Guid("19b3a016-e039-49be-bbb5-cfc095a7a24a"),
-                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
+                            EventId = new Guid("d39011eb-7f7d-4b2b-95c1-850c2815f356"),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
                             CategoryId = 1,
                             EventTypeId = 4,
+                            LeagueTournamentId = 6,
                             Odds = 2.3m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("dae0e025-e800-47d5-aa24-f4bf3a18ea9f"),
-                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
+                            EventId = new Guid("ae364343-1aae-409e-969b-6941d2170466"),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
                             CategoryId = 2,
                             EventTypeId = 5,
+                            LeagueTournamentId = 10,
                             Odds = 2.1m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("3100856d-8f88-4c42-acdb-4087bffe548e"),
-                            BetId = new Guid("37b0f247-f7a5-4aac-b14e-5ff3f103143c"),
+                            EventId = new Guid("9aecac05-e02b-4cad-9910-fbc5b399fc04"),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
                             CategoryId = 1,
                             EventTypeId = 6,
+                            LeagueTournamentId = 2,
                             Odds = 1.8m,
-                            Status = 2
-                        },
-                        new
-                        {
-                            EventId = new Guid("37525da5-1c03-4cfb-93fb-ed57f507daf7"),
-                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
-                            CategoryId = 2,
-                            EventTypeId = 3,
-                            Odds = 1.5m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            EventId = new Guid("35b8614f-ceaf-4813-a614-b1fa0d88b9b1"),
-                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
-                            CategoryId = 1,
-                            EventTypeId = 1,
-                            Odds = 1.7m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            EventId = new Guid("bf4b8267-7d3a-4168-b96a-d6045c5653a6"),
-                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
-                            CategoryId = 3,
-                            EventTypeId = 4,
-                            Odds = 2.4m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            EventId = new Guid("bf805418-066e-4376-8d7f-cc5b5d108026"),
-                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
-                            CategoryId = 2,
-                            EventTypeId = 5,
-                            Odds = 2.1m,
-                            Status = 2
-                        },
-                        new
-                        {
-                            EventId = new Guid("b3728fd0-22e7-4b11-8dee-1b2766236697"),
-                            BetId = new Guid("e2deaa39-424e-4b0b-89e7-cda15de0b25b"),
-                            CategoryId = 1,
-                            EventTypeId = 6,
-                            Odds = 2.5m,
-                            Status = 1
-                        },
-                        new
-                        {
-                            EventId = new Guid("2ab3b3af-36a2-42aa-a9a9-e64d119b0a60"),
-                            BetId = new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"),
-                            CategoryId = 3,
-                            EventTypeId = 4,
-                            Odds = 2.0m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            EventId = new Guid("77d1367e-03a1-406a-a949-e610b3637768"),
-                            BetId = new Guid("b1651f09-ffbb-4397-8a96-2fbc75a4809c"),
-                            CategoryId = 2,
-                            EventTypeId = 1,
-                            Odds = 1.6m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            EventId = new Guid("1110967a-1c71-44a7-a622-ae147926e1da"),
-                            BetId = new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"),
-                            CategoryId = 1,
-                            EventTypeId = 3,
-                            Odds = 1.9m,
-                            Status = 1
-                        },
-                        new
-                        {
-                            EventId = new Guid("e3c40e8d-2540-4fa5-b027-ecea630958e8"),
-                            BetId = new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"),
-                            CategoryId = 2,
-                            EventTypeId = 2,
-                            Odds = 2.2m,
-                            Status = 0
-                        },
-                        new
-                        {
-                            EventId = new Guid("28ef59d5-28c1-4854-b610-9b86a63cf258"),
-                            BetId = new Guid("2abfae7d-ab21-471c-a37a-96f0df575054"),
-                            CategoryId = 3,
-                            EventTypeId = 5,
-                            Odds = 1.5m,
                             Status = 2
                         });
                 });
@@ -628,6 +555,149 @@ namespace Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Entities.LeagueTournament", b =>
+                {
+                    b.Property<int>("LeagueTournamentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LeagueTournamentId"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LeagueTournamentId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("LeagueTournaments");
+
+                    b.HasData(
+                        new
+                        {
+                            LeagueTournamentId = 1,
+                            CategoryId = 1,
+                            Name = "Premier League"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 2,
+                            CategoryId = 1,
+                            Name = "La Liga"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 3,
+                            CategoryId = 1,
+                            Name = "Serie A"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 4,
+                            CategoryId = 1,
+                            Name = "Bundesliga"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 5,
+                            CategoryId = 1,
+                            Name = "Ligue 1"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 6,
+                            CategoryId = 1,
+                            Name = "UEFA Champions League"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 7,
+                            CategoryId = 1,
+                            Name = "UEFA Europa League"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 8,
+                            CategoryId = 1,
+                            Name = "Euro Cup"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 9,
+                            CategoryId = 1,
+                            Name = "Copa America"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 10,
+                            CategoryId = 1,
+                            Name = "FIFA World Cup"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 11,
+                            CategoryId = 2,
+                            Name = "Wimbledon"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 12,
+                            CategoryId = 2,
+                            Name = "Roland Garros"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 13,
+                            CategoryId = 2,
+                            Name = "US Open"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 14,
+                            CategoryId = 2,
+                            Name = "Australian Open"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 15,
+                            CategoryId = 2,
+                            Name = "ATP Finals"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 16,
+                            CategoryId = 3,
+                            Name = "NBA Finals"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 17,
+                            CategoryId = 3,
+                            Name = "EuroLeague"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 18,
+                            CategoryId = 3,
+                            Name = "FIBA World Cup"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 19,
+                            CategoryId = 3,
+                            Name = "NCAA March Madness"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 20,
+                            CategoryId = 3,
+                            Name = "Olympic Basketball Tournament"
+                        });
+                });
+
             modelBuilder.Entity("Domain.Entities.Bet", b =>
                 {
                     b.HasOne("Domain.Entities.Bookmaker", "Bookmaker")
@@ -658,11 +728,23 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.LeagueTournament", "LeagueTournament")
+                        .WithMany()
+                        .HasForeignKey("LeagueTournamentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.LeagueTournament", null)
+                        .WithMany("Events")
+                        .HasForeignKey("LeagueTournamentId1");
+
                     b.Navigation("Bet");
 
                     b.Navigation("Category");
 
                     b.Navigation("EventType");
+
+                    b.Navigation("LeagueTournament");
                 });
 
             modelBuilder.Entity("Domain.Entities.EventType", b =>
@@ -671,6 +753,17 @@ namespace Infrastructure.Migrations
                         .WithMany("EventTypes")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LeagueTournament", b =>
+                {
+                    b.HasOne("Domain.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -694,6 +787,11 @@ namespace Infrastructure.Migrations
                 });
 
             modelBuilder.Entity("Domain.Entities.EventType", b =>
+                {
+                    b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LeagueTournament", b =>
                 {
                     b.Navigation("Events");
                 });
