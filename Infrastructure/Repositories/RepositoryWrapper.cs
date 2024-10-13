@@ -11,6 +11,7 @@ namespace Infrastructure.Repositories
         private IBookmakerRepository _bookmakerRepository;
         private IEventTypeRepository _eventTypeRepository;
         private ICategoryRepository _categoryRepository;
+        private ILeagueTournamentRepository _leagueTournamentRepository;
 
         public RepositoryWrapper(RepositoryContext context)
         {
@@ -22,6 +23,14 @@ namespace Infrastructure.Repositories
             get
             {
                 return _eventRepository ??= new EventRepository(_context);
+            }
+        }
+
+        public ILeagueTournamentRepository LeagueTournamentRepository
+        {
+            get
+            {
+                return _leagueTournamentRepository ??= new LeagueTournamentsRepository(_context);
             }
         }
 

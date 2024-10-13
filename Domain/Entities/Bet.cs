@@ -62,6 +62,11 @@ public class Bet
                     win = win * 0.90M;
                 }
 
+                if (Bookmaker.Name.Equals("Fortuna") && !IsTaxIncluded)
+                {
+                    win = win * 0.14M;
+                }
+
                 //TO DO:
                 //Fortuna applies additional 0.14% multiplier when playing live with 3 or more events
 

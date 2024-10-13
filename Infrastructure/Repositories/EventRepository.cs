@@ -42,8 +42,6 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
                 RepositoryContext.Entry(localBet).State = EntityState.Detached;
             }
 
-            
-
             RepositoryContext.Entry(@event).State = EntityState.Modified;
 
             Update(@event);

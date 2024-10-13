@@ -17,7 +17,7 @@ public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     public Task<IQueryable<T>> FindAll() => Task.FromResult(RepositoryContext.Set<T>().AsNoTracking());
 
     public Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression) =>
-       Task.FromResult( RepositoryContext.Set<T>()
+       Task.FromResult(RepositoryContext.Set<T>()
        .AsNoTracking()
        .Where(expression));
 

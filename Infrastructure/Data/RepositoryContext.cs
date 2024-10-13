@@ -20,6 +20,8 @@ public class RepositoryContext : DbContext
 
     public virtual DbSet<Bookmaker> Bookmakers { get; set; }
 
+    public virtual DbSet<LeagueTournament> LeagueTournaments { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -97,30 +99,41 @@ public class RepositoryContext : DbContext
 
     );
 
+        modelBuilder.Entity<LeagueTournament>().HasData(
+     new LeagueTournament { LeagueTournamentId = 1, Name = "Premier League", CategoryId = 1 },
+     new LeagueTournament { LeagueTournamentId = 2, Name = "La Liga", CategoryId = 1 },
+     new LeagueTournament { LeagueTournamentId = 3, Name = "Serie A", CategoryId = 1 },
+     new LeagueTournament { LeagueTournamentId = 4, Name = "Bundesliga", CategoryId = 1 },
+     new LeagueTournament { LeagueTournamentId = 5, Name = "Ligue 1", CategoryId = 1 },
+     new LeagueTournament { LeagueTournamentId = 6, Name = "UEFA Champions League", CategoryId = 1 },
+     new LeagueTournament { LeagueTournamentId = 7, Name = "UEFA Europa League", CategoryId = 1 },
+     new LeagueTournament { LeagueTournamentId = 8, Name = "Euro Cup", CategoryId = 1 },
+     new LeagueTournament { LeagueTournamentId = 9, Name = "Copa America", CategoryId = 1 },
+     new LeagueTournament { LeagueTournamentId = 10, Name = "FIFA World Cup", CategoryId = 1 },
+
+     new LeagueTournament { LeagueTournamentId = 11, Name = "Wimbledon", CategoryId = 2 },
+    new LeagueTournament { LeagueTournamentId = 12, Name = "Roland Garros", CategoryId = 2 },
+    new LeagueTournament { LeagueTournamentId = 13, Name = "US Open", CategoryId = 2 },
+    new LeagueTournament { LeagueTournamentId = 14, Name = "Australian Open", CategoryId = 2 },
+    new LeagueTournament { LeagueTournamentId = 15, Name = "ATP Finals", CategoryId = 2 },
+
+    new LeagueTournament { LeagueTournamentId = 16, Name = "NBA Finals", CategoryId = 3 },
+    new LeagueTournament { LeagueTournamentId = 17, Name = "EuroLeague", CategoryId = 3 },
+    new LeagueTournament { LeagueTournamentId = 18, Name = "FIBA World Cup", CategoryId = 3 },
+    new LeagueTournament { LeagueTournamentId = 19, Name = "NCAA March Madness", CategoryId = 3 },
+    new LeagueTournament { LeagueTournamentId = 20, Name = "Olympic Basketball Tournament", CategoryId = 3 }
+ );
+
         modelBuilder.Entity<Event>().HasData(
+       new Event { EventId = Guid.NewGuid(), Odds = 1.5m, CategoryId = 1, EventTypeId = 1, BetId = betId1, Status = StatusEnum.Won, LeagueTournamentId = 1 },
+       new Event { EventId = Guid.NewGuid(), Odds = 2.0m, CategoryId = 2, EventTypeId = 2, BetId = betId1, Status = StatusEnum.Won, LeagueTournamentId = 8 },
+       new Event { EventId = Guid.NewGuid(), Odds = 1.7m, CategoryId = 3, EventTypeId = 3, BetId = betId1, Status = StatusEnum.Won, LeagueTournamentId = 2 },
 
-            new Event { EventId = Guid.NewGuid(), Odds = 1.5m, CategoryId = 1, EventTypeId = 1, BetId = betId1, Status = StatusEnum.Won },
-            new Event { EventId = Guid.NewGuid(), Odds = 2.0m, CategoryId = 2, EventTypeId = 2, BetId = betId1, Status = StatusEnum.Won },
-            new Event { EventId = Guid.NewGuid(), Odds = 1.7m, CategoryId = 3, EventTypeId = 3, BetId = betId1, Status = StatusEnum.Won },
-
-            new Event { EventId = Guid.NewGuid(), Odds = 1.6m, CategoryId = 2, EventTypeId = 1, BetId = betId2, Status = StatusEnum.Lost },
-            new Event { EventId = Guid.NewGuid(), Odds = 2.3m, CategoryId = 1, EventTypeId = 4, BetId = betId2, Status = StatusEnum.Won },
-            new Event { EventId = Guid.NewGuid(), Odds = 2.1m, CategoryId = 2, EventTypeId = 5, BetId = betId2, Status = StatusEnum.Won },
-            new Event { EventId = Guid.NewGuid(), Odds = 1.8m, CategoryId = 1, EventTypeId = 6, BetId = betId2, Status = StatusEnum.Unfinished },
-
-            new Event { EventId = Guid.NewGuid(), Odds = 1.5m, CategoryId = 2, EventTypeId = 3, BetId = betId3, Status = StatusEnum.Won },
-            new Event { EventId = Guid.NewGuid(), Odds = 1.7m, CategoryId = 1, EventTypeId = 1, BetId = betId3, Status = StatusEnum.Won },
-            new Event { EventId = Guid.NewGuid(), Odds = 2.4m, CategoryId = 3, EventTypeId = 4, BetId = betId3, Status = StatusEnum.Won },
-            new Event { EventId = Guid.NewGuid(), Odds = 2.1m, CategoryId = 2, EventTypeId = 5, BetId = betId3, Status = StatusEnum.Unfinished },
-            new Event { EventId = Guid.NewGuid(), Odds = 2.5m, CategoryId = 1, EventTypeId = 6, BetId = betId3, Status = StatusEnum.Lost },
-
-            new Event { EventId = Guid.NewGuid(), Odds = 2.0m, CategoryId = 3, EventTypeId = 4, BetId = betId4, Status = StatusEnum.Won },
-            new Event { EventId = Guid.NewGuid(), Odds = 1.6m, CategoryId = 2, EventTypeId = 1, BetId = betId4, Status = StatusEnum.Won },
-
-            new Event { EventId = Guid.NewGuid(), Odds = 1.9m, CategoryId = 1, EventTypeId = 3, BetId = betId5, Status = StatusEnum.Lost },
-            new Event { EventId = Guid.NewGuid(), Odds = 2.2m, CategoryId = 2, EventTypeId = 2, BetId = betId5, Status = StatusEnum.Won },
-            new Event { EventId = Guid.NewGuid(), Odds = 1.5m, CategoryId = 3, EventTypeId = 5, BetId = betId5, Status = StatusEnum.Unfinished }
-        );
+       new Event { EventId = Guid.NewGuid(), Odds = 1.6m, CategoryId = 2, EventTypeId = 1, BetId = betId2, Status = StatusEnum.Lost, LeagueTournamentId = 7 },
+       new Event { EventId = Guid.NewGuid(), Odds = 2.3m, CategoryId = 1, EventTypeId = 4, BetId = betId2, Status = StatusEnum.Won, LeagueTournamentId = 6 },
+       new Event { EventId = Guid.NewGuid(), Odds = 2.1m, CategoryId = 2, EventTypeId = 5, BetId = betId2, Status = StatusEnum.Won, LeagueTournamentId = 10 },
+       new Event { EventId = Guid.NewGuid(), Odds = 1.8m, CategoryId = 1, EventTypeId = 6, BetId = betId2, Status = StatusEnum.Unfinished, LeagueTournamentId = 2 }
+   );
 
         modelBuilder.Entity<Bet>()
        .HasMany(b => b.EventsList)
@@ -139,6 +152,12 @@ public class RepositoryContext : DbContext
         .WithMany(et => et.Events)
         .HasForeignKey(e => e.EventTypeId)
         .OnDelete(DeleteBehavior.Restrict);
+
+        modelBuilder.Entity<Event>()
+       .HasOne(e => e.LeagueTournament)
+       .WithMany()
+       .HasForeignKey(e => e.LeagueTournamentId)
+       .OnDelete(DeleteBehavior.Restrict);
 
         modelBuilder.Entity<EventType>()
         .HasOne(et => et.Category)
