@@ -112,8 +112,9 @@ ul {
 .e-rowcell {
     font-family: "Manrope", sans-serif;
     font-optical-sizing: auto;
-    font-weight: 500;
+    font-weight: 600;
     font-style: normal;
+    height:50px;
 }
 
 .e-grid [class^=e-] {
@@ -129,7 +130,7 @@ main {
 }
 
 .nav-item .nav-link {
-    font-size: 1.12rem;
+    font-size: 1.3rem;
     color: #0B1623;
 }
 

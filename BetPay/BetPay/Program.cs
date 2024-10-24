@@ -33,8 +33,8 @@ builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();
 
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ2MjcyOEAzMjM2MmUzMDJlMzBtOHNNNERlYmxLZkxiRzlVQWcwV2FHZHNRY2pUMlIreURtY21EMUduVVY4PQ==");
-// Configure the HTTP request pipeline.
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWH9cc3VdQ2NdV0FyVkc=");
+
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
@@ -42,7 +42,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

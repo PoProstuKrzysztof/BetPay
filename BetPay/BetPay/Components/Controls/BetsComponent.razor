@@ -4,11 +4,10 @@
 
 <SfGrid @ref="BetGridInstance" DataSource="Bets" AllowGrouping="true" AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel"})">
     <GridPageSettings PageSize="5"></GridPageSettings>
-    <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true"></GridEditSettings>
+    <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="EditMode.Normal"></GridEditSettings>
     <GridEvents RowSelected="RowSelectHandler" TValue="Bet" OnActionComplete="BetActionsHandler"></GridEvents>
-    <GridColumn Field="@nameof(Bet.BetId)" Visible="false" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
     <GridColumns>
-          <GridForeignColumn Field="@nameof(Bookmaker.BookmakerId)" TextAlign="TextAlign.Left" HeaderText="Bookmaker" ValidationRules="new ValidationRules{Min =  1}" ForeignDataSource="Bookmakers" ForeignKeyValue="Name" EditType="EditType.DropDownEdit">
+        <GridForeignColumn Field="@nameof(Bookmaker.BookmakerId)" TextAlign="TextAlign.Left" HeaderText="Bookmaker" ValidationRules="new ValidationRules{Min =  1}" ForeignDataSource="Bookmakers" ForeignKeyValue="Name" EditType="EditType.DropDownEdit">
             <Template>
                 @{
                     var bookmaker = (context as Bet).Bookmaker;
@@ -45,8 +44,9 @@
                 </SfDropDownList>
             </EditTemplate>
         </GridForeignColumn>
+        <GridColumn Field="@nameof(Bet.BetId)" Visible="false" IsPrimaryKey="true" IsIdentity="true"></GridColumn>
         <GridColumn Field="@nameof(Bet.Stake)" TextAlign="TextAlign.Left" Type="ColumnType.Decimal" ValidationRules="new ValidationRules{ Required = true, Range=[1,99999]}" HeaderText="Stake"></GridColumn>
-        <GridColumn Field="@nameof(Bet.TotalOdds)" TextAlign="TextAlign.Left"   AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
+        <GridColumn Field="@nameof(Bet.TotalOdds)" TextAlign="TextAlign.Left" AllowAdding="false" AllowEditing="false" HeaderText="Total Odds" Format="0.00"></GridColumn>
         <GridColumn Field="@nameof(Bet.PotentialWin)" AllowAdding="false" TextAlign="TextAlign.Center" AllowEditing="false" HeaderText="Potential Win" Format="C2"></GridColumn>
         <GridColumn Field="@nameof(Bet.BetDate)" DefaultValue="DateTime.Today" Format="dd MMM yyyy" HeaderText="Bet Date" Type="Syncfusion.Blazor.Grids.ColumnType.Date"></GridColumn>
         <GridColumn Field="@nameof(Bet.Status)" AllowAdding="false" AllowEditing="false" HeaderText="Status" TextAlign="TextAlign.Center">
@@ -72,26 +72,30 @@
                             <span>@bet.Status</span>
                         </div>
                     }
+
                 }
             </Template>
         </GridColumn>
 
-        <GridColumn Field="@nameof(Bet.IsTaxIncluded)" HeaderText="Tax" DisplayAsCheckBox="true" TextAlign="TextAlign.Center"></GridColumn>
-        <GridColumn Field="@nameof(Bet.LivePrematch)" TextAlign="TextAlign.Left" HeaderText="State" EditType="EditType.DropDownEdit">
+        <GridColumn Field="@nameof(Bet.LivePrematch)" TextAlign="TextAlign.Center" HeaderText="State" EditType="EditType.DropDownEdit">
             <EditTemplate>
                 <SfDropDownList @bind-value="((context as Bet).LivePrematch)" TItem="string" TValue="LivePrematchEnum" DataSource="LivePrematchEnumValues">
                 </SfDropDownList>
             </EditTemplate>
         </GridColumn>
+        <GridColumn Field="@nameof(Bet.IsTaxIncluded)" HeaderText="Tax" DisplayAsCheckBox="true" TextAlign="TextAlign.Center"></GridColumn>
+
     </GridColumns>
 </SfGrid>
 
 <br />
+<div>
+</div>
 
 @if (IsBetSelected)
 {
 
-    <SfGrid @ref="EventGridInstance" Height="200px"  EnableStickyHeader="true" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
+    <SfGrid @ref="EventGridInstance" Height="200px" EnableStickyHeader="true" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
         <GridEvents TValue="Event" OnActionComplete="EventActionHandler"></GridEvents>
         <GridSelectionSettings></GridSelectionSettings>
         <GridEditSettings AllowEditing="true" AllowAdding="true" AllowDeleting="true" NewRowPosition="NewRowPosition.Bottom"></GridEditSettings>
@@ -111,7 +115,7 @@
             <GridForeignColumn Field="@nameof(LeagueTournament.LeagueTournamentId)" HeaderText="Competition" TValue="LeagueTournament" ForeignDataSource="LeagueTournaments" ForeignKeyValue="Name">
                 <EditTemplate>
                     <SfDropDownList @bind-value="@((context as Event).LeagueTournamentId)" TItem="LeagueTournament" Enabled="EnableEventTypeDropDown" TValue="int" Query="LeagueTournamentQuery" ID="LeagueTournamentId" Placeholder="Select competition" DataSource="LeagueTournaments">
-                        <DropDownListFieldSettings Text="Name" Value="LeagueTournamentId"></DropDownListFieldSettings>                      
+                        <DropDownListFieldSettings Text="Name" Value="LeagueTournamentId"></DropDownListFieldSettings>
                     </SfDropDownList>
                 </EditTemplate>
             </GridForeignColumn>
@@ -165,7 +169,6 @@
 
 
 
-
 @code {
 
     SfGrid<Bet>? BetGridInstance { get; set; }
@@ -200,22 +203,31 @@
 
     }
 
+    /// <summary>
+    /// Storing bet id to pass it to function BuildQuery
+    /// </summary>
+    /// <param name="Args"></param>
     public void RowSelectHandler(RowSelectEventArgs<Bet> Args)
     {
-
         RowIndex = Args.Data.BetId;
         IsBetSelected = true;
     }
 
 
+    /// <summary>
+    /// Event grid actions handler. It is executed after completing operation.
+    /// </summary>
+    /// <param name="args"></param>
 
     public async void EventActionHandler(ActionEventArgs<Event> args)
     {
         if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
         {
-            if (args.Action == "Add" && 
-            !args.Data.EventTypeId.Equals(0) || 
-            !args.Data.CategoryId.Equals(0))
+            if (args.Action.Equals("Add") &&
+            (!args.Data.EventTypeId.Equals(0) ||
+            !args.Data.CategoryId.Equals(0) ||
+            !args.Data.LeagueTournamentId.Equals(0))
+            )
             {
 
                 args.Data.BetId = RowIndex;
@@ -242,7 +254,7 @@
         }
         else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
         {
-            RepositoryWrapper.EventRepository.Delete(args.Data);            
+            RepositoryWrapper.EventRepository.Delete(args.Data);
             await RepositoryWrapper.SaveAsync();
             Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
             await EventGridInstance.Refresh();
@@ -251,6 +263,11 @@
 
 
     }
+
+    /// <summary>
+    /// Bet grid actions handler. It is executed after completing operation.
+    /// </summary>
+    /// <param name="args"></param>
 
     public async void BetActionsHandler(ActionEventArgs<Bet> args)
     {
@@ -264,19 +281,31 @@
                 await BetGridInstance.Refresh();
 
             }
+            else if (args.Action == "Edit")
+            {
+
+                RepositoryWrapper.BetRepository.UpdateBet(args.Data);
+                await RepositoryWrapper.SaveAsync();
+                await BetGridInstance.Refresh();
+
+            }
         }
+        
+
         else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
         {
             RepositoryWrapper.BetRepository.DeleteBet(args.Data);
             await RepositoryWrapper.SaveAsync();
             await BetGridInstance.Refresh();
         }
-
-
     }
 
 
-
+    /// <summary>
+    /// When choosing category on event grid, related event types are shown.
+    /// For example, you when tennis is chosen, you cannot select Above/Under goals event type.
+    /// </summary>
+    /// <param name="args"></param>
     public void ChangeCategory(ChangeEventArgs<int, Category> args)
     {
         EnableEventTypeDropDown = args.Value > 0 ? true : false;
@@ -285,6 +314,10 @@
         EventGridInstance.PreventRender(false);
     }
 
+    /// <summary>
+    /// When selecting bet, related events are displayed on event's grid
+    /// </summary>
+    /// <returns></returns>
 
     private Query BuildQuery()
     {

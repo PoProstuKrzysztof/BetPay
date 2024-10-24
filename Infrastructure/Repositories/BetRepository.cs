@@ -1,5 +1,6 @@
 ﻿using Application.Contracts;
 using Domain.Entities;
+using Domain.Enums;
 using Infrastructure.Data;
 using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,40 @@ namespace Infrastructure.Repositories
                 throw new RetrieveException("Failed to retrieve bets from the database.", nameof(Bet), ex);
             }
         }
+        public async Task<IEnumerable<MonthlyIncome>> GetAllMonthlyIncomeSummaries()
+        {
+            try
+            {
 
+                var allBets = await FindAll()
+                    .Result
+                    .Include(b => b.EventsList)
+                    .ToListAsync();
+
+               // Grouping by month and year
+                var incomeByMonth = allBets
+                    .GroupBy(b => new { b.BetDate.Year, b.BetDate.Month })
+                    .Select(g =>
+                    {
+                       // Calculating monthly income
+                        decimal monthlyIncome = g.Sum(b =>
+                        {
+                           
+                           return b.Status == StatusEnum.Won ? (b.PotentialWin ?? 0) : -b.Stake;
+                        });
+
+                        return new MonthlyIncome(g.Key.Year, g.Key.Month, monthlyIncome);
+                    })
+                    .OrderBy(x => x.MonthDate)
+                    .ToList();
+
+                return incomeByMonth;
+            }
+            catch (Exception ex)
+            {
+                throw new RetrieveException("Failed to retrieve monthly income summaries.", nameof(Bet), ex);
+            }
+        }
         public async Task<Bet> GetBetByGuid(Guid id)
         {
             try

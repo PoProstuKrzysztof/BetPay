@@ -8,20 +8,20 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="26.2.14" />
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="26.2.14" />
-    <PackageReference Include="Syncfusion.Blazor.Charts" Version="26.2.14" />
-    <PackageReference Include="Syncfusion.Blazor.Core" Version="26.2.14" />
-    <PackageReference Include="Syncfusion.Blazor.DataForm" Version="26.2.14" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="26.2.14" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="26.2.14" />
-    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="26.2.14" />
-    <PackageReference Include="Syncfusion.Blazor.Themes" Version="26.2.14" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="27.1.56" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="27.1.56" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="27.1.56" />
+    <PackageReference Include="Syncfusion.Blazor.Core" Version="27.1.56" />
+    <PackageReference Include="Syncfusion.Blazor.DataForm" Version="27.1.56" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="27.1.56" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="27.1.56" />
+    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="27.1.56" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="27.1.56" />
   </ItemGroup>
 
   <ItemGroup>

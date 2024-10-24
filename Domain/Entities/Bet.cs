@@ -54,7 +54,7 @@ public class Bet
         {
             if (TotalOdds != 0)
             {
-                decimal win = Math.Round((decimal)(Stake * TotalOdds));
+                decimal win = Math.Round((decimal)(Stake * TotalOdds), 2);
 
                 // Apply 10% if above 2280
                 if (win > 2280)
@@ -93,14 +93,17 @@ public class Bet
 
             decimal totalOdds = 1M;
 
-            foreach (var eventItem in EventsList)
+            foreach (var @event in EventsList)
             {
-                totalOdds *= eventItem.Odds;
+                totalOdds *= @event.Odds;
             }
 
-            return totalOdds;
+            return Math.Round(totalOdds,2);
         }
     }
+
+
+    [NotMapped]
 
     // Relationships
 

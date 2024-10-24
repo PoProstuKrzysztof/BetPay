@@ -6,6 +6,8 @@ public interface IBetRepository : IRepositoryBase<Bet>
 {
     Task<IEnumerable<Bet>> GetAllBetsAsync();
 
+    Task<IEnumerable<MonthlyIncome>> GetAllMonthlyIncomeSummaries();
+
     Task<Bet> GetBetByGuid(Guid id);
 
     void DeleteBet(Bet bet);

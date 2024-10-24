@@ -43,7 +43,6 @@
 }
 
 .nav-item {
-    font-size: 1.20rem;
     padding-bottom: 0.5rem;
 }
 
@@ -64,6 +63,7 @@
         display: flex;
         align-items: center;
         line-height: 3rem;
+        font-size:1.1rem;
         width: 100%;
     }
 

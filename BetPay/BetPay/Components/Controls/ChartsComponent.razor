@@ -1,0 +1,62 @@
+﻿<h3>Charts</h3>
+@inject IRepositoryWrapper RepositoryWrapper
+
+
+<SfChart Title="Summary">
+    <ChartEvents OnPointRender="@PointRender"></ChartEvents>
+
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" Title="Date"
+                       Format="yyyy MM"
+                       EdgeLabelPlacement="EdgeLabelPlacement.Shift"
+                       RangePadding="ChartRangePadding.Normal"
+                       IntervalType="IntervalType.Months">
+        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+    </ChartPrimaryXAxis>
+
+    <ChartPrimaryYAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Double" Title="Income"></ChartPrimaryYAxis>
+
+    <ChartSeriesCollection>
+        <ChartSeries Type="ChartSeriesType.Column" DataSource="MonthlyIncomes" XName="MonthDate" YName="NetIncome" ColumnWidth="0.5" ColumnSpacing="0.2">
+            <ChartMarker>
+                <ChartDataLabel Position="LabelPosition.Middle" Visible="true">
+                    <ChartDataLabelFont FontWeight="700" Color="#191c24"></ChartDataLabelFont>
+                </ChartDataLabel>
+            </ChartMarker>
+            <ChartTooltipSettings Enable="true" EnableMarker="true"></ChartTooltipSettings>
+        </ChartSeries>
+    </ChartSeriesCollection>
+</SfChart>
+
+
+@code {
+    public IEnumerable<Bet>? Bets { get; set; }
+    public IEnumerable<MonthlyIncome>? MonthlyIncomes { get; set; }
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
+        MonthlyIncomes = await RepositoryWrapper.BetRepository.GetAllMonthlyIncomeSummaries();
+
+    }
+
+
+    /// <summary>
+    /// Based on value, changes the color of the column
+    /// </summary>
+    /// <param name="args"></param>
+    public void PointRender(PointRenderEventArgs args)
+    {
+        if (args.Point.YValue < 0)
+        {
+            args.Fill = "red";
+        }
+        else
+        {
+            args.Fill = "green";
+        }
+    }
+}
+
