@@ -71,7 +71,7 @@ public class Bet
                 //Fortuna applies additional 0.14% multiplier when playing live with 3 or more events
 
                 // Apply tax if tax is included
-                return IsTaxIncluded ? win * 0.86M : win;
+                return IsTaxIncluded ? (win * 0.86M) : win;
             }
 
             return 0;

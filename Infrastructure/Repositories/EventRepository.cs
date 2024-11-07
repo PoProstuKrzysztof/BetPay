@@ -104,4 +104,31 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
             throw new DeleteException($"Failed to delete event with ID: {@event.EventId}.", nameof(Event), ex);
         }
     }
+
+    public async Task<IEnumerable<EventCategoryChart>> GetAllEventsWithCategoryAsync()
+    {
+        var events = await FindAll()
+            .Result
+            .Include(c => c.Category)
+            .ToListAsync();
+
+        var totalEvents = events.Count;
+        var categoryCounts = events
+            .GroupBy(e => e.Category.Name)
+            .Select(g => new
+            {
+                Category = g.Key,
+                Count = g.Count()
+            })
+            .ToList();
+
+        var eventCategoryCharts = categoryCounts
+            .Select(cc => new EventCategoryChart(
+                cc.Category,
+                (double)cc.Count / totalEvents * 100
+            ))
+            .ToList();
+
+        return eventCategoryCharts;
+    }
 }

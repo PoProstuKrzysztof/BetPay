@@ -29,7 +29,7 @@ namespace Infrastructure.Repositories
                 throw new RetrieveException("Failed to retrieve bets from the database.", nameof(Bet), ex);
             }
         }
-        public async Task<IEnumerable<MonthlyIncome>> GetAllMonthlyIncomeSummaries()
+        public async Task<IEnumerable<MonthlyIncomeChart>> GetAllMonthlyIncomeSummariesAsync()
         {
             try
             {
@@ -46,12 +46,11 @@ namespace Infrastructure.Repositories
                     {
                        // Calculating monthly income
                         decimal monthlyIncome = g.Sum(b =>
-                        {
-                           
-                           return b.Status == StatusEnum.Won ? (b.PotentialWin ?? 0) : -b.Stake;
+                        {                   
+                           return b.Status == StatusEnum.Won ? (b.PotentialWin  ?? 0) : -b.Stake;
                         });
 
-                        return new MonthlyIncome(g.Key.Year, g.Key.Month, monthlyIncome);
+                        return new MonthlyIncomeChart(g.Key.Year, g.Key.Month, monthlyIncome);
                     })
                     .OrderBy(x => x.MonthDate)
                     .ToList();

@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace Domain.Entities;
 
 /// <summary>
-/// Entity for chart monthly income from bets
+/// Monthly income from bets for charts entity
 /// </summary>
-public class MonthlyIncome
+public class MonthlyIncomeChart
 {
     public DateTime MonthDate { get; set; }
     public decimal NetIncome { get; set; }
 
-    public MonthlyIncome(int year, int month, decimal netIncome)
+    public MonthlyIncomeChart(int year, int month, decimal netIncome)
     {
         MonthDate = new DateTime(year, month, 1); 
         NetIncome = Math.Round(netIncome,2);
