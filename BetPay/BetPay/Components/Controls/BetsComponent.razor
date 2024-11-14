@@ -2,8 +2,10 @@
 @using Syncfusion.Blazor.DropDowns
 @inject IRepositoryWrapper RepositoryWrapper
 
-<SfGrid @ref="BetGridInstance" DataSource="Bets" AllowGrouping="true" AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel"})">
+<SfGrid @ref="BetGridInstance"  DataSource="Bets" AllowGrouping="true" AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel"})">
     <GridPageSettings PageSize="5"></GridPageSettings>
+
+    
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="EditMode.Normal"></GridEditSettings>
     <GridEvents RowSelected="RowSelectHandler" TValue="Bet" OnActionComplete="BetActionsHandler"></GridEvents>
     <GridColumns>
@@ -88,8 +90,8 @@
     </GridColumns>
 </SfGrid>
 
-<br />
-<div>
+
+<div class="divider">
 </div>
 
 @if (IsBetSelected)
@@ -98,6 +100,11 @@
     <SfGrid @ref="EventGridInstance" Height="200px" EnableStickyHeader="true" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
         <GridEvents TValue="Event" OnActionComplete="EventActionHandler"></GridEvents>
         <GridSelectionSettings></GridSelectionSettings>
+        <GridTemplates>
+            <EmptyRecordTemplate>
+                <span style="font-weight:500"><center>There are no event's added yet!</center></span>
+            </EmptyRecordTemplate>
+        </GridTemplates>
         <GridEditSettings AllowEditing="true" AllowAdding="true" AllowDeleting="true" NewRowPosition="NewRowPosition.Bottom"></GridEditSettings>
         <GridColumns>
             <GridColumn Field="@nameof(Event.EventId)" IsPrimaryKey="true" IsIdentity="true" Visible="false"></GridColumn>

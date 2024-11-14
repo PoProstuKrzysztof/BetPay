@@ -17,5 +17,6 @@ public class EventCategoryChart
         Percentage = percentage;
     }
     public string? Category { get; set; }
-    public double Percentage { get; set; }
+    
+    public double Percentage { get; set; } 
 }

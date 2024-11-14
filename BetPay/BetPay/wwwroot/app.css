@@ -6,6 +6,11 @@ html, body {
     font-size: 1rem;
 }
 
+
+.component {
+    box-shadow: 0px 0px 45px -15px rgba(66, 68, 90, 1);
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -18,6 +23,11 @@ html, body {
 
 .content {
     padding-top: 1.1rem;
+}
+
+.divider {
+    height:2rem;
+    background-color: #191c24;
 }
 
 h1:focus {
@@ -119,19 +129,17 @@ ul {
 
 .e-grid [class^=e-] {
     box-sizing: content-box;
+
 }
 
 .e-checkbox-wrapper .e-frame, .e-css.e-checkbox-wrapper .e-frame {
-    width: 500px;
+    width: 600px;
 }
 
-main {
-    background-color: #FBFCF8;
-}
+
 
 .nav-item .nav-link {
     font-size: 1.3rem;
-    color: #191c24;
 }
 
 .fa-solid, .fas {

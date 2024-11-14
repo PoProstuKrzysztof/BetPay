@@ -125,7 +125,7 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
         var eventCategoryCharts = categoryCounts
             .Select(cc => new EventCategoryChart(
                 cc.Category,
-                (double)cc.Count / totalEvents * 100
+                Math.Round((double) cc.Count / totalEvents * 100,0)
             ))
             .ToList();
 

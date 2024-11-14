@@ -2,16 +2,18 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background-color: #191C24;
 }
 
 main {
     flex: 1;
-    background-color: #FAF9F6;
+    background-color: #f7f7f7;
 }
 
 .sidebar {
-    background-color: #191C24;
     overflow: hidden;
+    border: 1px solid #f7f7f71b;
+
 }
 
 @media (min-width: 641px) {
