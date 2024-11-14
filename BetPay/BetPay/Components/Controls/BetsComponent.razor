@@ -1,6 +1,10 @@
 ﻿@using Domain.Enums
+@using Domain.Functions
 @using Syncfusion.Blazor.DropDowns
 @inject IRepositoryWrapper RepositoryWrapper
+
+
+
 
 <SfGrid @ref="BetGridInstance" DataSource="Bets" AllowGrouping="true" AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel"})">
     <GridPageSettings PageSize="5"></GridPageSettings>
@@ -167,12 +171,20 @@
 
 
 
+<SfToast @ref="ToastObj"  Timeout="3000">
+    <ToastPosition X="Right"></ToastPosition>
+    <ToastAnimationSettings>
+        <ToastShowAnimationSettings Effect="ToastEffect.SlideBottomIn"></ToastShowAnimationSettings>
+        <ToastHideAnimationSettings Effect="ToastEffect.SlideTopOut"></ToastHideAnimationSettings>
+    </ToastAnimationSettings>
+</SfToast>
 
 
 @code {
 
     SfGrid<Bet>? BetGridInstance { get; set; }
     SfGrid<Event>? EventGridInstance { get; set; }
+    SfToast ToastObj;
 
     public IEnumerable<Bet>? Bets { get; set; }
     public IEnumerable<Event>? Events { get; set; }
@@ -221,44 +233,59 @@
 
     public async void EventActionHandler(ActionEventArgs<Event> args)
     {
-        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        try
         {
-            if (args.Action.Equals("Add") &&
-            (!args.Data.EventTypeId.Equals(0) ||
-            !args.Data.CategoryId.Equals(0) ||
-            !args.Data.LeagueTournamentId.Equals(0))
-            )
+            // Operation after modyfing grid event row
+            if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
             {
 
-                args.Data.BetId = RowIndex;
+                // Operation after creating event
+                if (args.Action.Equals("Add") &&
+                (!args.Data.EventTypeId.Equals(0) ||
+                !args.Data.CategoryId.Equals(0) ||
+                !args.Data.LeagueTournamentId.Equals(0))
+                )
+                {
+                    args.Data.BetId = RowIndex;
 
-                RepositoryWrapper.EventRepository.CreateEvent(args.Data);
+                    RepositoryWrapper.EventRepository.CreateEvent(args.Data);
+                    await RepositoryWrapper.SaveAsync();
+                    Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
+                    await EventGridInstance.Refresh();
+                    await BetGridInstance.Refresh();
+                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Event was succesfull created!");
+
+                }
+                // Operation after editing event
+                else if (args.Action == "Edit")
+                {
+
+                    Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
+                    RepositoryWrapper.EventRepository.UpdateEvent(args.Data);
+                    await RepositoryWrapper.SaveAsync();
+                    await EventGridInstance.Refresh();
+                    await BetGridInstance.Refresh();
+                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Event was succesfully edited!");
+
+                }
+            }
+            // Operation after deleting event
+            else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+            {
+                RepositoryWrapper.EventRepository.Delete(args.Data);
                 await RepositoryWrapper.SaveAsync();
                 Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
                 await EventGridInstance.Refresh();
                 await BetGridInstance.Refresh();
+                await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Event was succesfully deleted!");
 
             }
-            else if (args.Action == "Edit")
-            {
-
-                Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
-                RepositoryWrapper.EventRepository.UpdateEvent(args.Data);
-                await RepositoryWrapper.SaveAsync();
-                await EventGridInstance.Refresh();
-                await BetGridInstance.Refresh();
-
-            }
-
 
         }
-        else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        catch (Exception)
         {
-            RepositoryWrapper.EventRepository.Delete(args.Data);
-            await RepositoryWrapper.SaveAsync();
-            Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
-            await EventGridInstance.Refresh();
-            await BetGridInstance.Refresh();
+            await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Failed,"");
+            throw;
         }
 
 
@@ -271,33 +298,52 @@
 
     public async void BetActionsHandler(ActionEventArgs<Bet> args)
     {
-        if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
+        try
         {
-            if (args.Action == "Add")
+            // Operation after modyfing bet grid row
+            if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Save))
             {
+                // Operation after creating bet
+                if (args.Action == "Add")
+                {
 
-                RepositoryWrapper.BetRepository.CreateBet(args.Data);
+                    RepositoryWrapper.BetRepository.CreateBet(args.Data);
+                    await RepositoryWrapper.SaveAsync();
+                    await BetGridInstance.Refresh();
+                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes, "Bet was succesfully created!");
+
+
+                }
+                // Operation after editing bet
+                else if (args.Action == "Edit")
+                {
+
+                    RepositoryWrapper.BetRepository.UpdateBet(args.Data);
+                    await RepositoryWrapper.SaveAsync();
+                    await BetGridInstance.Refresh();
+                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Bet was succesfuly edited!");
+
+                }
+            }
+
+            // Operation after deleting bet
+            else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+            {
+                RepositoryWrapper.BetRepository.DeleteBet(args.Data);
                 await RepositoryWrapper.SaveAsync();
                 await BetGridInstance.Refresh();
+                await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Bet was succesfuly deleted!");
 
             }
-            else if (args.Action == "Edit")
-            {
 
-                RepositoryWrapper.BetRepository.UpdateBet(args.Data);
-                await RepositoryWrapper.SaveAsync();
-                await BetGridInstance.Refresh();
 
-            }
         }
-        
-
-        else if (args.RequestType.Equals(Syncfusion.Blazor.Grids.Action.Delete))
+        catch (Exception)
         {
-            RepositoryWrapper.BetRepository.DeleteBet(args.Data);
-            await RepositoryWrapper.SaveAsync();
-            await BetGridInstance.Refresh();
+            await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Failed,"");
+            throw;
         }
+
     }
 
 
@@ -332,4 +378,6 @@
             return new Query();
         }
     }
+        
+    
 }
