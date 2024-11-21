@@ -1,0 +1,58 @@
+﻿@inject IRepositoryWrapper RepositoryWrapper;
+
+<SfChart Title="Last 12 Months">
+    <ChartEvents OnPointRender="@PointRender"></ChartEvents>
+    <ChartTooltipSettings Enable="true" Fill="#191c24"></ChartTooltipSettings>
+
+    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime" Title="Date"
+                       Format="yyyy MM"
+                       EdgeLabelPlacement="EdgeLabelPlacement.Shift"
+                       RangePadding="ChartRangePadding.Normal"
+                       IntervalType="IntervalType.Months"
+                       LabelPadding="5"
+                       Minimum="new DateTime(2023,4,1)"
+                       Interval="1">
+        <ChartAxisMajorGridLines Width="0"></ChartAxisMajorGridLines>
+        <ChartAxisMajorTickLines Width="0"></ChartAxisMajorTickLines>
+    </ChartPrimaryXAxis>
+
+    <ChartPrimaryYAxis ValueType="Syncfusion.Blazor.Charts.ValueType.Double" Title="Income"></ChartPrimaryYAxis>
+
+    <ChartSeriesCollection>
+        <ChartSeries Type="ChartSeriesType.Column" DataSource="MonthlyBalance" XName="MonthDate" YName="Balance"
+                     ColumnWidth="0.5">
+            <ChartMarker>
+                <ChartDataLabel Position="LabelPosition.Middle" Visible="true">
+                    <ChartDataLabelFont FontWeight="700" Color="#191c24"></ChartDataLabelFont>
+                </ChartDataLabel>
+            </ChartMarker>
+            <ChartCornerRadius TopRight="10" TopLeft="10" BottomLeft="10" BottomRight="10"></ChartCornerRadius>
+        </ChartSeries>
+    </ChartSeriesCollection>
+</SfChart>
+
+
+@code {
+    private IEnumerable<MonthlyBalance>? MonthlyBalance { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.MonthlyBalance = await RepositoryWrapper.BetRepository.GetAllMonthlyBalanceSummariesAsync();
+    }
+
+    /// <summary>
+    /// Based on value, changes the color of the column
+    /// </summary>
+    /// <param name="args"></param>
+    public void PointRender(PointRenderEventArgs args)
+    {
+        if (args.Point.YValue < 0)
+        {
+            args.Fill = "#FF0000";
+        }
+        else
+        {
+            args.Fill = "green";
+        }
+    }
+}

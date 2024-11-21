@@ -20,13 +20,13 @@ public class Bet
     /// <summary>
     /// Check the status of the bet based on the event's statuses involved in this bet 
     /// </summary>
-    public StatusEnum? Status
+    public StatusEnum Status
     {
         get
         {
             if (EventsList == null || !EventsList.Any())
             {
-                return StatusEnum.Unfinished;
+                return StatusEnum.Pending;
             }
 
             if (EventsList.Any(e => e.Status == StatusEnum.Lost))
@@ -38,7 +38,7 @@ public class Bet
                 return StatusEnum.Won;
             }
 
-            return StatusEnum.Unfinished;
+            return StatusEnum.Pending;
         }
     }
 

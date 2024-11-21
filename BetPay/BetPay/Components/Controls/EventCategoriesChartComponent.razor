@@ -1,0 +1,31 @@
+﻿@inject IRepositoryWrapper RepositoryWrapper
+
+
+
+<SfAccumulationChart Title="Categories" EnableAnimation="true">
+    <AccumulationChartSeriesCollection>
+        <AccumulationChartSeries PointColorMapping="Fill" DataSource="EventsCategories" XName="Category" YName="Percentage"
+                                 Name="Category"
+                                 Explode="true">
+            <AccumulationDataLabelSettings Visible="true"
+                                           Name="Percentage"
+                                           Position="AccumulationLabelPosition.Outside">
+                <AccumulationChartDataLabelFont Size=1rem FontWeight="500"></AccumulationChartDataLabelFont>
+            </AccumulationDataLabelSettings>
+        </AccumulationChartSeries>
+    </AccumulationChartSeriesCollection>
+
+    <AccumulationChartLegendSettings Visible="false"></AccumulationChartLegendSettings>
+    <AccumulationChartTooltipSettings Enable="true" Format="<b>${point.x}</b><br><b>${point.y}%</b>"></AccumulationChartTooltipSettings>
+</SfAccumulationChart>
+
+
+@code {
+    private IEnumerable<EventCategoryChart>? EventsCategories { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.EventsCategories = await RepositoryWrapper.EventRepository.GetAllEventsWithCategoryAsync();
+    }
+}
+ 

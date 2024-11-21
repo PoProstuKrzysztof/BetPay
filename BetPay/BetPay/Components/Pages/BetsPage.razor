@@ -4,13 +4,12 @@
 @using Syncfusion.Blazor.Notifications
 @inject IRepositoryWrapper RepositoryWrapper
 
-
-
+@page "/"
 
 <SfGrid @ref="BetGridInstance" DataSource="Bets" AllowGrouping="true" AllowPaging="true" AllowSelection="true" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel"})">
     <GridPageSettings PageSize="5"></GridPageSettings>
 
-    
+
     <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="EditMode.Normal"></GridEditSettings>
     <GridEvents RowSelected="RowSelectHandler" TValue="Bet" OnActionComplete="BetActionsHandler"></GridEvents>
     <GridColumns>
@@ -59,27 +58,23 @@
         <GridColumn Field="@nameof(Bet.Status)" AllowAdding="false" AllowEditing="false" HeaderText="Status" TextAlign="TextAlign.Center">
             <Template>
                 @{
-                    var bet = (context as Bet);
+                    var status = (context as Bet).Status;
+                    var statusClasses = new Dictionary<StatusEnum, string>
+                {
+                { StatusEnum.Won, "status status-won" },
+                { StatusEnum.Lost, "status status-lost" },
+                { StatusEnum.Pending, "status status-pending" },
+                { StatusEnum.Refunded, "status status-refunded" },
+                { StatusEnum.Canceled, "status status-canceled" },
+                { StatusEnum.Cashout, "status status-cashout" }
+                };
 
-                    @if (bet.Status == StatusEnum.Won)
+                    if (statusClasses.ContainsKey(status))
                     {
-                        <div class="status-won">
-                            <span>@bet.Status</span>
+                        <div class="@statusClasses[status]">
+                            <span>@status</span>
                         </div>
                     }
-                    @if (bet.Status == StatusEnum.Lost)
-                    {
-                        <div class="status-lost">
-                            <span>@bet.Status</span>
-                        </div>
-                    }
-                    @if (bet.Status == StatusEnum.Unfinished)
-                    {
-                        <div class="status-unfinished">
-                            <span>@bet.Status</span>
-                        </div>
-                    }
-
                 }
             </Template>
         </GridColumn>
@@ -96,11 +91,10 @@
 </SfGrid>
 
 
-<div class="divider">
-</div>
 
 @if (IsBetSelected)
 {
+
 
     <SfGrid @ref="EventGridInstance" Height="200px" EnableStickyHeader="true" DataSource="Events" Query="@BuildQuery()" TValue="Event" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
         <GridEvents TValue="Event" OnActionComplete="EventActionHandler"></GridEvents>
@@ -144,26 +138,22 @@
                 <Template>
                     @{
                         var status = (context as Event).Status;
+                        var statusClasses = new Dictionary<StatusEnum, string>
+                {
+                { StatusEnum.Won, "status status-won" },
+                { StatusEnum.Lost, "status status-lost" },
+                { StatusEnum.Pending, "status status-pending" },
+                { StatusEnum.Refunded, "status status-refunded" },
+                { StatusEnum.Canceled, "status status-canceled" },
+                { StatusEnum.Cashout, "status status-cashout" }
+                };
 
-                        @if (status == StatusEnum.Won)
+                        if (statusClasses.ContainsKey(status))
                         {
-                            <div class="status-won">
+                            <div class="@statusClasses[status]">
                                 <span>@status</span>
                             </div>
                         }
-                        @if (status == StatusEnum.Lost)
-                        {
-                            <div class="status-lost">
-                                <span>@status</span>
-                            </div>
-                        }
-                        @if (status == StatusEnum.Unfinished)
-                        {
-                            <div class="status-unfinished">
-                                <span>@status</span>
-                            </div>
-                        }
-
                     }
                 </Template>
                 <EditTemplate>
@@ -179,7 +169,7 @@
 
 
 
-<SfToast @ref="ToastObj"  Timeout="3000">
+<SfToast @ref="ToastObj" Timeout="3000">
     <ToastPosition X="Right"></ToastPosition>
     <ToastAnimationSettings>
         <ToastShowAnimationSettings Effect="ToastEffect.SlideBottomIn"></ToastShowAnimationSettings>
@@ -261,7 +251,7 @@
                     Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
                     await EventGridInstance.Refresh();
                     await BetGridInstance.Refresh();
-                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Event was succesfull created!");
+                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes, "Event was succesfull created!");
 
                 }
                 // Operation after editing event
@@ -273,7 +263,7 @@
                     await RepositoryWrapper.SaveAsync();
                     await EventGridInstance.Refresh();
                     await BetGridInstance.Refresh();
-                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Event was succesfully edited!");
+                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes, "Event was succesfully edited!");
 
                 }
             }
@@ -285,14 +275,14 @@
                 Bets = await RepositoryWrapper.BetRepository.GetAllBetsAsync();
                 await EventGridInstance.Refresh();
                 await BetGridInstance.Refresh();
-                await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Event was succesfully deleted!");
+                await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes, "Event was succesfully deleted!");
 
             }
 
         }
         catch (Exception)
         {
-            await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Failed,"");
+            await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Failed, "");
             throw;
         }
 
@@ -329,7 +319,7 @@
                     RepositoryWrapper.BetRepository.UpdateBet(args.Data);
                     await RepositoryWrapper.SaveAsync();
                     await BetGridInstance.Refresh();
-                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Bet was succesfuly edited!");
+                    await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes, "Bet was succesfuly edited!");
 
                 }
             }
@@ -340,7 +330,7 @@
                 RepositoryWrapper.BetRepository.DeleteBet(args.Data);
                 await RepositoryWrapper.SaveAsync();
                 await BetGridInstance.Refresh();
-                await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes,"Bet was succesfuly deleted!");
+                await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Succes, "Bet was succesfuly deleted!");
 
             }
 
@@ -348,7 +338,7 @@
         }
         catch (Exception)
         {
-            await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Failed,"");
+            await ShowToastGridOperations.ShowToastGridOperation(this.ToastObj, ToastTypeEnum.Failed, "");
             throw;
         }
 
@@ -386,6 +376,6 @@
             return new Query();
         }
     }
-        
-    
+
+
 }

@@ -6,6 +6,7 @@ using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Blazor;
+using System.Net.Sockets;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-builder.Services.AddDbContextPool<RepositoryContext>(options =>
+
+builder.Services.AddDbContext<RepositoryContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         sqlServerOptionsAction: sqlOptions =>
@@ -28,7 +30,9 @@ builder.Services.AddDbContextPool<RepositoryContext>(options =>
     options.UseLazyLoadingProxies();
     options.EnableDetailedErrors();
     options.EnableSensitiveDataLogging();
-});
+    
+}, ServiceLifetime.Scoped);
+
 builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();

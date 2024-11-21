@@ -10,15 +10,15 @@ namespace Domain.Entities;
 /// <summary>
 /// Monthly income from bets for charts entity
 /// </summary>
-public class MonthlyIncomeChart
+public class MonthlyBalance
 {
     public DateTime MonthDate { get; set; }
-    public decimal NetIncome { get; set; }
+    public decimal Balance { get; set; }
 
-    public MonthlyIncomeChart(int year, int month, decimal netIncome)
+    public MonthlyBalance(int year, int month, decimal balance)
     {
-        MonthDate = new DateTime(year, month, 1); 
-        NetIncome = Math.Round(netIncome,2);
+        MonthDate = new DateTime(year, month, 1);
+        Balance = Math.Round(balance, 2);
     }
 
  

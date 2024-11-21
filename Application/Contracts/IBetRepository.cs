@@ -6,7 +6,7 @@ public interface IBetRepository : IRepositoryBase<Bet>
 {
     Task<IEnumerable<Bet>> GetAllBetsAsync();
 
-    Task<IEnumerable<MonthlyIncomeChart>> GetAllMonthlyIncomeSummariesAsync();
+    Task<IEnumerable<MonthlyBalance>> GetAllMonthlyBalanceSummariesAsync();
 
     Task<Bet> GetBetByGuid(Guid id);
 

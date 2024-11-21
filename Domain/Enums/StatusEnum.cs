@@ -9,5 +9,11 @@ public enum StatusEnum
 
     Lost = 1,
 
-    Unfinished = 2
+    Pending = 2,
+    
+    Cashout = 3,
+
+    Canceled = 4,
+
+    Refunded = 5
 }

@@ -33,13 +33,10 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
             var localEvent = RepositoryContext.Set<Event>()
                .Local.FirstOrDefault(e => e.EventId.Equals(@event.EventId));
 
-            var localBet = RepositoryContext.Set<Bet>()
-                .Local.FirstOrDefault(e => e.BetId.Equals(@event.BetId));
-
-            if (localEvent != null && localBet != null)
+          
+            if (localEvent != null )
             {
                 RepositoryContext.Entry(localEvent).State = EntityState.Detached;
-                RepositoryContext.Entry(localBet).State = EntityState.Detached;
             }
 
             RepositoryContext.Entry(@event).State = EntityState.Modified;

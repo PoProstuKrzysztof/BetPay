@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="27.1.58" />
+    <PackageReference Include="Syncfusion.Blazor.Grid" Version="27.2.2" />
   </ItemGroup>
 
 </Project>

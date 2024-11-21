@@ -132,7 +132,7 @@ public class RepositoryContext : DbContext
        new Event { EventId = Guid.NewGuid(), Odds = 1.6m, CategoryId = 2, EventTypeId = 1, BetId = betId2, Status = StatusEnum.Lost, LeagueTournamentId = 7 },
        new Event { EventId = Guid.NewGuid(), Odds = 2.3m, CategoryId = 1, EventTypeId = 4, BetId = betId2, Status = StatusEnum.Won, LeagueTournamentId = 6 },
        new Event { EventId = Guid.NewGuid(), Odds = 2.1m, CategoryId = 2, EventTypeId = 5, BetId = betId2, Status = StatusEnum.Won, LeagueTournamentId = 10 },
-       new Event { EventId = Guid.NewGuid(), Odds = 1.8m, CategoryId = 1, EventTypeId = 6, BetId = betId2, Status = StatusEnum.Unfinished, LeagueTournamentId = 2 }
+       new Event { EventId = Guid.NewGuid(), Odds = 1.8m, CategoryId = 1, EventTypeId = 6, BetId = betId2, Status = StatusEnum.Pending, LeagueTournamentId = 2 }
    );
 
         modelBuilder.Entity<Bet>()
