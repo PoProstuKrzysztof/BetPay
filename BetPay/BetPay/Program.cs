@@ -6,7 +6,6 @@ using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Blazor;
-using System.Net.Sockets;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,14 +29,13 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
     options.UseLazyLoadingProxies();
     options.EnableDetailedErrors();
     options.EnableSensitiveDataLogging();
-    
 }, ServiceLifetime.Scoped);
 
 builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();
 
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NDaF5cWWtCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWH9cc3VdQ2NdV0FyVkc=");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["Syncfusion:LicenseKey"]);
 
 if (app.Environment.IsDevelopment())
 {

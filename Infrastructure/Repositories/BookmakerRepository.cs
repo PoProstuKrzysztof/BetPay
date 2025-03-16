@@ -17,7 +17,6 @@ public class BookmakerRepository : RepositoryBase<Bookmaker>, IBookmakerReposito
         try
         {
             return await FindAll()
-                    .Result
                     .OrderBy(x => x.BookmakerId)
                     .ToListAsync();
         }

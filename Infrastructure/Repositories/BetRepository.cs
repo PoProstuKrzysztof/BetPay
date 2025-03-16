@@ -18,7 +18,6 @@ namespace Infrastructure.Repositories
             try
             {
                 return await FindAll()
-                .Result
                 .OrderByDescending(x => x.BetDate)
                 .Include(b => b.EventsList)
                 .Include(b => b.Bookmaker)
@@ -29,25 +28,24 @@ namespace Infrastructure.Repositories
                 throw new RetrieveException("Failed to retrieve bets from the database.", nameof(Bet), ex);
             }
         }
+
         public async Task<IEnumerable<MonthlyBalance>> GetAllMonthlyBalanceSummariesAsync()
         {
             try
             {
-
                 var allBets = await FindAll()
-                    .Result
                     .Include(b => b.EventsList)
                     .ToListAsync();
 
-               // Grouping by month and year
+                // Grouping by month and year
                 var balanceByMonth = allBets
                     .GroupBy(b => new { b.BetDate.Year, b.BetDate.Month })
                     .Select(g =>
                     {
-                       // Calculating monthly income
+                        // Calculating monthly income
                         decimal monthlyBalance = g.Sum(b =>
-                        {                   
-                           return b.Status == StatusEnum.Won ? (b.PotentialWin  ?? 0) : -b.Stake;
+                        {
+                            return b.Status == StatusEnum.Won ? (b.PotentialWin ?? 0) : -b.Stake;
                         });
 
                         return new MonthlyBalance(g.Key.Year, g.Key.Month, monthlyBalance);
@@ -62,12 +60,12 @@ namespace Infrastructure.Repositories
                 throw new RetrieveException("Failed to retrieve monthly income summaries.", nameof(Bet), ex);
             }
         }
+
         public async Task<Bet> GetBetByGuid(Guid id)
         {
             try
             {
                 return await FindByCondition(x => x.BetId.Equals(id))
-                    .Result
                     .Include(el => el.EventsList)
                     .Include(b => b.Bookmaker)
                     .FirstAsync();

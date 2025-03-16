@@ -17,15 +17,12 @@ namespace Infrastructure.Repositories
             try
             {
                 return await FindAll()
-                        .Result
                         .OrderBy(x => x.EventTypeId)
                         .ToListAsync();
             }
             catch (Exception ex)
             {
-
                 throw new RetrieveException("Failed to retrieve event types.", nameof(EventType), ex);
-
             }
         }
     }

@@ -17,7 +17,6 @@ public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
         try
         {
             return await FindAll()
-              .Result
               .OrderBy(x => x.CategoryId)
               .ToListAsync();
         }

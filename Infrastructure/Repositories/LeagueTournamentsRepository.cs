@@ -17,7 +17,6 @@ public class LeagueTournamentsRepository : RepositoryBase<LeagueTournament>, ILe
         try
         {
             return await FindAll()
-                    .Result
                     .OrderBy(x => x.LeagueTournamentId)
                     .ToListAsync();
         }

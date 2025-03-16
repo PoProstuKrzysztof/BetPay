@@ -17,7 +17,6 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
         try
         {
             return await FindAll()
-               .Result
                .ToListAsync();
         }
         catch (Exception ex)
@@ -33,8 +32,7 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
             var localEvent = RepositoryContext.Set<Event>()
                .Local.FirstOrDefault(e => e.EventId.Equals(@event.EventId));
 
-          
-            if (localEvent != null )
+            if (localEvent != null)
             {
                 RepositoryContext.Entry(localEvent).State = EntityState.Detached;
             }
@@ -53,6 +51,11 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
     {
         try
         {
+            if (@event.GetType().GetProperties().All(p => p.GetValue(null) == null))
+            {
+                return;
+            }
+
             var bet = RepositoryContext.Set<Bet>()
                 .First(b => b.BetId == @event.BetId);
 
@@ -105,7 +108,6 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
     public async Task<IEnumerable<EventCategoryChart>> GetAllEventsWithCategoryAsync()
     {
         var events = await FindAll()
-            .Result
             .Include(c => c.Category)
             .ToListAsync();
 
@@ -122,7 +124,7 @@ public class EventRepository : RepositoryBase<Event>, IEventRepository
         var eventCategoryCharts = categoryCounts
             .Select(cc => new EventCategoryChart(
                 cc.Category,
-                Math.Round((double) cc.Count / totalEvents * 100,0)
+                Math.Round((double)cc.Count / totalEvents * 100, 0)
             ))
             .ToList();
 
