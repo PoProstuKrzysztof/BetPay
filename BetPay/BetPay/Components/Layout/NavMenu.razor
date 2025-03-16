@@ -8,22 +8,22 @@
 
 <div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
     <nav class="flex-column">
-        <div class="nav-item px-3">
+        <div class="nav-item">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
+                <i class="fa-solid fa-table-list"></i> Dashboard
             </NavLink>
         </div>
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Bets">
-                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Bets
+        <div class="nav-item">
+            <NavLink class="nav-link" href="statistics" Match="NavLinkMatch.All">
+                <span><i class="bi bi-bar-chart-line-fill"></i></span> Statistics
             </NavLink>
         </div>
-        <div class="nav-item px-3">
-    <NavLink class="nav-link" href="tests">
-        <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> TESTS
-    </NavLink>
-</div>
+        <div class="nav-item">
+            <NavLink class="nav-link" href="tests" Match="NavLinkMatch.All">
+                <span class="bi bi-plus-square-fill-nav-menu" aria-hidden="true"></span> Testing
+            </NavLink>
+        </div>
 
     </nav>
 </div>

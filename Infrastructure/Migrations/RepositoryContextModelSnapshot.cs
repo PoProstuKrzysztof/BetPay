@@ -33,11 +33,14 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("BetDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("BookmakerId")
+                    b.Property<int>("BookmakerId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsTaxIncluded")
                         .HasColumnType("bit");
+
+                    b.Property<int>("LivePrematch")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Stake")
                         .HasColumnType("decimal(18,2)");
@@ -51,42 +54,47 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            BetId = new Guid("87b931e3-d6e8-4d42-805d-c93f09a402e7"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
+                            BetDate = new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 2,
                             IsTaxIncluded = true,
+                            LivePrematch = 2,
                             Stake = 50m
                         },
                         new
                         {
-                            BetId = new Guid("a08555be-3662-449a-8da7-f425e8c20a2f"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
+                            BetDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 3,
                             IsTaxIncluded = true,
+                            LivePrematch = 2,
                             Stake = 100m
                         },
                         new
                         {
-                            BetId = new Guid("4abdf2b3-cfc4-4176-b657-c2662b115f68"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            BookmakerId = 2,
-                            IsTaxIncluded = true,
+                            BetId = new Guid("14636804-0b37-45d9-aa36-7d14a6f7507c"),
+                            BetDate = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 1,
+                            IsTaxIncluded = false,
+                            LivePrematch = 2,
                             Stake = 200m
                         },
                         new
                         {
-                            BetId = new Guid("bc1efdec-83b8-4057-820a-45d387c19767"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BetId = new Guid("80c93edd-1f3f-460b-9181-25800030f568"),
+                            BetDate = new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 1,
                             IsTaxIncluded = false,
+                            LivePrematch = 1,
                             Stake = 75m
                         },
                         new
                         {
-                            BetId = new Guid("a528195f-1109-4cde-8a0a-4e1d2999e062"),
-                            BetDate = new DateTime(2024, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            BookmakerId = 4,
+                            BetId = new Guid("200172fa-bd84-4789-9226-557d8d68f49a"),
+                            BetDate = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            BookmakerId = 5,
                             IsTaxIncluded = true,
+                            LivePrematch = 1,
                             Stake = 150m
                         });
                 });
@@ -94,10 +102,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Entities.Bookmaker", b =>
                 {
                     b.Property<int>("BookmakerId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookmakerId"));
 
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
@@ -113,72 +118,92 @@ namespace Infrastructure.Migrations
                         new
                         {
                             BookmakerId = 1,
+                            ImagePath = "/Images/Bookmakers/betclic.png",
                             Name = "Betclic"
                         },
                         new
                         {
                             BookmakerId = 2,
+                            ImagePath = "/Images/Bookmakers/superbet.png",
                             Name = "Superbet"
                         },
                         new
                         {
                             BookmakerId = 3,
+                            ImagePath = "/Images/Bookmakers/fortuna.png",
                             Name = "Fortuna"
                         },
                         new
                         {
                             BookmakerId = 4,
+                            ImagePath = "/Images/Bookmakers/sts.png",
                             Name = "STS"
                         },
                         new
                         {
                             BookmakerId = 5,
+                            ImagePath = "/Images/Bookmakers/betfan.png",
                             Name = "Betfan"
                         },
                         new
                         {
                             BookmakerId = 6,
+                            ImagePath = "/Images/Bookmakers/fuksiarz.png",
                             Name = "Fuksiarz"
                         },
                         new
                         {
                             BookmakerId = 7,
+                            ImagePath = "/Images/Bookmakers/lvbet.png",
                             Name = "LvBet"
                         },
                         new
                         {
                             BookmakerId = 8,
+                            ImagePath = "/Images/Bookmakers/betters.png",
                             Name = "Betters"
                         },
                         new
                         {
                             BookmakerId = 9,
+                            ImagePath = "/Images/Bookmakers/betcris.png",
                             Name = "Betcris"
                         },
                         new
                         {
                             BookmakerId = 10,
+                            ImagePath = "/Images/Bookmakers/gobet.png",
                             Name = "GoBet"
                         },
                         new
                         {
                             BookmakerId = 11,
+                            ImagePath = "/Images/Bookmakers/totalbet.png",
                             Name = "TotalBet"
                         },
                         new
                         {
                             BookmakerId = 12,
+                            ImagePath = "/Images/Bookmakers/forbet.png",
                             Name = "ForBet"
                         },
                         new
                         {
                             BookmakerId = 13,
+                            ImagePath = "/Images/Bookmakers/etoto.png",
                             Name = "Etoto"
                         },
                         new
                         {
                             BookmakerId = 14,
+                            ImagePath = "/Images/Bookmakers/comeon.png",
                             Name = "ComeOn"
+                        },
+                        new
+                        {
+                            BookmakerId = 15,
+                            ImagePath = "/Images/Bookmakers/pzbuk.png",
+                            Name = "Pzbuk"
                         });
                 });
 
@@ -207,16 +232,11 @@ namespace Infrastructure.Migrations
                         new
                         {
                             CategoryId = 2,
-                            Name = "Soccer"
-                        },
-                        new
-                        {
-                            CategoryId = 3,
                             Name = "Tennis"
                         },
                         new
                         {
-                            CategoryId = 4,
+                            CategoryId = 3,
                             Name = "Basketball"
                         });
                 });
@@ -235,6 +255,12 @@ namespace Infrastructure.Migrations
                     b.Property<int>("EventTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("LeagueTournamentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("LeagueTournamentId1")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Odds")
                         .HasColumnType("decimal(18,2)");
 
@@ -249,108 +275,92 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("EventTypeId");
 
+                    b.HasIndex("LeagueTournamentId");
+
+                    b.HasIndex("LeagueTournamentId1");
+
                     b.ToTable("Events");
 
                     b.HasData(
                         new
                         {
-                            EventId = new Guid("5952c675-5f10-4844-999d-ea136f7eee4d"),
-                            BetId = new Guid("87b931e3-d6e8-4d42-805d-c93f09a402e7"),
+                            EventId = new Guid("4b299938-1ea6-4593-a8e5-ae02ddb57b21"),
+                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
                             CategoryId = 1,
                             EventTypeId = 1,
+                            LeagueTournamentId = 1,
                             Odds = 1.5m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("09a37797-8d97-49e5-b437-2be10d0d8e46"),
-                            BetId = new Guid("87b931e3-d6e8-4d42-805d-c93f09a402e7"),
+                            EventId = new Guid("c2391e47-1e8b-4b2c-8232-787f3e93c4c9"),
+                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
                             CategoryId = 2,
                             EventTypeId = 2,
+                            LeagueTournamentId = 8,
                             Odds = 2.0m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("0d848284-ee55-419a-aca9-da94199f77dc"),
-                            BetId = new Guid("a08555be-3662-449a-8da7-f425e8c20a2f"),
-                            CategoryId = 1,
+                            EventId = new Guid("a9d1e0da-021c-47ae-a6b9-45e57df93a7c"),
+                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
+                            CategoryId = 3,
                             EventTypeId = 3,
-                            Odds = 1.8m,
+                            LeagueTournamentId = 2,
+                            Odds = 1.7m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("982cdbee-d9e7-41d4-ac04-a9e5867b9599"),
-                            BetId = new Guid("a08555be-3662-449a-8da7-f425e8c20a2f"),
-                            CategoryId = 3,
-                            EventTypeId = 4,
-                            Odds = 2.2m,
+                            EventId = new Guid("70b9fd2c-7aa8-461f-a15f-5518a67c3f93"),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
+                            CategoryId = 2,
+                            EventTypeId = 1,
+                            LeagueTournamentId = 7,
+                            Odds = 1.6m,
                             Status = 1
                         },
                         new
                         {
-                            EventId = new Guid("0a684c8e-d330-46e6-b9ed-95457deea601"),
-                            BetId = new Guid("4abdf2b3-cfc4-4176-b657-c2662b115f68"),
-                            CategoryId = 2,
-                            EventTypeId = 1,
-                            Odds = 1.6m,
-                            Status = 2
-                        },
-                        new
-                        {
-                            EventId = new Guid("730b937c-5de5-47fa-a30c-1a5d07f5b812"),
-                            BetId = new Guid("4abdf2b3-cfc4-4176-b657-c2662b115f68"),
+                            EventId = new Guid("d39011eb-7f7d-4b2b-95c1-850c2815f356"),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
                             CategoryId = 1,
-                            EventTypeId = 3,
-                            Odds = 2.5m,
-                            Status = 2
-                        },
-                        new
-                        {
-                            EventId = new Guid("cd1799aa-768f-45fb-9c97-11ddeac23f50"),
-                            BetId = new Guid("bc1efdec-83b8-4057-820a-45d387c19767"),
-                            CategoryId = 3,
                             EventTypeId = 4,
-                            Odds = 2.0m,
+                            LeagueTournamentId = 6,
+                            Odds = 2.3m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("18813c61-5019-4064-960f-47cbf5cba8b3"),
-                            BetId = new Guid("bc1efdec-83b8-4057-820a-45d387c19767"),
+                            EventId = new Guid("ae364343-1aae-409e-969b-6941d2170466"),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
                             CategoryId = 2,
-                            EventTypeId = 2,
-                            Odds = 1.7m,
-                            Status = 2
-                        },
-                        new
-                        {
-                            EventId = new Guid("34a02abf-d4f4-49cb-b8ad-414199c7ccd7"),
-                            BetId = new Guid("a528195f-1109-4cde-8a0a-4e1d2999e062"),
-                            CategoryId = 1,
-                            EventTypeId = 3,
+                            EventTypeId = 5,
+                            LeagueTournamentId = 10,
                             Odds = 2.1m,
                             Status = 0
                         },
                         new
                         {
-                            EventId = new Guid("2e78c8e2-5941-4914-9982-001f3f365911"),
-                            BetId = new Guid("a528195f-1109-4cde-8a0a-4e1d2999e062"),
-                            CategoryId = 3,
-                            EventTypeId = 4,
-                            Odds = 2.3m,
-                            Status = 0
+                            EventId = new Guid("9aecac05-e02b-4cad-9910-fbc5b399fc04"),
+                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
+                            CategoryId = 1,
+                            EventTypeId = 6,
+                            LeagueTournamentId = 2,
+                            Odds = 1.8m,
+                            Status = 2
                         });
                 });
 
             modelBuilder.Entity("Domain.Entities.EventType", b =>
                 {
                     b.Property<int>("EventTypeId")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EventTypeId"));
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -358,98 +368,333 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("EventTypeId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("EventTypes");
 
                     b.HasData(
                         new
                         {
                             EventTypeId = 1,
+                            CategoryId = 1,
                             Name = "BTTS"
                         },
                         new
                         {
                             EventTypeId = 2,
+                            CategoryId = 1,
                             Name = "1X2"
                         },
                         new
                         {
                             EventTypeId = 3,
+                            CategoryId = 1,
                             Name = "Over/Under Goals"
                         },
                         new
                         {
                             EventTypeId = 4,
+                            CategoryId = 1,
                             Name = "Corners"
                         },
                         new
                         {
                             EventTypeId = 5,
+                            CategoryId = 1,
                             Name = "Yellow Cards"
                         },
                         new
                         {
                             EventTypeId = 6,
+                            CategoryId = 1,
                             Name = "Correct Score"
                         },
                         new
                         {
                             EventTypeId = 7,
+                            CategoryId = 1,
                             Name = "Double Chance"
                         },
                         new
                         {
                             EventTypeId = 8,
+                            CategoryId = 1,
                             Name = "First Goal Scorer"
                         },
                         new
                         {
                             EventTypeId = 9,
+                            CategoryId = 1,
                             Name = "Last Goal Scorer"
                         },
                         new
                         {
                             EventTypeId = 10,
+                            CategoryId = 1,
                             Name = "Player to Score Anytime"
                         },
                         new
                         {
                             EventTypeId = 11,
+                            CategoryId = 1,
                             Name = "Clean Sheet"
                         },
                         new
                         {
                             EventTypeId = 12,
+                            CategoryId = 1,
                             Name = "Team to Win Both Halves"
                         },
                         new
                         {
                             EventTypeId = 13,
+                            CategoryId = 1,
                             Name = "Half-Time Result"
                         },
                         new
                         {
                             EventTypeId = 14,
+                            CategoryId = 1,
                             Name = "Full-Time Result"
                         },
                         new
                         {
                             EventTypeId = 15,
+                            CategoryId = 1,
                             Name = "Half-Time/Full-Time"
                         },
                         new
                         {
                             EventTypeId = 16,
+                            CategoryId = 1,
                             Name = "Team to Score First"
                         },
                         new
                         {
                             EventTypeId = 17,
+                            CategoryId = 1,
                             Name = "First Half Goals"
                         },
                         new
                         {
                             EventTypeId = 18,
+                            CategoryId = 1,
                             Name = "Second Half Goals"
+                        },
+                        new
+                        {
+                            EventTypeId = 19,
+                            CategoryId = 2,
+                            Name = "Total Aces"
+                        },
+                        new
+                        {
+                            EventTypeId = 20,
+                            CategoryId = 2,
+                            Name = "Total Double Faults"
+                        },
+                        new
+                        {
+                            EventTypeId = 21,
+                            CategoryId = 2,
+                            Name = "Set Winner"
+                        },
+                        new
+                        {
+                            EventTypeId = 22,
+                            CategoryId = 2,
+                            Name = "Match Winner"
+                        },
+                        new
+                        {
+                            EventTypeId = 23,
+                            CategoryId = 2,
+                            Name = "First Set Winner"
+                        },
+                        new
+                        {
+                            EventTypeId = 24,
+                            CategoryId = 2,
+                            Name = "Total Games Over/Under"
+                        },
+                        new
+                        {
+                            EventTypeId = 25,
+                            CategoryId = 3,
+                            Name = "First Basket Scorer"
+                        },
+                        new
+                        {
+                            EventTypeId = 26,
+                            CategoryId = 3,
+                            Name = "Total Points Over/Under"
+                        },
+                        new
+                        {
+                            EventTypeId = 27,
+                            CategoryId = 3,
+                            Name = "Winning Margin"
+                        },
+                        new
+                        {
+                            EventTypeId = 28,
+                            CategoryId = 3,
+                            Name = "Most Assists"
+                        },
+                        new
+                        {
+                            EventTypeId = 29,
+                            CategoryId = 3,
+                            Name = "Total Rebounds"
+                        },
+                        new
+                        {
+                            EventTypeId = 30,
+                            CategoryId = 3,
+                            Name = "First Team to Score 20 Points"
+                        });
+                });
+
+            modelBuilder.Entity("Domain.Entities.LeagueTournament", b =>
+                {
+                    b.Property<int>("LeagueTournamentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LeagueTournamentId"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("LeagueTournamentId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("LeagueTournaments");
+
+                    b.HasData(
+                        new
+                        {
+                            LeagueTournamentId = 1,
+                            CategoryId = 1,
+                            Name = "Premier League"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 2,
+                            CategoryId = 1,
+                            Name = "La Liga"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 3,
+                            CategoryId = 1,
+                            Name = "Serie A"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 4,
+                            CategoryId = 1,
+                            Name = "Bundesliga"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 5,
+                            CategoryId = 1,
+                            Name = "Ligue 1"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 6,
+                            CategoryId = 1,
+                            Name = "UEFA Champions League"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 7,
+                            CategoryId = 1,
+                            Name = "UEFA Europa League"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 8,
+                            CategoryId = 1,
+                            Name = "Euro Cup"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 9,
+                            CategoryId = 1,
+                            Name = "Copa America"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 10,
+                            CategoryId = 1,
+                            Name = "FIFA World Cup"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 11,
+                            CategoryId = 2,
+                            Name = "Wimbledon"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 12,
+                            CategoryId = 2,
+                            Name = "Roland Garros"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 13,
+                            CategoryId = 2,
+                            Name = "US Open"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 14,
+                            CategoryId = 2,
+                            Name = "Australian Open"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 15,
+                            CategoryId = 2,
+                            Name = "ATP Finals"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 16,
+                            CategoryId = 3,
+                            Name = "NBA Finals"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 17,
+                            CategoryId = 3,
+                            Name = "EuroLeague"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 18,
+                            CategoryId = 3,
+                            Name = "FIBA World Cup"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 19,
+                            CategoryId = 3,
+                            Name = "NCAA March Madness"
+                        },
+                        new
+                        {
+                            LeagueTournamentId = 20,
+                            CategoryId = 3,
+                            Name = "Olympic Basketball Tournament"
                         });
                 });
 
@@ -457,7 +702,9 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Entities.Bookmaker", "Bookmaker")
                         .WithMany("BetList")
-                        .HasForeignKey("BookmakerId");
+                        .HasForeignKey("BookmakerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Bookmaker");
                 });
@@ -472,20 +719,54 @@ namespace Infrastructure.Migrations
                     b.HasOne("Domain.Entities.Category", "Category")
                         .WithMany("Events")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entities.EventType", "EventType")
                         .WithMany("Events")
                         .HasForeignKey("EventTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Domain.Entities.LeagueTournament", "LeagueTournament")
+                        .WithMany()
+                        .HasForeignKey("LeagueTournamentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.LeagueTournament", null)
+                        .WithMany("Events")
+                        .HasForeignKey("LeagueTournamentId1");
 
                     b.Navigation("Bet");
 
                     b.Navigation("Category");
 
                     b.Navigation("EventType");
+
+                    b.Navigation("LeagueTournament");
+                });
+
+            modelBuilder.Entity("Domain.Entities.EventType", b =>
+                {
+                    b.HasOne("Domain.Entities.Category", "Category")
+                        .WithMany("EventTypes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LeagueTournament", b =>
+                {
+                    b.HasOne("Domain.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Domain.Entities.Bet", b =>
@@ -500,10 +781,17 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
+                    b.Navigation("EventTypes");
+
                     b.Navigation("Events");
                 });
 
             modelBuilder.Entity("Domain.Entities.EventType", b =>
+                {
+                    b.Navigation("Events");
+                });
+
+            modelBuilder.Entity("Domain.Entities.LeagueTournament", b =>
                 {
                     b.Navigation("Events");
                 });

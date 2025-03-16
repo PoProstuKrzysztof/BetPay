@@ -4,9 +4,9 @@ namespace Application.Contracts;
 
 public interface IRepositoryBase<T>
 {
-    Task<IQueryable<T>> FindAll();
+    IQueryable<T> FindAll();
 
-    Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression);
+    IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
 
     void Create(T entity);
 

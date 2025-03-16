@@ -2,7 +2,10 @@
 
 namespace Domain.Validators;
 
-public class CustomValidationsBookmakerId : ValidationAttribute
+/// <summary>
+/// Custom validation for BookmakerId property in Bet entity class
+/// </summary>
+public sealed class CustomValidationsBookmakerId : ValidationAttribute
 {
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 

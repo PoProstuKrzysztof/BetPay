@@ -1,0 +1,32 @@
+﻿@inject IRepositoryWrapper RepositoryWrapper
+
+@if (EventsCategoriesData != null)
+{
+    <SfAccumulationChart Title="Categories" EnableAnimation="true">
+        <AccumulationChartSeriesCollection>
+            <AccumulationChartSeries PointColorMapping="Fill" 
+                                   DataSource="EventsCategoriesData" 
+                                   XName="Category" 
+                                   YName="Percentage"
+                                   Name="Category"
+                                   Explode="true">
+                <AccumulationDataLabelSettings Visible="true"
+                                             Name="Percentage"
+                                             Position="AccumulationLabelPosition.Outside">
+                    <AccumulationChartDataLabelFont Size=1rem FontWeight="500" />
+                </AccumulationDataLabelSettings>
+            </AccumulationChartSeries>
+        </AccumulationChartSeriesCollection>
+
+        <AccumulationChartLegendSettings Visible="false" />
+        <AccumulationChartTooltipSettings Enable="true" 
+                                        Format="<b>${point.x}</b><br><b>${point.y}%</b>" />
+    </SfAccumulationChart>
+}
+
+@code {
+    [Parameter]
+    public IEnumerable<EventCategoryChart>? EventsCategoriesData { get; set; }
+
+}
+ 

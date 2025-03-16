@@ -13,10 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-builder.Services.AddDbContextPool<RepositoryContext>(options =>
+
+builder.Services.AddDbContext<RepositoryContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         sqlServerOptionsAction: sqlOptions =>
@@ -27,13 +29,14 @@ builder.Services.AddDbContextPool<RepositoryContext>(options =>
     options.UseLazyLoadingProxies();
     options.EnableDetailedErrors();
     options.EnableSensitiveDataLogging();
-});
+}, ServiceLifetime.Scoped);
+
 builder.Services.AddSyncfusionBlazor();
 
 var app = builder.Build();
 
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzQ2MjcyOEAzMjM2MmUzMDJlMzBtOHNNNERlYmxLZkxiRzlVQWcwV2FHZHNRY2pUMlIreURtY21EMUduVVY4PQ==");
-// Configure the HTTP request pipeline.
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["Syncfusion:LicenseKey"]);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
@@ -41,7 +44,6 @@ if (app.Environment.IsDevelopment())
 else
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -52,8 +54,7 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
-    .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(BetPay.Client._Imports).Assembly);
+    .AddInteractiveWebAssemblyRenderMode();
 
 app.Run();
 

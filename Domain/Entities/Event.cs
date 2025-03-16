@@ -1,4 +1,4 @@
-﻿using BetPay.Enums;
+﻿using Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,7 +12,7 @@ public class Event
 
     public decimal Odds { get; set; }
 
-    public StatusEnum Status { get; set; } = StatusEnum.Unfinished;
+    public StatusEnum Status { get; set; } = StatusEnum.Pending;
 
     // Relationships
     public int CategoryId { get; set; }
@@ -21,6 +21,10 @@ public class Event
 
     public int EventTypeId { get; set; }
     public virtual EventType EventType { get; set; }
+
+    public int LeagueTournamentId { get; set; }
+
+    public virtual LeagueTournament LeagueTournament { get; set; }
 
     public Guid? BetId { get; set; }
 

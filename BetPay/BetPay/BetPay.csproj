@@ -4,25 +4,33 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>c1897db6-f352-4ed6-b7a3-6f5934ec98bf</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\BetPay.Client\BetPay.Client.csproj" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Charts" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Core" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.DataForm" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Grid" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="26.2.13" />
-    <PackageReference Include="Syncfusion.Blazor.Themes" Version="26.2.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.14" />
+    <PackageReference Include="Syncfusion.Blazor.Buttons" Version="28.2.11" />
+    <PackageReference Include="Syncfusion.Blazor.Calendars" Version="28.2.11" />
+    <PackageReference Include="Syncfusion.Blazor.Charts" Version="28.2.11" />
+    <PackageReference Include="Syncfusion.Blazor.Core" Version="28.2.11" />
+    <PackageReference Include="Syncfusion.Blazor.DataForm" Version="28.2.11" />
+    <PackageReference Include="Syncfusion.Blazor.Layouts" Version="28.2.11" />
+    <PackageReference Include="Syncfusion.Blazor.Navigations" Version="28.2.11" />
+    <PackageReference Include="Syncfusion.Blazor.Spinner" Version="28.2.11" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="28.2.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Bookmakers\" />
   </ItemGroup>
 
 </Project>

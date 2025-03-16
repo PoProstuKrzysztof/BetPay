@@ -1,4 +1,4 @@
-﻿using BetPay.Enums;
+﻿using Domain.Enums;
 using Domain.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,13 +15,18 @@ public class Bet
 
     public DateTime BetDate { get; set; }
 
-    public StatusEnum? Status
+    public LivePrematchEnum LivePrematch { get; set; }
+
+    /// <summary>
+    /// Check the status of the bet based on the event's statuses involved in this bet 
+    /// </summary>
+    public StatusEnum Status
     {
         get
         {
             if (EventsList == null || !EventsList.Any())
             {
-                return StatusEnum.Unfinished;
+                return StatusEnum.Pending;
             }
 
             if (EventsList.Any(e => e.Status == StatusEnum.Lost))
@@ -33,12 +38,15 @@ public class Bet
                 return StatusEnum.Won;
             }
 
-            return StatusEnum.Unfinished;
+            return StatusEnum.Pending;
         }
     }
 
     public bool IsTaxIncluded { get; set; } = true;
 
+    /// <summary>
+    /// In Poland, the tax on betting is 14%. When above 2280 zł, an additional 10% is applied.
+    /// </summary>
     [NotMapped]
     public decimal? PotentialWin
     {
@@ -46,14 +54,33 @@ public class Bet
         {
             if (TotalOdds != 0)
             {
-                decimal win = Math.Round((decimal)(Stake * TotalOdds));
-                return IsTaxIncluded ? win * 0.86M : win;
+                decimal win = Math.Round((decimal)(Stake * TotalOdds), 2);
+
+                // Apply 10% if above 2280
+                if (win > 2280)
+                {
+                    win = win * 0.90M;
+                }
+
+                if (Bookmaker.Name.Equals("Fortuna") && !IsTaxIncluded)
+                {
+                    win = win * 0.14M;
+                }
+
+                //TO DO:
+                //Fortuna applies additional 0.14% multiplier when playing live with 3 or more events
+
+                // Apply tax if tax is included
+                return IsTaxIncluded ? (win * 0.86M) : win;
             }
 
             return 0;
         }
     }
 
+    /// <summary>
+    /// Total odds of the bet calculated based on sum of related events odds.
+    /// </summary>
     [NotMapped]
     public decimal? TotalOdds
     {
@@ -66,14 +93,17 @@ public class Bet
 
             decimal totalOdds = 1M;
 
-            foreach (var eventItem in EventsList)
+            foreach (var @event in EventsList)
             {
-                totalOdds *= eventItem.Odds;
+                totalOdds *= @event.Odds;
             }
 
-            return totalOdds;
+            return Math.Round(totalOdds,2);
         }
     }
+
+
+    [NotMapped]
 
     // Relationships
 

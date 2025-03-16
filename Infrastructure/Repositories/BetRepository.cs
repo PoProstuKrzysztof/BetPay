@@ -1,6 +1,8 @@
 ﻿using Application.Contracts;
 using Domain.Entities;
+using Domain.Enums;
 using Infrastructure.Data;
+using Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
@@ -13,56 +15,133 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Bet>> GetAllBetsAsync()
         {
-            return await FindAll()
-                .Result
+            try
+            {
+                return await FindAll()
                 .OrderByDescending(x => x.BetDate)
                 .Include(b => b.EventsList)
                 .Include(b => b.Bookmaker)
                 .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new RetrieveException("Failed to retrieve bets from the database.", nameof(Bet), ex);
+            }
+        }
+
+        public async Task<IEnumerable<MonthlyBalance>> GetAllMonthlyBalanceSummariesAsync()
+        {
+            try
+            {
+                var allBets = await FindAll()
+                    .Include(b => b.EventsList)
+                    .ToListAsync();
+
+                // Grouping by month and year
+                var balanceByMonth = allBets
+                    .GroupBy(b => new { b.BetDate.Year, b.BetDate.Month })
+                    .Select(g =>
+                    {
+                        // Calculating monthly income
+                        decimal monthlyBalance = g.Sum(b =>
+                        {
+                            return b.Status == StatusEnum.Won ? (b.PotentialWin ?? 0) : -b.Stake;
+                        });
+
+                        return new MonthlyBalance(g.Key.Year, g.Key.Month, monthlyBalance);
+                    })
+                    .OrderBy(x => x.MonthDate)
+                   .ToList();
+
+                return balanceByMonth;
+            }
+            catch (Exception ex)
+            {
+                throw new RetrieveException("Failed to retrieve monthly income summaries.", nameof(Bet), ex);
+            }
         }
 
         public async Task<Bet> GetBetByGuid(Guid id)
         {
-            return await FindByCondition(x => x.BetId.Equals(id))
-                .Result
-                .Include(el => el.EventsList)
-                .Include(b => b.Bookmaker)
-                .FirstOrDefaultAsync();
+            try
+            {
+                return await FindByCondition(x => x.BetId.Equals(id))
+                    .Include(el => el.EventsList)
+                    .Include(b => b.Bookmaker)
+                    .FirstAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new RetrieveException($"Failed to retrieve bet with ID: {id}.", nameof(Bet), ex);
+            }
         }
 
         public void CreateBet(Bet bet)
         {
-            var bookmaker = RepositoryContext.Set<Bookmaker>()
-                .FirstOrDefault(x => x.BookmakerId == bet.BookmakerId);
-            RepositoryContext.Attach(bookmaker);
+            try
+            {
+                var bookmaker = RepositoryContext.Set<Bookmaker>()
+                .First(x => x.BookmakerId == bet.BookmakerId);
 
-            bet.Bookmaker = bookmaker;
-            Create(bet);
+                if (bookmaker == null)
+                {
+                    throw new CreateException("Bookmaker not found for bet creation.", nameof(Bet));
+                }
+
+                RepositoryContext.Attach(bookmaker);
+                bet.Bookmaker = bookmaker;
+
+                RepositoryContext.Entry(bet).State = EntityState.Added;
+
+                Create(bet);
+            }
+            catch (Exception ex)
+            {
+                throw new CreateException("Failed to create bet.", nameof(Bet), ex);
+            }
         }
 
         public void DeleteBet(Bet bet)
         {
-            var local = RepositoryContext.Set<Bet>()
-                .Local.FirstOrDefault(e => e.BetId.Equals(bet.BetId));
-
-            if (local != null)
+            try
             {
-                RepositoryContext.Entry(local).State = EntityState.Detached;
+                var local = RepositoryContext.Set<Bet>()
+                    .Local.FirstOrDefault(e => e.BetId.Equals(bet.BetId));
+
+                if (local != null)
+                {
+                    RepositoryContext.Entry(local).State = EntityState.Detached;
+                }
+
+                RepositoryContext.Entry(bet).State = EntityState.Deleted;
+                Delete(bet);
             }
-
-            RepositoryContext.Entry(bet).State = EntityState.Deleted;
-
-            Delete(bet);
+            catch (Exception ex)
+            {
+                throw new DeleteException($"Failed to delete bet with ID: {bet.BetId}.", nameof(Bet), ex);
+            }
         }
 
         public void UpdateBet(Bet bet)
         {
-            Update(bet);
-        }
+            try
+            {
+                var local = RepositoryContext.Set<Bet>()
+                        .Local.FirstOrDefault(e => e.BetId.Equals(bet.BetId));
 
-        public void ChangeBetStatus(string status, Guid betId)
-        {
-            GetBetByGuid(betId);
+                if (local != null)
+                {
+                    RepositoryContext.Entry(local).State = EntityState.Detached;
+                }
+
+                RepositoryContext.Entry(bet).State = EntityState.Modified;
+
+                Update(bet);
+            }
+            catch (Exception ex)
+            {
+                throw new UpdateException($"Failed to update bet with ID: {bet.BetId}.", nameof(Bet), ex);
+            }
         }
     }
 }
