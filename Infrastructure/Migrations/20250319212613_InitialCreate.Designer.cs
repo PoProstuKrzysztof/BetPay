@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20241013165945_InitialCreate")]
+    [Migration("20250319212613_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.14")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -57,7 +57,7 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
+                            BetId = new Guid("84eacbf1-abda-41bf-a071-1c910bc2473d"),
                             BetDate = new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 2,
                             IsTaxIncluded = true,
@@ -66,7 +66,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
+                            BetId = new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"),
                             BetDate = new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 3,
                             IsTaxIncluded = true,
@@ -75,7 +75,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("14636804-0b37-45d9-aa36-7d14a6f7507c"),
+                            BetId = new Guid("a78e4e22-2477-46ef-bbc6-a1e0a04665e5"),
                             BetDate = new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 1,
                             IsTaxIncluded = false,
@@ -84,7 +84,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("80c93edd-1f3f-460b-9181-25800030f568"),
+                            BetId = new Guid("50bce28b-e41a-4176-9064-68132b01a1bf"),
                             BetDate = new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 1,
                             IsTaxIncluded = false,
@@ -93,7 +93,7 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            BetId = new Guid("200172fa-bd84-4789-9226-557d8d68f49a"),
+                            BetId = new Guid("ef724ccf-5f6c-4ed5-967a-655a635cc3e4"),
                             BetDate = new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             BookmakerId = 5,
                             IsTaxIncluded = true,
@@ -244,6 +244,35 @@ namespace Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Entities.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FlagUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Countries");
+                });
+
             modelBuilder.Entity("Domain.Entities.Event", b =>
                 {
                     b.Property<Guid>("EventId")
@@ -287,8 +316,8 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            EventId = new Guid("4b299938-1ea6-4593-a8e5-ae02ddb57b21"),
-                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
+                            EventId = new Guid("92be7b44-4d50-480e-987e-524d35b825c9"),
+                            BetId = new Guid("84eacbf1-abda-41bf-a071-1c910bc2473d"),
                             CategoryId = 1,
                             EventTypeId = 1,
                             LeagueTournamentId = 1,
@@ -297,8 +326,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("c2391e47-1e8b-4b2c-8232-787f3e93c4c9"),
-                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
+                            EventId = new Guid("ba1e87ad-0f14-42b0-9e54-f3081a116928"),
+                            BetId = new Guid("84eacbf1-abda-41bf-a071-1c910bc2473d"),
                             CategoryId = 2,
                             EventTypeId = 2,
                             LeagueTournamentId = 8,
@@ -307,8 +336,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("a9d1e0da-021c-47ae-a6b9-45e57df93a7c"),
-                            BetId = new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"),
+                            EventId = new Guid("e71b68a6-35e3-41aa-acb9-28f2503316b7"),
+                            BetId = new Guid("84eacbf1-abda-41bf-a071-1c910bc2473d"),
                             CategoryId = 3,
                             EventTypeId = 3,
                             LeagueTournamentId = 2,
@@ -317,8 +346,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("70b9fd2c-7aa8-461f-a15f-5518a67c3f93"),
-                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
+                            EventId = new Guid("1ccc000b-ae40-417a-98a6-ae10151e2bc6"),
+                            BetId = new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"),
                             CategoryId = 2,
                             EventTypeId = 1,
                             LeagueTournamentId = 7,
@@ -327,8 +356,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("d39011eb-7f7d-4b2b-95c1-850c2815f356"),
-                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
+                            EventId = new Guid("2ddc0261-3ce4-47a9-8d32-78e0edf9f48a"),
+                            BetId = new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"),
                             CategoryId = 1,
                             EventTypeId = 4,
                             LeagueTournamentId = 6,
@@ -337,8 +366,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("ae364343-1aae-409e-969b-6941d2170466"),
-                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
+                            EventId = new Guid("72b9e653-db70-4d26-9486-c0cc24577173"),
+                            BetId = new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"),
                             CategoryId = 2,
                             EventTypeId = 5,
                             LeagueTournamentId = 10,
@@ -347,8 +376,8 @@ namespace Infrastructure.Migrations
                         },
                         new
                         {
-                            EventId = new Guid("9aecac05-e02b-4cad-9910-fbc5b399fc04"),
-                            BetId = new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"),
+                            EventId = new Guid("f6863a09-9e0e-476f-bb9e-a119cb115d8b"),
+                            BetId = new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"),
                             CategoryId = 1,
                             EventTypeId = 6,
                             LeagueTournamentId = 2,
