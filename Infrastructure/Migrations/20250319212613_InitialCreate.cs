@@ -40,6 +40,23 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Countries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Code = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FlagUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Bets",
                 columns: table => new
                 {
@@ -184,11 +201,11 @@ namespace Infrastructure.Migrations
                 columns: new[] { "BetId", "BetDate", "BookmakerId", "IsTaxIncluded", "LivePrematch", "Stake" },
                 values: new object[,]
                 {
-                    { new Guid("14636804-0b37-45d9-aa36-7d14a6f7507c"), new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, 200m },
-                    { new Guid("200172fa-bd84-4789-9226-557d8d68f49a"), new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, true, 1, 150m },
-                    { new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, true, 2, 100m },
-                    { new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"), new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, true, 2, 50m },
-                    { new Guid("80c93edd-1f3f-460b-9181-25800030f568"), new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, 75m }
+                    { new Guid("50bce28b-e41a-4176-9064-68132b01a1bf"), new DateTime(2023, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 1, 75m },
+                    { new Guid("84eacbf1-abda-41bf-a071-1c910bc2473d"), new DateTime(2023, 7, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, true, 2, 50m },
+                    { new Guid("a78e4e22-2477-46ef-bbc6-a1e0a04665e5"), new DateTime(2023, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, false, 2, 200m },
+                    { new Guid("ef724ccf-5f6c-4ed5-967a-655a635cc3e4"), new DateTime(2023, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, true, 1, 150m },
+                    { new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"), new DateTime(2023, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, true, 2, 100m }
                 });
 
             migrationBuilder.InsertData(
@@ -260,13 +277,13 @@ namespace Infrastructure.Migrations
                 columns: new[] { "EventId", "BetId", "CategoryId", "EventTypeId", "LeagueTournamentId", "LeagueTournamentId1", "Odds", "Status" },
                 values: new object[,]
                 {
-                    { new Guid("4b299938-1ea6-4593-a8e5-ae02ddb57b21"), new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"), 1, 1, 1, null, 1.5m, 0 },
-                    { new Guid("70b9fd2c-7aa8-461f-a15f-5518a67c3f93"), new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), 2, 1, 7, null, 1.6m, 1 },
-                    { new Guid("9aecac05-e02b-4cad-9910-fbc5b399fc04"), new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), 1, 6, 2, null, 1.8m, 2 },
-                    { new Guid("a9d1e0da-021c-47ae-a6b9-45e57df93a7c"), new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"), 3, 3, 2, null, 1.7m, 0 },
-                    { new Guid("ae364343-1aae-409e-969b-6941d2170466"), new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), 2, 5, 10, null, 2.1m, 0 },
-                    { new Guid("c2391e47-1e8b-4b2c-8232-787f3e93c4c9"), new Guid("68f3a7a8-f820-407a-80a0-ee83e366d5e1"), 2, 2, 8, null, 2.0m, 0 },
-                    { new Guid("d39011eb-7f7d-4b2b-95c1-850c2815f356"), new Guid("3a1585ea-4859-49c5-93c5-7a86c4422f7e"), 1, 4, 6, null, 2.3m, 0 }
+                    { new Guid("1ccc000b-ae40-417a-98a6-ae10151e2bc6"), new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"), 2, 1, 7, null, 1.6m, 1 },
+                    { new Guid("2ddc0261-3ce4-47a9-8d32-78e0edf9f48a"), new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"), 1, 4, 6, null, 2.3m, 0 },
+                    { new Guid("72b9e653-db70-4d26-9486-c0cc24577173"), new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"), 2, 5, 10, null, 2.1m, 0 },
+                    { new Guid("92be7b44-4d50-480e-987e-524d35b825c9"), new Guid("84eacbf1-abda-41bf-a071-1c910bc2473d"), 1, 1, 1, null, 1.5m, 0 },
+                    { new Guid("ba1e87ad-0f14-42b0-9e54-f3081a116928"), new Guid("84eacbf1-abda-41bf-a071-1c910bc2473d"), 2, 2, 8, null, 2.0m, 0 },
+                    { new Guid("e71b68a6-35e3-41aa-acb9-28f2503316b7"), new Guid("84eacbf1-abda-41bf-a071-1c910bc2473d"), 3, 3, 2, null, 1.7m, 0 },
+                    { new Guid("f6863a09-9e0e-476f-bb9e-a119cb115d8b"), new Guid("f7c02600-ecc6-4c5e-9e87-07d91bf26316"), 1, 6, 2, null, 1.8m, 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -313,6 +330,9 @@ namespace Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Countries");
+
             migrationBuilder.DropTable(
                 name: "Events");
 

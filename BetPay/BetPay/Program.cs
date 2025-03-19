@@ -1,23 +1,13 @@
-using Application;
-using Application.Contracts;
 using BetPay.Components;
 using Infrastructure;
 using Infrastructure.Data;
-using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents()
-    .AddInteractiveWebAssemblyComponents();
-
-builder.Services.AddApplication();
-builder.Services.AddInfrastructure();
-builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-
+// Jedna rejestracja DbContext
 builder.Services.AddDbContext<RepositoryContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -31,11 +21,33 @@ builder.Services.AddDbContext<RepositoryContext>(options =>
     options.EnableSensitiveDataLogging();
 }, ServiceLifetime.Scoped);
 
+// Dodaj inne serwisy
+builder.Services.AddInfrastructure(builder.Configuration);
+
+// Konfiguracja Blazor
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents()
+    .AddInteractiveWebAssemblyComponents();
+
 builder.Services.AddSyncfusionBlazor();
+builder.Services.AddControllers();
+builder.Services.AddAntiforgery();
 
 var app = builder.Build();
 
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["Syncfusion:LicenseKey"]);
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var syncService = scope.ServiceProvider.GetRequiredService<CountrySynchronizationService>();
+        await syncService.SynchronizeCountriesAsync();
+        app.Logger.LogInformation("Successfully synchronized countries at startup");
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError(ex, "An error occurred while synchronizing countries at startup");
+    }
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -48,7 +60,7 @@ else
 }
 
 app.UseHttpsRedirection();
-
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(builder.Configuration["Syncfusion:LicenseKey"]);
 app.UseStaticFiles();
 app.UseAntiforgery();
 

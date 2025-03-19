@@ -22,6 +22,8 @@ public class RepositoryContext : DbContext
 
     public virtual DbSet<LeagueTournament> LeagueTournaments { get; set; }
 
+    public virtual DbSet<Country> Countries { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
