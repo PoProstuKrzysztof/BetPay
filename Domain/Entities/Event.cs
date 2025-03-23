@@ -14,18 +14,22 @@ public class Event
 
     public StatusEnum Status { get; set; } = StatusEnum.Pending;
 
-    // Relationships
+    [ForeignKey("CategoryId")]
     public int CategoryId { get; set; }
 
     public virtual Category Category { get; set; }
 
+    [ForeignKey("EventTypeId")]
     public int EventTypeId { get; set; }
+
     public virtual EventType EventType { get; set; }
 
+    [ForeignKey("LeagueTournamentId")]
     public int LeagueTournamentId { get; set; }
 
     public virtual LeagueTournament LeagueTournament { get; set; }
 
+    [ForeignKey("BetId")]
     public Guid? BetId { get; set; }
 
     public virtual Bet? Bet { get; set; }

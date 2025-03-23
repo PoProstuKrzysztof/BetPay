@@ -40,18 +40,8 @@ namespace Infrastructure.Services
                     {
                         Name = x.Name,
                         Code = x.Code,
-                        FlagUrl = x.Flag,
-                        CreatedOn = DateTime.UtcNow
-                    })
-                    .ToList();
-
-                _logger.LogInformation("Processing {Count} valid countries", countries.Count);
-
-                foreach (var country in countries)
-                {
-                    _logger.LogDebug("Country data - Code: {Code}, Name: {Name}, FlagUrl: {FlagUrl}",
-                        country.Code, country.Name, country.FlagUrl);
-                }
+                        FlagUrl = x.Flag
+                    }).ToList();
 
                 await _countryRepository.AddOrUpdateRangeAsync(countries, cancellationToken);
                 _logger.LogInformation("Successfully synchronized {Count} countries", countries.Count);

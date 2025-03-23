@@ -1,5 +1,4 @@
 ﻿using Domain.Entities;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data;
@@ -91,51 +90,6 @@ public class RepositoryContext : DbContext
             new Bookmaker { BookmakerId = 15, Name = "Pzbuk", ImagePath = "/Images/Bookmakers/pzbuk.png" }
 
             );
-
-        modelBuilder.Entity<Bet>().HasData(
-        new Bet { BetId = betId1, Stake = 50m, BetDate = new DateTime(2023, 7, 2), IsTaxIncluded = true, BookmakerId = 2, LivePrematch = LivePrematchEnum.Prematch },
-        new Bet { BetId = betId2, Stake = 100m, BetDate = new DateTime(2023, 5, 10), IsTaxIncluded = true, BookmakerId = 3, LivePrematch = LivePrematchEnum.Prematch },
-        new Bet { BetId = betId3, Stake = 200m, BetDate = new DateTime(2023, 8, 15), IsTaxIncluded = false, BookmakerId = 1, LivePrematch = LivePrematchEnum.Prematch },
-        new Bet { BetId = betId4, Stake = 75m, BetDate = new DateTime(2023, 9, 2), IsTaxIncluded = false, BookmakerId = 1, LivePrematch = LivePrematchEnum.Live },
-        new Bet { BetId = betId5, Stake = 150m, BetDate = new DateTime(2023, 12, 1), IsTaxIncluded = true, BookmakerId = 5, LivePrematch = LivePrematchEnum.Live }
-
-    );
-
-        modelBuilder.Entity<LeagueTournament>().HasData(
-     new LeagueTournament { LeagueTournamentId = 1, Name = "Premier League", CategoryId = 1 },
-     new LeagueTournament { LeagueTournamentId = 2, Name = "La Liga", CategoryId = 1 },
-     new LeagueTournament { LeagueTournamentId = 3, Name = "Serie A", CategoryId = 1 },
-     new LeagueTournament { LeagueTournamentId = 4, Name = "Bundesliga", CategoryId = 1 },
-     new LeagueTournament { LeagueTournamentId = 5, Name = "Ligue 1", CategoryId = 1 },
-     new LeagueTournament { LeagueTournamentId = 6, Name = "UEFA Champions League", CategoryId = 1 },
-     new LeagueTournament { LeagueTournamentId = 7, Name = "UEFA Europa League", CategoryId = 1 },
-     new LeagueTournament { LeagueTournamentId = 8, Name = "Euro Cup", CategoryId = 1 },
-     new LeagueTournament { LeagueTournamentId = 9, Name = "Copa America", CategoryId = 1 },
-     new LeagueTournament { LeagueTournamentId = 10, Name = "FIFA World Cup", CategoryId = 1 },
-
-     new LeagueTournament { LeagueTournamentId = 11, Name = "Wimbledon", CategoryId = 2 },
-    new LeagueTournament { LeagueTournamentId = 12, Name = "Roland Garros", CategoryId = 2 },
-    new LeagueTournament { LeagueTournamentId = 13, Name = "US Open", CategoryId = 2 },
-    new LeagueTournament { LeagueTournamentId = 14, Name = "Australian Open", CategoryId = 2 },
-    new LeagueTournament { LeagueTournamentId = 15, Name = "ATP Finals", CategoryId = 2 },
-
-    new LeagueTournament { LeagueTournamentId = 16, Name = "NBA Finals", CategoryId = 3 },
-    new LeagueTournament { LeagueTournamentId = 17, Name = "EuroLeague", CategoryId = 3 },
-    new LeagueTournament { LeagueTournamentId = 18, Name = "FIBA World Cup", CategoryId = 3 },
-    new LeagueTournament { LeagueTournamentId = 19, Name = "NCAA March Madness", CategoryId = 3 },
-    new LeagueTournament { LeagueTournamentId = 20, Name = "Olympic Basketball Tournament", CategoryId = 3 }
- );
-
-        modelBuilder.Entity<Event>().HasData(
-       new Event { EventId = Guid.NewGuid(), Odds = 1.5m, CategoryId = 1, EventTypeId = 1, BetId = betId1, Status = StatusEnum.Won, LeagueTournamentId = 1 },
-       new Event { EventId = Guid.NewGuid(), Odds = 2.0m, CategoryId = 2, EventTypeId = 2, BetId = betId1, Status = StatusEnum.Won, LeagueTournamentId = 8 },
-       new Event { EventId = Guid.NewGuid(), Odds = 1.7m, CategoryId = 3, EventTypeId = 3, BetId = betId1, Status = StatusEnum.Won, LeagueTournamentId = 2 },
-
-       new Event { EventId = Guid.NewGuid(), Odds = 1.6m, CategoryId = 2, EventTypeId = 1, BetId = betId2, Status = StatusEnum.Lost, LeagueTournamentId = 7 },
-       new Event { EventId = Guid.NewGuid(), Odds = 2.3m, CategoryId = 1, EventTypeId = 4, BetId = betId2, Status = StatusEnum.Won, LeagueTournamentId = 6 },
-       new Event { EventId = Guid.NewGuid(), Odds = 2.1m, CategoryId = 2, EventTypeId = 5, BetId = betId2, Status = StatusEnum.Won, LeagueTournamentId = 10 },
-       new Event { EventId = Guid.NewGuid(), Odds = 1.8m, CategoryId = 1, EventTypeId = 6, BetId = betId2, Status = StatusEnum.Pending, LeagueTournamentId = 2 }
-   );
 
         modelBuilder.Entity<Bet>()
        .HasMany(b => b.EventsList)

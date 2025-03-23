@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace Domain.Entities;
+﻿namespace Domain.Entities;
 
 /// <summary>
 /// Monthly income from bets for charts entity
@@ -20,6 +13,4 @@ public class MonthlyBalance
         MonthDate = new DateTime(year, month, 1);
         Balance = Math.Round(balance, 2);
     }
-
- 
 }

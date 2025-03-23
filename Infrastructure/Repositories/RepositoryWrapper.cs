@@ -1,11 +1,13 @@
 ﻿using Application.Contracts;
 using Infrastructure.Data;
+using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Repositories
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private readonly RepositoryContext _context;
+        private readonly ILoggerFactory? _loggerFactory;
         private IBetRepository _betRepository;
         private IEventRepository _eventRepository;
         private IBookmakerRepository _bookmakerRepository;
@@ -13,9 +15,12 @@ namespace Infrastructure.Repositories
         private ICategoryRepository _categoryRepository;
         private ILeagueTournamentRepository _leagueTournamentRepository;
 
-        public RepositoryWrapper(RepositoryContext context)
+        public RepositoryWrapper(
+            RepositoryContext context,
+            ILoggerFactory? loggerFactory = null)
         {
             _context = context;
+            _loggerFactory = loggerFactory;
         }
 
         public IEventRepository EventRepository
@@ -30,7 +35,9 @@ namespace Infrastructure.Repositories
         {
             get
             {
-                return _leagueTournamentRepository ??= new LeagueTournamentsRepository(_context);
+                return _leagueTournamentRepository ??= _loggerFactory != null
+                    ? new LeagueTournamentRepository(_context, _loggerFactory.CreateLogger<LeagueTournamentRepository>())
+                    : new LeagueTournamentRepository(_context);
             }
         }
 

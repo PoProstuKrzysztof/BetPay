@@ -22,11 +22,16 @@ namespace Infrastructure.Services
             try
             {
                 using var scope = _scopeFactory.CreateScope();
-                var syncService = scope.ServiceProvider.GetRequiredService<CountrySynchronizationService>();
-                
-                _logger.LogInformation("Starting initial data synchronization");
-                await syncService.SynchronizeCountriesAsync(cancellationToken);
-                _logger.LogInformation("Initial data synchronization completed");
+
+                var countrySyncService = scope.ServiceProvider.GetRequiredService<CountrySynchronizationService>();
+                _logger.LogInformation("Starting country synchronization");
+                await countrySyncService.SynchronizeCountriesAsync(cancellationToken);
+                _logger.LogInformation("Country synchronization completed");
+
+                var leagueSyncService = scope.ServiceProvider.GetRequiredService<LeagueSynchronizationService>();
+                _logger.LogInformation("Starting league synchronization for all countries");
+                await leagueSyncService.SynchronizeAllLeaguesAsync(cancellationToken);
+                _logger.LogInformation("League synchronization completed");
             }
             catch (Exception ex)
             {

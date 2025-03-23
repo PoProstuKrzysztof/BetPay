@@ -20,10 +20,14 @@ public static class DependencyInjection
         services.AddScoped<IFootballApiService, FootballApiService>();
 
         services.AddScoped<ICountryEndpoint, CountryEndpoint>();
+        services.AddScoped<ILeagueEndpoint, LeagueEndpoint>();
+
         services.AddScoped<ICountryRepository, CountryRepository>();
+        services.AddScoped<ILeagueTournamentRepository, LeagueTournamentRepository>();
         services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
         services.AddScoped<CountrySynchronizationService>();
+        services.AddScoped<LeagueSynchronizationService>();
 
         services.AddHostedService<InitializationService>();
 

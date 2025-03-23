@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Domain.Entities.Common;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 
-public class Bookmaker
+public class Bookmaker : Entity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.None)]

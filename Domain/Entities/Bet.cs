@@ -1,11 +1,12 @@
-﻿using Domain.Enums;
+﻿using Domain.Entities.Common;
+using Domain.Enums;
 using Domain.Validators;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities;
 
-public class Bet
+public class Bet : Entity
 {
     [Key]
     [DatabaseGeneratedAttribute(DatabaseGeneratedOption.None)]
@@ -98,15 +99,11 @@ public class Bet
                 totalOdds *= @event.Odds;
             }
 
-            return Math.Round(totalOdds,2);
+            return Math.Round(totalOdds, 2);
         }
     }
 
-
     [NotMapped]
-
-    // Relationships
-
     public virtual ICollection<Event> EventsList { get; set; } = new List<Event>();
 
     [CustomValidationsBookmakerId]
